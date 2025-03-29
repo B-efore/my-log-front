@@ -1,0 +1,37 @@
+:root {
+    --color-main: #215783;
+    --color-main-light: #102a3f;
+}
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+    list-style: none;
+    gap: 0.5rem;
+}
+
+.tag {
+    font-size: var(--font-tag);
+    color: #ffffff;
+    background-color: var(--color-main);
+    border-radius: var(--border-radius);
+    padding: 0.3rem 0.7rem 0.2rem 0.7rem;
+    transition: background-color var(--transition);
+    cursor: pointer;
+}
+
+.tag:hover {
+    background-color: var(--color-main-light);
+}
+  
+.tag-input {
+    font-size: 1rem;
+    border: none;
+    outline: none;
+    flex: 1;
+    min-width: 220px;
+    max-width: 100%;
+    box-sizing: border-box;
+}

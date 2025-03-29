@@ -1,0 +1,58 @@
+@font-face {
+    font-family: "TitleFont";
+    src: url("/AppleSDGothicNeo-Bold.ttf");
+}
+
+.header {
+    position: fixed;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1.5rem;
+    background-color: white;
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
+}
+
+.header-left,
+.header-right {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+
+.logo {
+    width: 2.5rem;
+    aspect-ratio: 1/ 1;
+    object-fit: cover;
+    margin-right: 5px;
+}
+
+.logo:hover {
+    transition: opacity 0.3s ease;
+    opacity: 0.8;
+}
+  
+.blog-name {
+    font-family: "TitleFont";
+    font-size: 1.1rem;
+    padding: 0.3rem 0.5rem;
+    margin-top: 3px;
+}
+
+.icon-button {
+    display: flex;
+    font-size: 1.8rem;
+    color: #2c2c2c;
+    padding: 6px;
+}
+
+.icon-button:hover {
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+    background-color: rgb(231, 231, 231);
+}

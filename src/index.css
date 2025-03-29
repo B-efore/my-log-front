@@ -1,0 +1,22 @@
+@font-face {
+  font-family: "DefaultFontRegular";
+  src: url("/AppleSDGothicNeo-Regular.ttf");
+}
+
+html, body {
+  margin: 0px;
+  width: 100%;
+}
+
+#root {
+  background-color: white;
+  min-width: 600px;
+  width: 100%;
+  margin: 0 auto;
+  min-height: 100vh;
+  height: 100%;
+}
+
+body * {
+  font-family: "DefaultFontRegular";
+}
