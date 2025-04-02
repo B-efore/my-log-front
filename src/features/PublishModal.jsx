@@ -5,7 +5,7 @@ import "./PublishModal.css";
 const PublishModal = ({ onClose, onSubmit }) => {
   const [category, setCategory] = useState(0);
   const [visibility, setVisibility] = useState("공개");
-  const [isPinned, setIsPinned] = useState(false);
+  const [pinned, setPinned] = useState(false);
   const [userCategories, setUserCategories] = useState([]);
 
   useEffect(() => {
@@ -13,8 +13,6 @@ const PublishModal = ({ onClose, onSubmit }) => {
       try {
         const list = await getCategories();
         const categories = list.length > 0 ? list : [{ categoryId: 0, name: "전체" }];
-        console.log("list", list);
-        console.log("categories", categories);
         setUserCategories(categories);
         setCategory(categories[0].categoryId);
       } catch (error) {
@@ -28,12 +26,11 @@ const PublishModal = ({ onClose, onSubmit }) => {
   }, []);
 
   const handlePublish = () => {
-    onSubmit({ categoryId: category, visibility, isPinned: isPinned });
+    onSubmit({ categoryId: category, visibility, pinned: pinned });
     onClose();
   };
 
   return (
-    <div className="modal-overlay">
       <div className="modal-box">
         <div className="modal-section">
           <label>카테고리</label>
@@ -64,14 +61,14 @@ const PublishModal = ({ onClose, onSubmit }) => {
           </div>
         </div>
 
-        <div className="modal-section">
-          <label>
+        <div className="modal-section pinned-section">
+          <label className="pinned-label">
             <input
               type="checkbox"
-              checked={isPinned}
-              onChange={(e) => setIsPinned(e.target.checked)}
+              checked={pinned}
+              onChange={(e) => setPinned(e.target.checked)}
             />
-            메인글로 등록
+            <span>메인글로 등록</span>
           </label>
         </div>
 
@@ -80,7 +77,6 @@ const PublishModal = ({ onClose, onSubmit }) => {
           <button onClick={handlePublish}>발행</button>
         </div>
       </div>
-    </div>
   );
 };
 

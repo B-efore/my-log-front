@@ -1,84 +1,90 @@
-.modal-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.4);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-  }
+.publish-button-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.modal-box {
+  position: absolute;
+  top: 120%;
+  right: 0;
+  z-index: 10;
+  width: 50vw;
+  min-width: 350px;
+  max-width: 350px;
+  background: var(--color-default-light);
+  padding: 2rem;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--color-box-main);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+}
+
+.pinned-section {
+  display: flex;
+  align-items: center;
+}
+
+.pinned-label {
+  display: flex;
+  align-items: center;
+  font-size: var(--font-small);
+  gap: 0.5rem;
+  white-space: nowrap;
+}
   
-  .modal-box {
-    background: #fff;
-    padding: 2rem;
-    border-radius: 12px;
-    min-width: 400px;
-    max-width: 90%;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-    box-sizing: border-box;
-  }
-  
-  .modal-box h2 {
+.modal-section {
     margin-bottom: 1.5rem;
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #333;
-  }
+}
   
-  .modal-section {
-    margin-bottom: 1.2rem;
-  }
-  
-  .modal-section label {
-    display: block;
-    font-weight: 500;
+.modal-section label {
+    display: flex;
     margin-bottom: 0.5rem;
-    color: #444;
-  }
+    color: black;
+}
   
-  .modal-section select,
-  .modal-section input[type="checkbox"] {
+.modal-section select,
+.modal-section input[type="checkbox"] {
     padding: 0.5rem;
-    font-size: 1rem;
+    font-size: var(--font-small);
     width: 100%;
     box-sizing: border-box;
-  }
+}
   
-  .visibility-options {
+.visibility-options {
     display: flex;
-    gap: 0.5rem;
-  }
+    gap: 1rem;
+}
   
-  .visibility-options button {
+.visibility-options button {
     flex: 1;
-    padding: 0.5rem 1.2rem;
-    border: 1px solid white;
+    padding: 0.6rem 1.2rem;
+    border: none;
     background-color: var(--color-sub-light);
-    border-radius: 6px;
+    border-radius: 5px;
     cursor: pointer;
-    font-size: 1rem;
-    color: #333;
+    font-size: var(--font-small);
+    color: black;
     transition: all 0.2s ease;
-  }
+}
   
-  .visibility-options button.active {
+.visibility-options button.active {
     background-color: var(--color-main);
-    color: #fff;
+    color: var(--color-default-light);
     border-color: var(--color-main);
-  }
+}
   
-  .modal-actions {
+.modal-actions {
     display: flex;
     justify-content: flex-end;
-    gap: 0.75rem;
+    gap: 1rem;
     margin-top: 1.5rem;
-  }
+}
   
   .modal-actions button {
     padding: 0.5rem 1.2rem;
     border: none;
-    border-radius: 6px;
-    font-size: 1rem;
+    border-radius: 5px;
+    font-size: var(--font-small);
     cursor: pointer;
     transition: background-color 0.3s ease;
   }
@@ -101,7 +107,6 @@
     background-color: var(--color-main-light);
   }
   
-  /* 반응형 */
   @media (max-width: 480px) {
     .modal-box {
       padding: 1.2rem;

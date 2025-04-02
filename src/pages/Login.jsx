@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "../api/axios";
-import { getLogoImage } from '../util/get-logo';
+import { getLogoImage } from '../util/get-images';
 import "./Login.css";
 
 const Login = () => {

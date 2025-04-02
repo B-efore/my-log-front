@@ -14,13 +14,17 @@ const TagInput = ({ tags = [], onAdd, onRemove }) => {
     }
   };
 
+  const handleTagRemove = (index) => {
+    onRemove(index);
+  }
+
   return (
     <div className="tags">
       {tags.map((tag, index) => (
         <div
-          key={index}
+          key={`${tag}-${index}`}
           className="tag"
-          onClick={() => onRemove(index)}
+          onClick={() => handleTagRemove(index)}
           title="클릭해서 삭제"
         >
           {tag}

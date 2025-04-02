@@ -1,16 +1,15 @@
 import React, { useState } from "react";
 import { createPost } from "../api/postService";
-import Header from "../components/Header";
+import Header from "../components/Header/Header";
 import PostEditor from "../components/PostEditor";
 import MarkdownPreview from "../components/MarkdownPreview";
-import PublishModal from "../components/PublishModal";
+import PublishModal from "../features/PublishModal";
+import usePost from "../hooks/usePost";
 import "./PostWrite.css";
 
 const PostWrite = () => {
 
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-  const [tags, setTags] = useState([]);
+  const { post, handleChange, addTag, removeTag, validatePost } = usePost();
   const [showModal, setShowModal] = useState(false);
 
   const handleSave = () => {
@@ -19,14 +18,20 @@ const PostWrite = () => {
 
   const handlePublish = async (settings) => {
 
+    const { valid, message } = validatePost();
+    if(!valid) {
+      alert(message);
+      return;
+    }
+
     const requestBody = {
-      title,
-      content,
+      title: post.title,
+      content: post.content,
       contentPreview: content.slice(0, 100),
       visibility: settings.visibility,
       categoryId: settings.categoryId,
-      tagRequests: tags.map((tag) => ({ name: tag })),
-      // isPinned: settings.isPinned || false,
+      tagRequests: post.tags.map((tag) => ({ name: tag })),
+      pinned: settings.pinned || false,
     };
 
     try {
@@ -40,15 +45,6 @@ const PostWrite = () => {
     }
   };
 
-  const addTag = (tag) => {
-    if (!tags.includes(tag)) {
-      setTags([...tags, tag]);
-    }
-  };
-
-  const removeTag = (indexToRemove) => {
-    setTags(tags.filter((_, index) => index !== indexToRemove));
-  };
 
   return (
     <div className="post-editor">
@@ -57,32 +53,34 @@ const PostWrite = () => {
             rightChild={
             <>
                 <button className="save-button" onClick={handleSave}>저장</button>
-                <button className="publish-button" onClick={() => setShowModal(true)}>발행</button>
+                <div className="publish-button-wrapper" >
+                  <button className="publish-button" onClick={() => setShowModal(true)}>발행</button>
+                
+                  {showModal && (
+                    <PublishModal
+                      onClose={() => setShowModal(false)}
+                      onSubmit={handlePublish}
+                    />
+                  )}
+                </div>
             </>
             }
         />
 
         <div className="post-editor__body">
             <PostEditor
-                title={title}
-                content={content}
-                tags={tags}
-                onTitleChange={(e) => setTitle(e.target.value)}
-                onContentChange={(e) => setContent(e.target.value)}
+                title={post.title}
+                content={post.content}
+                tags={post.tags}
+                onChange={handleChange}
                 addTag={addTag}
                 removeTag={removeTag}
             />
 
-            <MarkdownPreview title={title} content={content} />
+            <MarkdownPreview title={post.title} content={post.content} />
         </div>
 
-        {showModal && (
-        <PublishModal
-          onClose={() => setShowModal(false)}
-          onSubmit={handlePublish}
-        />
-      )}
-
+        
       </div>
   );
 };

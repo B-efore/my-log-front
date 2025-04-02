@@ -5,7 +5,7 @@ import Home from "./pages/Home";
 import PostWrite from "./pages/PostWrite";
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
-import Header from "./components/Header";
+import Header from "./components/Header/Header";
 import error from "./assets/불왹.png"
 
 function App() {

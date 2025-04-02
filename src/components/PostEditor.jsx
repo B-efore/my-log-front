@@ -1,12 +1,11 @@
 import React from "react";
-import TagInput from "./TagInput";
+import TagInput from "./TagInput/TagInput";
 
 const PostEditor = ({
   title,
   content,
   tags,
-  onTitleChange,
-  onContentChange,
+  onChange,
   addTag,
   removeTag
 }) => {
@@ -17,8 +16,9 @@ const PostEditor = ({
           className="title"
           type="text"
           placeholder="제목"
+          name="title"
           value={title}
-          onChange={onTitleChange}
+          onChange={onChange}
         />
       </div>
 
@@ -34,8 +34,9 @@ const PostEditor = ({
         <textarea
           className="content"
           placeholder="본문을 작성해주세요."
+          name="content"
           value={content}
-          onChange={onContentChange}
+          onChange={onChange}
         />
       </div>
     </div>
