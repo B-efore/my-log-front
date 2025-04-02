@@ -1,0 +1,15 @@
+:root {
+    --color-main: #215783;
+    --color-main-light: #102a3f;
+    --color-sub-light: #ebeef1;
+    --color-default-light: #fff;
+
+    --color-box-main: #c6cdd3;
+    
+    --transition: 0.3s ease;
+    --border-radius: 10px;
+
+    --font-title: 2.5rem;
+    --font-tag: 1rem;
+    --font-base: 1.1rem;
+}

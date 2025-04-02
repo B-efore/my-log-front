@@ -1,0 +1,120 @@
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .modal-box {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 12px;
+    min-width: 400px;
+    max-width: 90%;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    box-sizing: border-box;
+  }
+  
+  .modal-box h2 {
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .modal-section {
+    margin-bottom: 1.2rem;
+  }
+  
+  .modal-section label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: #444;
+  }
+  
+  .modal-section select,
+  .modal-section input[type="checkbox"] {
+    padding: 0.5rem;
+    font-size: 1rem;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .visibility-options {
+    display: flex;
+    gap: 0.5rem;
+  }
+  
+  .visibility-options button {
+    flex: 1;
+    padding: 0.5rem 1.2rem;
+    border: 1px solid white;
+    background-color: var(--color-sub-light);
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    color: #333;
+    transition: all 0.2s ease;
+  }
+  
+  .visibility-options button.active {
+    background-color: var(--color-main);
+    color: #fff;
+    border-color: var(--color-main);
+  }
+  
+  .modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+  
+  .modal-actions button {
+    padding: 0.5rem 1.2rem;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .modal-actions button:first-of-type {
+    background-color: white;
+    color: #333;
+  }
+
+  .modal-actions button:first-of-type:hover {
+    background-color: var(--color-sub-light);
+  }
+  
+  .modal-actions button:last-of-type {
+    background-color: var(--color-main);
+    color: white;
+  }
+  
+  .modal-actions button:last-of-type:hover {
+    background-color: var(--color-main-light);
+  }
+  
+  /* 반응형 */
+  @media (max-width: 480px) {
+    .modal-box {
+      padding: 1.2rem;
+      min-width: 300px;
+      max-width: 95%;
+    }
+  
+    .modal-box h2 {
+      font-size: 1.2rem;
+    }
+  
+    .modal-actions button {
+      font-size: 0.9rem;
+      padding: 0.4rem 1rem;
+    }
+  }

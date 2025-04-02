@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import TagInput from "./TagInput";
 
 const PostEditor = ({
@@ -10,7 +10,6 @@ const PostEditor = ({
   addTag,
   removeTag
 }) => {
-
   return (
     <div className="post-editor__left">
       <div className="editor">

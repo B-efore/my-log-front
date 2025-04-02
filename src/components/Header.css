@@ -24,6 +24,10 @@
     cursor: pointer;
 }
 
+.header-right {
+    gap: 1rem;
+}
+
 
 .logo {
     width: 2.5rem;
@@ -48,11 +52,33 @@
     display: flex;
     font-size: 1.8rem;
     color: #2c2c2c;
-    padding: 6px;
 }
 
 .icon-button:hover {
     border-radius: 50%;
     transition: background-color 0.3s ease;
     background-color: rgb(231, 231, 231);
+}
+
+.profile-image {
+    width: 2.5rem;
+    border: 1px solid var(--color-box-main);
+    border-radius: 50%;
+    background-color: var(--color-default-light);
+}
+
+.header-login-button {
+    padding: 0.4rem 1em;
+    background-color: var(--color-main);
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+}
+
+.header-login-button:hover {
+    background-color: var(--color-main-light);
+    transition: background-color var(--transition);
 }
