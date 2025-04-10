@@ -1,0 +1,18 @@
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+    list-style: none;
+    gap: 0.5rem;
+}
+
+.tag-input {
+    font-size: 1rem;
+    min-width: 220px;
+    max-width: 100%;
+    border: none;
+    outline: none;
+    flex: 1;
+    box-sizing: border-box;
+}

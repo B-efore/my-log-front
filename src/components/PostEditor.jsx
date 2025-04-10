@@ -1,5 +1,5 @@
 import React from "react";
-import TagInput from "./TagInput/TagInput";
+import TagInput from "./Tag/TagInput";
 
 const PostEditor = ({
   title,

@@ -5,14 +5,24 @@ const usePost = () => {
     title: "",
     content: "",
     tags: [],
+    categoryId: null,
+    pinned: false,
+    visibility: "공개",
   });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setPost((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+  const handleChange = (key, value) => {
+    if (typeof key == "string") {
+      setPost((prev) => ({
+        ...prev,
+        [key]: value,
+      }));
+    } else {
+      const { name, value } = key.target;
+      setPost((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
   };
 
   const addTag = (tag) => {
@@ -48,6 +58,7 @@ const usePost = () => {
 
   return {
     post,
+    setPost,
     handleChange,
     addTag,
     removeTag,

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import "./TagInput.css";
+import "./TagInput.css"
+import Tag from "./Tag";
 
 const TagInput = ({ tags = [], onAdd, onRemove }) => {
   const [input, setInput] = useState("");
@@ -21,15 +22,13 @@ const TagInput = ({ tags = [], onAdd, onRemove }) => {
   return (
     <div className="tags">
       {tags.map((tag, index) => (
-        <div
+        <Tag
           key={`${tag}-${index}`}
-          className="tag"
+          label={tag}
           onClick={() => handleTagRemove(index)}
-          title="클릭해서 삭제"
-        >
-          {tag}
-        </div>
+        />
       ))}
+      
       <input
         className="tag-input"
         type="text"
