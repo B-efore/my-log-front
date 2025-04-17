@@ -1,8 +1,10 @@
-import './Header.css';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FiSearch, FiEdit3 } from 'react-icons/fi';
 import { getLogoImage } from '../../util/get-images';
 import useAuth from '../../hooks/useAuth';
+import HeaderDropdown from './HeaderDropDown';
+import './Header.css';
 
 const Header = ({ name, leftChild, rightChild }) => {
 
@@ -12,34 +14,48 @@ const Header = ({ name, leftChild, rightChild }) => {
     const goWrite = () => navigate("/write");
     const { isLoggedIn, userImage } = useAuth();
 
-    return (
-    <header className="header">
-        <div className="header-left" onClick={goHome}>
-            <img className="logo" src={getLogoImage()} />
-            <span className="blog-name">{name}</span>
-        </div>
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const toggleDropdown = () => setIsDropdownOpen(prev => !prev);
 
-        <div className="header-right">
-        {rightChild ? rightChild : (
-            <>
-                <FiSearch className="icon-button" title="검색" />
-                {isLoggedIn ? (
+    return (
+        <header className="header">
+            <div className="header-left" onClick={goHome}>
+                <img className="logo" src={getLogoImage()} />
+                <span className="blog-name">{name}</span>
+            </div>
+
+            <div className="header-right">
+                {rightChild ? rightChild : (
                     <>
-                    <FiEdit3 className="icon-button" title="편집" onClick={goWrite} />
-                    <img
-                        src={userImage}
-                        alt="profile"
-                        className="profile-image"
-                        onClick={goHome}
-                    />
+                        <FiSearch className="icon-button" title="검색" />
+                        {isLoggedIn ? (
+                            <>
+                                <FiEdit3 className="icon-button" title="편집" onClick={goWrite} />
+                                <div className="profile-wrapper">
+                                    <img
+                                        src={userImage}
+                                        alt="profile"
+                                        className="profile-image"
+                                        onClick={toggleDropdown}
+                                    />
+                                    {isDropdownOpen && (
+                                        <HeaderDropdown
+                                            onClose={() => setIsDropdownOpen(false)}
+                                            onNavigate={(path) => {
+                                                navigate(path);
+                                                setIsDropdownOpen(false);
+                                            }}
+                                        />
+                                    )}
+                                </div>
+                            </>
+                        ) : (
+                            <button className="header-login-button" onClick={goLogin}>로그인</button>
+                        )}
                     </>
-                ) : (
-                    <button className="header-login-button" onClick={goLogin}>로그인</button> 
                 )}
-            </>
-        )}
-        </div>
-    </header>
+            </div>
+        </header>
     );
 }
 

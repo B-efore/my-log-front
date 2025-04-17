@@ -35,7 +35,7 @@
 .logo:hover {
     opacity: 0.8;
 }
-  
+
 .blog-name {
     font-family: "TitleFont";
     font-size: var(--font-base);
@@ -52,6 +52,10 @@
 
 .icon-button:hover {
     background-color: var(--color-sub-light);
+}
+
+.profile-wrapper {
+    position: relative;
 }
 
 .profile-image {
