@@ -2,12 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useParams, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import { deletePost, getPost } from "../api/postService";
-import Header from "./Header/Header";
+import Header from "../components/header/Header";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import Tag from "./Tag/Tag";
+import Tag from "../components/Tag/Tag";
 import { getProfileImage } from "../util/get-images";
 import { formatDate } from "../util/formatDate";
+import ConfirmModal from "../features/ConfirmModal";
+import ToastMessage from "../components/common/ToastMessage";
 import "./PostDetail.css"
 
 const PostDetail = () => {
@@ -23,12 +25,20 @@ const PostDetail = () => {
     );
 
   const handleDelete = async () => {
+    setShowConfirm(true);
+  };
+
+  const handleConfirmDelete = async () => {
+
+    setShowConfirm(false);
+    await new Promise(resolve => setTimeout(resolve, 0));
+
     try {
       await deletePost(postId);
-      alert("게시글이 삭제되었습니다.");
+      ToastMessage("게시글이 삭제되었습니다.");
       navigate("/");
     } catch (err) {
-      alert("삭제 과정에서 오류가 발생했습니다.");
+      ToastMessage("삭제 과정에서 오류가 발생했습니다.", { type: "error" });
     }
   };
 
@@ -38,6 +48,8 @@ const PostDetail = () => {
 
   const [post, setPost] = useState(location.state?.post || null);
   const [loading, setLoading] = useState(!post);
+
+  const [showConfirm, setShowConfirm] = useState(false);
 
   const isAuthor = post?.user?.id === loggedInUserId;
 
@@ -49,7 +61,8 @@ const PostDetail = () => {
           setLoading(false);
         })
         .catch((err) => {
-          alert("게시글을 불러오는데 실패했습니다.");
+          ToastMessage("게시글을 불러오는데 실패했습니다.", { type : "error"});
+          navigate("/");
         });
     }
   }, [postId]);
@@ -71,6 +84,13 @@ const PostDetail = () => {
             <div className="post-actions">
               <button className="edit-btn" onClick={goEdit}>수정</button>
               <button className="delete-btn" onClick={handleDelete}>삭제</button>
+              {showConfirm && (
+                <ConfirmModal
+                  message="정말 이 게시글을 삭제하시겠습니까?"
+                  onConfirm={handleConfirmDelete}
+                  onCancel={() => setShowConfirm(false)}
+                />
+              )}
             </div>
           )}
         </div>
@@ -88,10 +108,10 @@ const PostDetail = () => {
         <ReactMarkdown remarkPlugins={remarkGfm}>{post.content}</ReactMarkdown>
 
         <div className="post-author">
-          <img 
-          className="author-img" 
-          src={post.user.profileImageUrl || getProfileImage()}
-          alt={`${post.user.username}의 프로필 이미지`}
+          <img
+            className="author-img"
+            src={post.user.profileImageUrl || getProfileImage()}
+            alt={`${post.user.username}의 프로필 이미지`}
           />
           <div>
             <div className="author-name">{post.user.username}</div>

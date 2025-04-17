@@ -2,12 +2,13 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { createPost } from "../api/postService";
 import { getCategories } from "../api/categoryService";
-import Header from "../components/Header/Header";
+import Header from "../components/header/Header";
 import PostEditor from "../components/PostEditor";
 import MarkdownPreview from "../components/MarkdownPreview";
-import PostPublishModal from "../features/PostPublishModal";
+import PostPublishModal from "../components/post/PostPublishModal";
 import usePost from "../hooks/usePost";
 import "./PostWrite.css";
+import ToastMessage from "../components/common/ToastMessage";
 
 const PostWrite = () => {
 
@@ -30,7 +31,7 @@ const PostWrite = () => {
 
     const { valid, message } = validatePost();
     if(!valid) {
-      alert(message);
+      ToastMessage(message, { type : "error"});
       return;
     }
 
@@ -46,7 +47,7 @@ const PostWrite = () => {
 
     try {
       const response = await createPost(requestBody);
-      alert("게시글이 성공적으로 등록되었습니다.");
+      ToastMessage("게시글이 성공적으로 등록되었습니다.");
       setShowModal(false);
 
       const postId = response.data.postId;
@@ -58,7 +59,7 @@ const PostWrite = () => {
     } catch (error) {
       console.error(requestBody);
       console.error(error.response?.data);
-      alert("게시글 등록 중 오류가 발생했습니다.");
+      ToastMessage("게시글 등록 중 오류가 발생했습니다.", { type : "error"});
     }
   };
 

@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getPost, updatePost } from "../api/postService";
 import { getCategories } from "../api/categoryService";
-import Header from "../components/Header/Header";
+import Header from "../components/header/Header";
 import PostEditor from "../components/PostEditor";
 import MarkdownPreview from "../components/MarkdownPreview";
 import usePost from "../hooks/usePost";
-import PostPublishModal from "../features/PostPublishModal";
+import PostPublishModal from "../components/post/PostPublishModal";
+import ToastMessage from "../components/common/ToastMessage";
 import "./PostWrite.css";
 
 const PostEdit = () => {
@@ -38,7 +39,7 @@ const PostEdit = () => {
             setLoading(false);
         })
         .catch((err) => {
-            alert("게시글을 불러오는데 실패했습니다.");
+          ToastMessage("게시글을 불러오는데 실패했습니다.", { type : "error"});
         });
       }, [postId, setPost]);
 
@@ -61,7 +62,7 @@ const PostEdit = () => {
 
     try {
       const response = await updatePost(postId, requestBody);
-      alert("게시글이 수정되었습니다.");
+      ToastMessage("게시글이 수정되었습니다.");
       setShowModal(false);
 
       console.info(requestBody);
@@ -75,7 +76,7 @@ const PostEdit = () => {
     } catch (err) {
       console.error(requestBody);
       console.error(err.response?.data);
-      alert("게시글 수정에 실패했습니다.");
+      ToastMessage("게시글 수정에 실패했습니다.", { type : "error" });
     }
   };
 

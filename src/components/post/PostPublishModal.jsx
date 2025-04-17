@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { useOutsideClick } from "../hooks/useOutsideClick";
+import { useOutsideClick } from "../../hooks/useOutsideClick";
 import "./PostPublishModal.css";
 
 const PostPublishModal = ({ onClose, onSubmit, handleChange, post, categories }) => {
