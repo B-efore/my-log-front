@@ -2,10 +2,15 @@ import { useEffect, useState } from "react";
 import { getProfileImage } from "../util/get-images";
 
 const useAuth = () => {
+    
   const [userImage, setUserImage] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
+    checkAuth();
+  }, []);
+
+  const checkAuth = () => {
     const token = localStorage.getItem("token");
 
     if (token) {
@@ -16,9 +21,16 @@ const useAuth = () => {
       setUserImage(null);
       setIsLoggedIn(false);
     }
-  }, []);
+  };
 
-  return { isLoggedIn, userImage };
+  const logout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("profileImage");
+    setUserImage(null);
+    setIsLoggedIn(false);
+  };
+
+  return { isLoggedIn, userImage, logout };
 };
 
 export default useAuth;

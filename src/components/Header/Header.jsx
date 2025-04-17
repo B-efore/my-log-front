@@ -12,10 +12,16 @@ const Header = ({ name, leftChild, rightChild }) => {
     const goHome = () => navigate("/");
     const goLogin = () => navigate("/login");
     const goWrite = () => navigate("/write");
-    const { isLoggedIn, userImage } = useAuth();
+    const { isLoggedIn, userImage, logout } = useAuth();
 
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const toggleDropdown = () => setIsDropdownOpen(prev => !prev);
+
+    const handleLogout = () => {
+        logout();
+        navigate("/");
+        setIsDropdownOpen(false);
+      };
 
     return (
         <header className="header">
@@ -40,6 +46,7 @@ const Header = ({ name, leftChild, rightChild }) => {
                                     />
                                     {isDropdownOpen && (
                                         <HeaderDropdown
+                                            onLogout={handleLogout}
                                             onClose={() => setIsDropdownOpen(false)}
                                             onNavigate={(path) => {
                                                 navigate(path);
