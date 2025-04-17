@@ -11,3 +11,7 @@ export const updatePost = async (postId, postData) => {
 export const getPost = async (postId) => {
     return axios.get(`/posts/${postId}`);
 }
+
+export const deletePost = async (postId) => {
+    return axios.delete(`/posts/${postId}`);
+}
