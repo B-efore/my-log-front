@@ -5,7 +5,7 @@ import { getCategories } from "../api/categoryService";
 import Header from "../components/Header/Header";
 import PostEditor from "../components/PostEditor";
 import MarkdownPreview from "../components/MarkdownPreview";
-import PublishModal from "../features/PublishModal";
+import PostPublishModal from "../features/PostPublishModal";
 import usePost from "../hooks/usePost";
 import "./PostWrite.css";
 
@@ -74,7 +74,7 @@ const PostWrite = () => {
                   <button className="publish-button" onClick={() => setShowModal(true)}>발행</button>
                 
                   {showModal && (
-                    <PublishModal
+                    <PostPublishModal
                       onClose={() => setShowModal(false)}
                       onSubmit={handlePublish}
                       handleChange={handleChange}

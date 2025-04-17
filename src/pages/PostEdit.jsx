@@ -6,7 +6,7 @@ import Header from "../components/Header/Header";
 import PostEditor from "../components/PostEditor";
 import MarkdownPreview from "../components/MarkdownPreview";
 import usePost from "../hooks/usePost";
-import PublishModal from "../features/PublishModal";
+import PostPublishModal from "../features/PostPublishModal";
 import "./PostWrite.css";
 
 const PostEdit = () => {
@@ -92,7 +92,7 @@ const PostEdit = () => {
                   <button className="publish-button" onClick={() => setShowModal(true)}>발행</button>
                 
                   {showModal && (
-                    <PublishModal
+                    <PostPublishModal
                     onClose={() => setShowModal(false)}
                     onSubmit={handleSave}
                     handleChange={handleChange}
