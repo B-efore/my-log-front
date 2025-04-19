@@ -3,13 +3,16 @@ import { useLocation, useParams, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import { deletePost, getPost } from "../api/postService";
 import Header from "../components/header/Header";
+import CommentInput from "../components/CommentInput";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import Tag from "../components/Tag/Tag";
 import { getProfileImage } from "../util/get-images";
 import { formatDate } from "../util/formatDate";
-import ConfirmModal from "../features/ConfirmModal";
+import ConfirmModal from "../components/common/ConfirmModal";
 import ToastMessage from "../components/common/ToastMessage";
+import { FaUserCircle } from "react-icons/fa";
+
 import "./PostDetail.css"
 
 const PostDetail = () => {
@@ -51,7 +54,7 @@ const PostDetail = () => {
 
   const [showConfirm, setShowConfirm] = useState(false);
 
-  const isAuthor = post?.user?.id === loggedInUserId;
+  const isAuthor = post?.user?.userId === loggedInUserId;
 
   useEffect(() => {
     if (!post) {
@@ -61,7 +64,7 @@ const PostDetail = () => {
           setLoading(false);
         })
         .catch((err) => {
-          ToastMessage("게시글을 불러오는데 실패했습니다.", { type : "error"});
+          ToastMessage("게시글을 불러오는데 실패했습니다.", { type: "error" });
           navigate("/");
         });
     }
@@ -119,6 +122,41 @@ const PostDetail = () => {
           </div>
         </div>
       </div>
+
+      <div className="comment-input-section">
+      <h3 className="comment-title">댓글 {post.comments.length}</h3>
+        <CommentInput className="comment-input-wrapped" postId={postId} onCommentSubmit={(newComment) => {
+          setPost((prevPost) => ({
+            ...prevPost,
+            comments: [...prevPost.comments, newComment],
+          }));
+        }} />
+
+        {post.comments && post.comments.length > 0 && (
+          <div className="comment-section">
+
+            {post.comments.map((comment) => (
+              <div key={comment.commentId} className="comment">
+                <FaUserCircle className="comment-avatar" />
+                <div className="comment-body">
+                  <div className="comment-meta">
+                    <span className="comment-author">{comment.user.username}</span>
+                    <span className="comment-date">{comment.createdAt}</span>
+                    {comment.user.userId === loggedInUserId && (
+                      <div className="comment-actions">
+                        <button className="edit-btn">수정</button>
+                        <button className="delete-btn">삭제</button>
+                      </div>
+                    )}
+                  </div>
+                  <div className="comment-content">{comment.content}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
     </div>
   );
 };

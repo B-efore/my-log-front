@@ -11,37 +11,37 @@ import ToastMessage from "../components/common/ToastMessage";
 import "./PostWrite.css";
 
 const PostEdit = () => {
-    
-    const { postId } = useParams();
-    const navigate = useNavigate();
 
-    const { post, setPost, handleChange, addTag, removeTag, validatePost } = usePost();
-    const [userCategories, setUserCategories] = useState([]);
-    const [showModal, setShowModal] = useState(false);
-    const [loading, setLoading] = useState(!post);
+  const { postId } = useParams();
+  const navigate = useNavigate();
 
-    useEffect(() => {
+  const { post, setPost, handleChange, addTag, removeTag, validatePost } = usePost();
+  const [userCategories, setUserCategories] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [loading, setLoading] = useState(!post);
 
-        getCategories().then(setUserCategories).catch(() => {
-            setUserCategories([{ categoryId: 0, name: "전체" }]);
-          });
+  useEffect(() => {
 
-        getPost(postId)
-        .then((res) => {
-            setPost({
-            title: res.data.title,
-            content: res.data.content,
-            tags: res.data.tags.map(tag => tag.name),
-            categoryId: res.data.category.categoryId,
-            visibility: res.data.visibility,
-            pinned: res.data.pinned,
-            });
-            setLoading(false);
-        })
-        .catch((err) => {
-          ToastMessage("게시글을 불러오는데 실패했습니다.", { type : "error"});
+    getCategories().then(setUserCategories).catch(() => {
+      setUserCategories([{ categoryId: 0, name: "전체" }]);
+    });
+
+    getPost(postId)
+      .then((res) => {
+        setPost({
+          title: res.data.title,
+          content: res.data.content,
+          tags: res.data.tags.map(tag => tag.name),
+          categoryId: res.data.category.categoryId,
+          visibility: res.data.visibility,
+          pinned: res.data.pinned,
         });
-      }, [postId, setPost]);
+        setLoading(false);
+      })
+      .catch((err) => {
+        ToastMessage("게시글을 불러오는데 실패했습니다.", { type: "error" });
+      });
+  }, [postId, setPost]);
 
   const handleSave = async () => {
     const { valid, message } = validatePost();
@@ -51,13 +51,13 @@ const PostEdit = () => {
     }
 
     const requestBody = {
-        title: post.title,
-        content: post.content,
-        contentPreview: post.content.slice(0, 100),
-        visibility: post.visibility,
-        categoryId: post.categoryId,
-        tagRequests: post.tags.map((tag) => ({ name: tag })),
-        pinned: post.pinned || false,
+      title: post.title,
+      content: post.content,
+      contentPreview: post.content.slice(0, 100),
+      visibility: post.visibility,
+      categoryId: post.categoryId,
+      tagRequests: post.tags.map((tag) => ({ name: tag })),
+      pinned: post.pinned || false,
     };
 
     try {
@@ -76,7 +76,7 @@ const PostEdit = () => {
     } catch (err) {
       console.error(requestBody);
       console.error(err.response?.data);
-      ToastMessage("게시글 수정에 실패했습니다.", { type : "error" });
+      ToastMessage("게시글 수정에 실패했습니다.", { type: "error" });
     }
   };
 
@@ -85,42 +85,42 @@ const PostEdit = () => {
   return (
     <div className="post-editor">
 
-        <Header
-            rightChild={
-            <>
-                <button className="save-button" onClick={handleSave}>저장</button>
-                <div className="publish-button-wrapper" >
-                  <button className="publish-button" onClick={() => setShowModal(true)}>발행</button>
-                
-                  {showModal && (
-                    <PostPublishModal
-                    onClose={() => setShowModal(false)}
-                    onSubmit={handleSave}
-                    handleChange={handleChange}
-                    post={post}
-                    categories={userCategories}
-                    />
-                  )}
-                </div>
-            </>
-            }
+      <Header
+        rightChild={
+          <>
+            <button className="save-button" onClick={handleSave}>저장</button>
+            <div className="publish-button-wrapper" >
+              <button className="publish-button" onClick={() => setShowModal(true)}>발행</button>
+
+              {showModal && (
+                <PostPublishModal
+                  onClose={() => setShowModal(false)}
+                  onSubmit={handleSave}
+                  handleChange={handleChange}
+                  post={post}
+                  categories={userCategories}
+                />
+              )}
+            </div>
+          </>
+        }
+      />
+
+      <div className="post-editor__body">
+        <PostEditor
+          title={post.title}
+          content={post.content}
+          tags={post.tags}
+          onChange={handleChange}
+          addTag={addTag}
+          removeTag={removeTag}
         />
 
-        <div className="post-editor__body">
-            <PostEditor
-                title={post.title}
-                content={post.content}
-                tags={post.tags}
-                onChange={handleChange}
-                addTag={addTag}
-                removeTag={removeTag}
-            />
-
-            <MarkdownPreview title={post.title} content={post.content} />
-        </div>
-
-        
+        <MarkdownPreview title={post.title} content={post.content} />
       </div>
+
+
+    </div>
   );
 };
 
