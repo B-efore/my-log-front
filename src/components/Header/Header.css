@@ -14,7 +14,7 @@
     justify-content: space-between;
     padding: 0 1.5rem;
     background-color: var(--color-default-light);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
 }
 
 .header-left,
