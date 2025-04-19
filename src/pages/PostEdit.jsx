@@ -3,8 +3,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import { getPost, updatePost } from "../api/postService";
 import { getCategories } from "../api/categoryService";
 import Header from "../components/header/Header";
-import PostEditor from "../components/PostEditor";
-import MarkdownPreview from "../components/MarkdownPreview";
+import PostEditor from "../components/post/PostEditor";
+import MarkdownPreview from "../components/post/MarkdownPreview"
 import usePost from "../hooks/usePost";
 import PostPublishModal from "../components/post/PostPublishModal";
 import ToastMessage from "../components/common/ToastMessage";

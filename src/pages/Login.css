@@ -10,7 +10,8 @@
     width: 100%;
     max-width: 20rem;
     padding: 2rem;
-    border: 1px solid var(--color-box-main);
+    background-color: var(--color-box);
+    border: 1px solid var(--color-box-border);
     border-radius: var(--border-radius);
     text-align: center;
 }

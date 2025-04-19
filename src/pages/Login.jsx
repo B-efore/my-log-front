@@ -1,12 +1,16 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 import axios from "../api/axios";
 import { getLogoImage } from '../util/get-images';
+
 import "./Login.css";
 
 const Login = () => {
 
   const navigate = useNavigate();
+  const { login } = useAuth();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -20,7 +24,7 @@ const Login = () => {
       console.log(res);
 
       if (res.status == "200") {
-        localStorage.setItem("token", res.data.accessToken);
+        login(res.data.accessToken);
         navigate("/");
       } else {
         alert(res.data.message);
@@ -68,7 +72,7 @@ const Login = () => {
       <div className="login-links">
         <a href="#">아이디 찾기</a>
         <a href="#">비밀번호 찾기</a>
-        <a href="#">회원가입</a>
+        <Link to="/register">회원가입</Link>
       </div>
 
         <div className="login-divider">

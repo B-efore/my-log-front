@@ -5,6 +5,9 @@
     --color-default-light: #fff;
 
     --color-box-main: #c6cdd3;
+
+    --color-box: #f1f3f5;
+    --color-box-border: #e4e6e7;
     
     --transition: 0.3s ease;
     --border-radius: 10px;

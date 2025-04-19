@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
+import { useAuth } from "../context/AuthContext";
 import { useLocation, useParams, useNavigate } from "react-router-dom";
-import useAuth from "../hooks/useAuth";
 import { deletePost, getPost } from "../api/postService";
 import { deleteComment } from "../api/commentService";
 import Header from "../components/header/Header";
 import CommentInput from "../components/comment/CommentInput";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import Tag from "../components/Tag/Tag";
+import Tag from "../components/tag/Tag";
 import { getProfileImage } from "../util/get-images";
 import { formatDate } from "../util/formatDate";
 import ConfirmModal from "../components/common/ConfirmModal";
@@ -62,7 +62,6 @@ const PostDetail = () => {
   const handleDeleteComment = (commentId) => {
     setShowCommentConfirm({ open: true, targetId: commentId });
   };
-
 
   const handleCreateComment = (newComment) => {
     setComments((prev) => [...prev, newComment]);
