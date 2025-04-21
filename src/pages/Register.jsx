@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import ToastMessage from "../components/common/ToastMessage";
 import { getLogoImage } from "../util/get-images";
 import { signup } from "../api/authService";
@@ -7,6 +7,7 @@ import { showErrorToast } from "../util/toast";
 import "./Register.css";
 
 const Register = () => {
+
   const navigate = useNavigate();
   const [form, setForm] = useState({
     email: "",
@@ -14,25 +15,28 @@ const Register = () => {
     username: "",
   });
 
+  const goHome = () => navigate("/");
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-          await signup(form);
-          ToastMessage("회원가입이 완료되었습니다.");
-          navigate("/login");
-        } catch (err) {
-          showErrorToast("회원가입에 실패했습니다.");
-        }
+    e.preventDefault();
+    try {
+      await signup(form);
+      ToastMessage("회원가입이 완료되었습니다.");
+      navigate("/login");
+    } catch (err) {
+      console.error("요청 실패");
+      showErrorToast("회원가입에 실패했습니다.");
+    }
   };
 
   return (
     <div className="register-wrapper">
-      <img src={getLogoImage()} alt="logo" className="register-logo" />
+      <img onClick={goHome} src={getLogoImage()} alt="logo" className="register-logo" />
       <form className="register-box" onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="email">이메일</label>
@@ -84,7 +88,7 @@ const Register = () => {
       </form>
 
       <div className="register-footer">
-        계정이 이미 존재합니다. <a href="/login">로그인</a>
+        계정이 이미 존재합니다. <Link to="/login" replace>로그인</Link>
       </div>
     </div>
   );

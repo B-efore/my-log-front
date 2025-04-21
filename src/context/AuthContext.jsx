@@ -8,50 +8,56 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [userId, setUserId] = useState(null);
+  const [userImage, setUserImage] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
 
     const token = localStorage.getItem("token");
 
-    if (token && !isTokenExpired(token)) {
+    if (token) {
       try {
-        const decoded = jwtDecode(token);
-
-        setUser(decoded);
-        setUserId(payload?.id || null);
-        setIsLoggedIn(true);
+        if (!isTokenExpired(token)) {
+          const decoded = jwtDecode(token);
+          setUser(decoded);
+          setUserId(decoded?.id || null);
+          setUserImage(getProfileImage());
+          setIsLoggedIn(true);
+        } else {
+          logout();
+        }
       } catch (err) {
         console.error("Invalid token");
         logout();
       }
-    } else {
-      logout();
     }
   }, []);
 
-  const login = (token) => {
+  const setLogin = (token) => {
     localStorage.setItem("token", token);
 
     try {
       const decoded = jwtDecode(token);
       setUser(decoded);
-      setUserId(payload?.id || null);
+      setUserId(decoded?.id || null);
+      setUserImage(getProfileImage());
       setIsLoggedIn(true);
     } catch {
       logout();
     }
   };
 
-  const logout = () => {
+  const setLogout = () => {
     localStorage.removeItem("token");
     setUser(null);
     setUserId(null);
+    setUserImage(null);
     setIsLoggedIn(false);
+    console.log("로그아웃 완료");
   };
 
   return (
-    <AuthContext.Provider value={{ user, userId, isLoggedIn, login, logout }}>
+    <AuthContext.Provider value={{ user, userId, userImage, isLoggedIn, setLogin, setLogout }}>
       {children}
     </AuthContext.Provider>
   );

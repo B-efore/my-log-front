@@ -12,13 +12,13 @@ const Header = ({ name, leftChild, rightChild }) => {
     const goHome = () => navigate("/");
     const goLogin = () => navigate("/login");
     const goWrite = () => navigate("/write");
-    const { isLoggedIn, userImage, logout } = useAuth();
+    const { isLoggedIn, userImage, setLogout } = useAuth();
 
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const toggleDropdown = () => setIsDropdownOpen(prev => !prev);
 
     const handleLogout = () => {
-        logout();
+        setLogout();
         navigate("/");
         setIsDropdownOpen(false);
       };

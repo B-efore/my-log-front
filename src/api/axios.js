@@ -1,7 +1,5 @@
 import axios from "axios";
-import { isTokenExpired } from "../util/jwt";
-import { logout } from "../util/logout";
-import ToastMessage from "../components/common/ToastMessage";
+import { showErrorToast } from "../util/toast";
 
 const instance = axios.create({
   baseURL: "http://localhost:8080",
@@ -25,12 +23,17 @@ instance.interceptors.request.use(
   }
 );
 
+let logoutHandler = () => {};
+
+export const setLogoutHandler = (handler) => {
+  logoutHandler = handler;
+}
+
 instance.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      ToastMessage("로그인 시간이 만료되었습니다.");
-      logout();
+      logoutHandler();
     }
 
     return Promise.reject(error);
