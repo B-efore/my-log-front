@@ -1,6 +1,6 @@
 import { useEffect } from "react";
-import { useAuth } from "../context/AuthContext";
-import { setLogoutHandler } from "../api/axios";
+import { useAuth } from "./context/AuthContext";
+import { setLogoutHandler } from "./api/axios";
 import { useNavigate } from "react-router-dom";
 
 const AppInitializer = () => {
