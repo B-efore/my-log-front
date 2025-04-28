@@ -3,17 +3,22 @@ import { useNavigate, Link } from "react-router-dom";
 import ToastMessage from "../components/common/ToastMessage";
 import { getLogoImage } from "../util/get-images";
 import { signup } from "../api/authService";
-import { showErrorToast } from "../util/toast";
+import { showErrorToast, showSuccessToast } from "../util/toast";
 import "./Register.css";
+import { sendMail } from "../api/mailService";
 
 const Register = () => {
 
   const navigate = useNavigate();
   const [form, setForm] = useState({
     email: "",
+    code: "",
     password: "",
+    confirmPassword: "",
     username: "",
   });
+
+  const [emailSent, setEmailSent] = useState(false);
 
   const goHome = () => navigate("/");
 
@@ -21,6 +26,22 @@ const Register = () => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
   };
+
+  const handleSendCode = async () => {
+
+    const requestBody = {
+      email: form.email,
+    };
+
+    try {
+      const response = await sendMail(requestBody);
+      showSuccessToast(response.data);
+      setEmailSent(true);
+    } catch (e) {
+      console.log(e);
+      showErrorToast(e);
+    }
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -40,17 +61,38 @@ const Register = () => {
       <form className="register-box" onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="email">이메일</label>
-          <input
-            className="register-input"
-            id="email"
-            name="email"
-            type="email"
-            placeholder="아이디"
-            value={form.email}
-            onChange={handleChange}
-            required
-          />
+          <div className="email-input-wrapper">
+            <input
+              className="register-input"
+              id="email"
+              name="email"
+              type="email"
+              placeholder="아이디"
+              value={form.email}
+              onChange={handleChange}
+              required
+            />
+            <button type="button" className="email-btn" onClick={handleSendCode}>
+              인증코드 발송
+            </button>
+          </div>
         </div>
+
+        {emailSent && (
+          <div className="form-group">
+            <label htmlFor="code">인증 코드</label>
+            <input
+              className="register-input"
+              id="code"
+              name="code"
+              type="text"
+              placeholder="인증 코드를 입력하세요."
+              value={form.code}
+              onChange={handleChange}
+              required
+            />
+          </div>
+        )}
 
         <div className="form-group">
           <label htmlFor="password">비밀번호</label>
@@ -65,6 +107,20 @@ const Register = () => {
             required
           />
           <small>비밀번호는 영문 대소문자, 숫자, 특수문자를 혼합해 8~16자를 사용하세요.</small>
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="confirmPassword">비밀번호 확인</label>
+          <input
+            className="register-input"
+            id="confirmPassword"
+            name="confirmPassword"
+            type="password"
+            placeholder="비밀번호 확인"
+            value={form.confirmPassword}
+            onChange={handleChange}
+            required
+          />
         </div>
 
         <div className="form-group">
