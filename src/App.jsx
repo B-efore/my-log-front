@@ -5,10 +5,11 @@ import { ToastContainer } from 'react-toastify';
 import Home from "./pages/Home";
 import PostWrite from "./pages/PostWrite";
 import PostEdit from './pages/PostEdit';
-import Login from "./pages/Login";
-import Register from './pages/Register';
+import Login from './pages/auth/Login';
+import Register from './pages/auth/Register';
 import NotFound from "./pages/NotFound";
 import PostDetail from './pages/PostDetail';
+import FindPassword from './pages/auth/FindPassword';
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/password/find" element={<FindPassword />} />
 
         <Route path="/write" element={<PostWrite />} />
         <Route path="/posts/:postId" element={<PostDetail />} />

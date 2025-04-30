@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate, Link, replace } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
-import { login } from "../api/authService";
-import axios from "../api/axios";
-import { getLogoImage } from '../util/get-images';
+import { useAuth } from "../../context/AuthContext";
+import { login } from "../../api/authService";
+import axios from "../../api/axios";
+import { getLogoImage } from '../../util/get-images';
 
 import "./Login.css";
-import { showErrorToast } from "../util/toast";
+import { showErrorToast } from "../../util/toast";
 
 const Login = () => {
 
@@ -80,7 +80,7 @@ const Login = () => {
 
       <div className="login-links">
         <Link to="/register">아이디 찾기</Link>
-        <Link to="/register" replace>비밀번호 찾기</Link>
+        <Link to="/password/find" replace>비밀번호 찾기</Link>
         <Link to="/register" replace>회원가입</Link>
       </div>
 

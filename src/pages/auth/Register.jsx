@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import ToastMessage from "../components/common/ToastMessage";
-import { getLogoImage } from "../util/get-images";
-import { signup } from "../api/authService";
-import { showErrorToast, showSuccessToast } from "../util/toast";
+import ToastMessage from "../../components/common/ToastMessage";
+import { getLogoImage } from "../../util/get-images";
+import { signup, verifyCode } from "../../api/authService";
+import { showErrorToast, showSuccessToast } from "../../util/toast";
 import "./Register.css";
-import { sendMail } from "../api/mailService";
+import { sendMail } from "../../api/mailService";
 
 const Register = () => {
 
@@ -19,6 +19,7 @@ const Register = () => {
   });
 
   const [emailSent, setEmailSent] = useState(false);
+  const [codeVerified, setCodeVerified] = useState(false);
 
   const goHome = () => navigate("/");
 
@@ -27,8 +28,9 @@ const Register = () => {
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSendCode = async () => {
+  const handleSendCode = async (e) => {
 
+    e.preventDefault();
     const requestBody = {
       email: form.email,
     };
@@ -37,14 +39,35 @@ const Register = () => {
       const response = await sendMail(requestBody);
       showSuccessToast(response.data);
       setEmailSent(true);
-    } catch (e) {
-      console.log(e);
-      showErrorToast(e);
+    } catch (error) {
+      console.log(error);
+      showErrorToast(error);
+    }
+  }
+
+
+  const handleVerifyCode = async (e) => {
+
+    e.preventDefault();
+    const requestBody = {
+      email: form.email,
+      code: form.code,
+    };
+
+    try {
+      const response = await verifyCode(requestBody);
+      showSuccessToast(response.data);
+      setCodeVerified(true);
+    } catch (error) {
+      console.log(error);
+      console.log(requestBody);
+      showErrorToast("인증에 실패했습니다.");
     }
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
       await signup(form);
       ToastMessage("회원가입이 완료되었습니다.");
@@ -59,9 +82,10 @@ const Register = () => {
     <div className="register-wrapper">
       <img onClick={goHome} src={getLogoImage()} alt="logo" className="register-logo" />
       <form className="register-box" onSubmit={handleSubmit}>
+
         <div className="form-group">
           <label htmlFor="email">이메일</label>
-          <div className="email-input-wrapper">
+          <div className="btn-input-wrapper">
             <input
               className="register-input"
               id="email"
@@ -72,15 +96,15 @@ const Register = () => {
               onChange={handleChange}
               required
             />
-            <button type="button" className="email-btn" onClick={handleSendCode}>
-              인증코드 발송
+            <button type="button" className="code-btn" onClick={handleSendCode}>
+              {emailSent ? "코드 재발송" : "코드 발송"}
             </button>
           </div>
         </div>
 
-        {emailSent && (
-          <div className="form-group">
-            <label htmlFor="code">인증 코드</label>
+        <div className="form-group">
+          <label htmlFor="code">인증 코드</label>
+          <div className="btn-input-wrapper">
             <input
               className="register-input"
               id="code"
@@ -91,8 +115,12 @@ const Register = () => {
               onChange={handleChange}
               required
             />
+
+            <button type="button" className="code-btn" onClick={handleVerifyCode}>
+              확인
+            </button>
           </div>
-        )}
+        </div>
 
         <div className="form-group">
           <label htmlFor="password">비밀번호</label>
@@ -138,10 +166,13 @@ const Register = () => {
           <small>닉네임은 한글, 영문, 숫자, '-', '_' 조합의 2~10자리를 사용하세요.</small>
         </div>
 
-        <button type="submit" className="submit-btn">
-          확인
-        </button>
+        <div className="form-group">
+          <button type="submit" className="submit-btn" disabled={!codeVerified}>
+            확인
+          </button>
+        </div>
       </form>
+
 
       <div className="register-footer">
         계정이 이미 존재합니다. <Link to="/login" replace>로그인</Link>
