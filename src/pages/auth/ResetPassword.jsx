@@ -9,7 +9,6 @@ import { showErrorToast, showSuccessToast } from "../../util/toast";
 const ResetPassword = () => {
 
     const navigate = useNavigate();
-    const goHome = () => navigate("/");
 
     const location = useLocation();
     const email = location.state?.email;
@@ -57,7 +56,7 @@ const ResetPassword = () => {
 
     return (
         <div className="reset-password-wrapper">
-            <img onClick={goHome} src={getLogoImage()} alt="logo" className="reset-password-logo" />
+            <img src={getLogoImage()} alt="logo" className="reset-password-logo" />
             <div className="title-wrapper">
                 <h2 className="title">
                     새로운 비밀번호를 입력해주세요.

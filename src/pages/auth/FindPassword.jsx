@@ -15,7 +15,7 @@ const FindPassword = () => {
     const { emailSent, codeVerified, sendCodeForPassword, verify } = useEmailVerification();
 
     const navigate = useNavigate();
-    const goHome = () => navigate("/");
+    const goHome = () => navigate("/", { replace: true});
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -25,6 +25,7 @@ const FindPassword = () => {
     const handleVerifySuccess = () => {
         navigate("/password/reset", {
             state: { email: form.email },
+            replace: true,
         });
     };
 
