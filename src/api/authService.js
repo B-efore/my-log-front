@@ -11,3 +11,11 @@ export const login = async (loginData) => {
 export const verifyCode = async (mailVerifyRequest) => {
     return axios.post("/auth/verify", mailVerifyRequest);
 }
+
+export const findPassword = async (mailRequest) => {
+    return axios.post("/auth/password/find", mailRequest);
+}
+
+export const resetPassword = async (passwordResetRequest) => {
+    return axios.post("/auth/password/reset", passwordResetRequest);
+}

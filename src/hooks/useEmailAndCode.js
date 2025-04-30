@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { sendMail } from "../api/mailService";
-import { verifyCode } from "../api/authService";
+import { findPassword, verifyCode } from "../api/authService";
 import { showErrorToast, showSuccessToast } from "../util/toast";
 
 export const useEmailVerification = () => {
@@ -10,7 +10,7 @@ export const useEmailVerification = () => {
 
     const sendCode = async (email) => {
         try {
-            const response = await sendMail({ email });
+            const response = await sendMail({ email: email });
             setEmailSent(true);
             showSuccessToast(response.data);
         } catch (error) {
@@ -19,11 +19,22 @@ export const useEmailVerification = () => {
         }
     };
 
+    const sendCodeForPassword = async (email) => {
+        try {
+            const response = await findPassword({ email: email });
+            setEmailSent(true);
+            showSuccessToast("인증번호를 전송했습니다.");
+        } catch (error) {
+            console.log(error);
+            showErrorToast("발송 실패");
+        }
+    }
+
     const verify = async ({ email, code }) => {
         try {
-        const response = await verifyCode({ email, code });
-        setCodeVerified(true);
-        showSuccessToast(response.data);
+            const response = await verifyCode({ email, code });
+            setCodeVerified(true);
+            showSuccessToast(response.data);
         } catch (error) {
             console.log(error);
             showErrorToast("인증 실패");
@@ -34,6 +45,7 @@ export const useEmailVerification = () => {
         emailSent,
         codeVerified,
         sendCode,
+        sendCodeForPassword,
         verify,
     };
 };

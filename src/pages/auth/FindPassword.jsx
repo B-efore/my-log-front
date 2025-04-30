@@ -7,13 +7,12 @@ import "./FindPassword.css";
 
 const FindPassword = () => {
 
-
     const [form, setForm] = useState({
         email: "",
         code: "",
     });
 
-    const { emailSent, codeVerified, sendCode, verify } = useEmailVerification();
+    const { emailSent, codeVerified, sendCodeForPassword, verify } = useEmailVerification();
 
     const navigate = useNavigate();
     const goHome = () => navigate("/");
@@ -43,7 +42,7 @@ const FindPassword = () => {
                     form={{ email: form.email, code: form.code }}
                     handlers={{
                         onChange: handleChange,
-                        onSend: sendCode,
+                        onSend: sendCodeForPassword,
                         onVerify: verify,
                         onSuccess: handleVerifySuccess,
                     }}

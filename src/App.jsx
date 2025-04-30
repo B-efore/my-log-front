@@ -10,6 +10,7 @@ import Register from './pages/auth/Register';
 import NotFound from "./pages/NotFound";
 import PostDetail from './pages/PostDetail';
 import FindPassword from './pages/auth/FindPassword';
+import ResetPassword from './pages/auth/ResetPassword';
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/password/find" element={<FindPassword />} />
+        <Route path="/password/reset" element={<ResetPassword />} />
 
         <Route path="/write" element={<PostWrite />} />
         <Route path="/posts/:postId" element={<PostDetail />} />
