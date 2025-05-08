@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 
 export const useOutsideClick = (ref, handler) => {
   useEffect(() => {
@@ -7,13 +7,9 @@ export const useOutsideClick = (ref, handler) => {
       handler();
     };
   
-    const timeout = setTimeout(() => {
-      document.addEventListener("click", handleClickOutside);
-    }, 0);
-  
+    document.addEventListener("mousedown", handleClickOutside)
     return () => {
-      clearTimeout(timeout);
-      document.removeEventListener("click", handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [ref, handler]);
 };

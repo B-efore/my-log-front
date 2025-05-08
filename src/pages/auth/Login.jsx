@@ -79,8 +79,8 @@ const Login = () => {
       </div>
 
       <div className="login-links">
-        <Link to="/register">아이디 찾기</Link>
-        <Link to="/password/find" replace>비밀번호 찾기</Link>
+        <Link to="/">아이디 찾기</Link>
+        <Link to="/password/find">비밀번호 찾기</Link>
         <Link to="/register" replace>회원가입</Link>
       </div>
 

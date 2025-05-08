@@ -7,6 +7,7 @@
   min-width: 350px;
   max-width: 350px;
   background: var(--color-default-light);
+  margin: 0 1.5rem;
   padding: 2rem;
   border-radius: var(--border-radius);
   border: 1px solid var(--color-box-main);
@@ -21,13 +22,15 @@
 
 .post-publish-modal__pinned-label {
   display: flex;
-  align-items: center;
   font-size: var(--font-small);
+  margin-right: auto;
   gap: 0.5rem;
   white-space: nowrap;
 }
 
 .post-publish-modal__section {
+  display: flex;
+  flex-direction: column;
   margin-bottom: 1.5rem;
 }
 
@@ -43,6 +46,52 @@
   font-size: var(--font-small);
   width: 100%;
   box-sizing: border-box;
+}
+
+.category-btn {
+  align-items: end;
+  background-color: white;
+  border: none;
+  cursor: pointer;
+  margin-left: auto;
+  padding: 5px 0;
+  font-size: 0.9rem;
+}
+
+.category-add-form {
+  display: flex;
+  width: 100%;
+  margin-top: 0.5rem;
+  gap: 0.5rem;
+}
+
+.category-add-input {
+  width: 100%;
+  flex:3;
+  padding: 0.5rem;
+  font-size: 0.9rem;
+  border: 1px solid var(--color-box-main);
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.category-add-buttons {
+  width: 100%;
+  flex: 1;
+  display: flex;
+  gap: 0.4rem;
+  white-space: nowrap;
+}
+
+.category-add-buttons button {
+  background-color: transparent;
+  border: 1px solid var(--color-box-main);
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: var(--font-small);
+  color: black;
+  transition: all 0.2s ease;
+  padding: 0 auto;
 }
 
 .post-publish-modal__visibility-options {

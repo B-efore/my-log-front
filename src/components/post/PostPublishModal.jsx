@@ -1,13 +1,41 @@
-import React, { useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { createCategory } from "../../api/categoryService";
 import { useOutsideClick } from "../../hooks/useOutsideClick";
 import "./PostPublishModal.css";
+import { showErrorToast } from "../../util/toast";
 
-const PostPublishModal = ({ onClose, onSubmit, handleChange, post, categories }) => {
+const PostPublishModal = ({ onClose, onSubmit, handleChange, post, categories, setCategories }) => {
+
+  const [showCategoryInput, setShowCategoryInput] = useState(false);
+  const [newCategoryName, setNewCategoryName] = useState("");
 
   const handlePublish = () => {
     onSubmit();
     onClose();
   };
+
+  const handleAddCategory = async () => {
+
+    if (!newCategoryName.trim()) return;
+
+    try {
+      const requestBody = {
+        name: newCategoryName,
+      };
+      const response = await createCategory(requestBody);
+
+      if (response.status == 201) {
+        const newCategory = response.data;
+        setCategories((prev) => [...prev, newCategory]);
+        // handleChange("categoryId", newCategory.categoryId);
+        setNewCategoryName("");
+        setShowCategoryInput(false);
+      }
+    } catch (error) {
+      console.error("카테고리 생성 실패: ", error);
+      showErrorToast("카테고리 생성에 실패했습니다.");
+    }
+  }
 
   const modalRef = useRef(null);
   useOutsideClick(modalRef, onClose);
@@ -32,6 +60,42 @@ const PostPublishModal = ({ onClose, onSubmit, handleChange, post, categories })
             </option>
           ))}
         </select>
+        {!showCategoryInput ? (
+          <button className="category-btn" onClick={() => setShowCategoryInput(true)}>
+            + 카테고리 추가
+          </button>
+        ) : (
+          <div className="category-add-form">
+            <input
+              type="text"
+              className="category-add-input"
+              value={newCategoryName}
+              onChange={(e) => setNewCategoryName(e.target.value)}
+              placeholder="새 카테고리 이름"
+            />
+            <div className="category-add-buttons">
+              <button
+                type="button"
+                className="category-confirm-btn"
+                onClick={handleAddCategory}
+              >
+                확인
+              </button>
+              <button
+                type="button"
+                className="category-cancel-btn"
+                onClick={() => {
+                  setNewCategoryName("");
+                  setShowCategoryInput(false);
+                }}
+              >
+                취소
+              </button>
+            </div>
+          </div>
+
+        )}
+
       </div>
 
       <div className="post-publish-modal__section">

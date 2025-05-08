@@ -4,3 +4,7 @@ export const getCategories = async () => {
   const res = await axios.get("/categories");
   return res.data?.categories || [];
 };
+
+export const createCategory = async (categoryRequest) => {
+  return axios.post("/categories", categoryRequest);
+}
