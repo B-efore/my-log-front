@@ -11,6 +11,7 @@ import NotFound from "./pages/NotFound";
 import PostDetail from './pages/PostDetail';
 import FindPassword from './pages/auth/FindPassword';
 import ResetPassword from './pages/auth/ResetPassword';
+import OAuth2Callback from './pages/auth/OAuth2Callback';
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
       <ToastContainer />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/oauth2/callback" element={<OAuth2Callback />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/password/find" element={<FindPassword />} />

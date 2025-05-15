@@ -8,6 +8,10 @@ export const login = async (loginData) => {
     return axios.post("/auth/login", loginData);
 }
 
+export const reissueToken = async () => {
+    return axios.post("/auth/reissue");
+}
+
 export const verifyCode = async (mailVerifyRequest) => {
     return axios.post("/auth/verify", mailVerifyRequest);
 }

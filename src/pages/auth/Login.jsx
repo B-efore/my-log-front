@@ -48,6 +48,10 @@ const Login = () => {
     handleLogin();
   }
 
+  const handleSocialLogin = (provider) => {
+    window.location.href = `http://localhost:8080/oauth2/authorization/${provider}`;
+  };
+
 
   return (
     <div className="login-wrapper">
@@ -89,8 +93,8 @@ const Login = () => {
       </div>
 
       <div className="social-buttons">
-        <button className="social-circle" title="Google 로그인"></button>
-        <button className="social-circle" title="Kakao 로그인"></button>
+        <button className="social-circle" title="Google 로그인" onClick={() => handleSocialLogin("google")}></button>
+        <button className="social-circle" title="Kakao 로그인" onClick={() => handleSocialLogin("kakao")}></button>
         <button className="social-circle" title="Naver 로그인"></button>
         <button className="social-circle" title="GitHub 로그인"></button>
       </div>
