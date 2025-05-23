@@ -24,11 +24,9 @@ export const AuthProvider = ({ children }) => {
           setUserImage(getProfileImage());
           setIsLoggedIn(true);
         } else {
-          logout();
         }
       } catch (err) {
         console.error("Invalid token");
-        logout();
       }
     }
   }, []);

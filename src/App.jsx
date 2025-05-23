@@ -12,6 +12,7 @@ import PostDetail from './pages/PostDetail';
 import FindPassword from './pages/auth/FindPassword';
 import ResetPassword from './pages/auth/ResetPassword';
 import OAuth2Callback from './pages/auth/OAuth2Callback';
+import Settings from './pages/Settings';
 
 function App() {
 
@@ -25,6 +26,8 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/password/find" element={<FindPassword />} />
         <Route path="/password/reset" element={<ResetPassword />} />
+
+        <Route path="/settings" element={<Settings />} />
 
         <Route path="/write" element={<PostWrite />} />
         <Route path="/posts/:postId" element={<PostDetail />} />
