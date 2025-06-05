@@ -3,6 +3,11 @@
   src: url("/AppleSDGothicNeo-Regular.ttf");
 }
 
+@font-face {
+  font-family: "DefaultFontBold";
+  src: url("/AppleSDGothicNeo-Bold.ttf");
+}
+
 html, body {
   margin: 0px;
   width: 100%;
