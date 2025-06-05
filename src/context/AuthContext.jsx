@@ -1,13 +1,15 @@
-import React, { createContext, useState, useEffect, useContext } from "react";
+import { createContext, useState, useEffect, useContext } from "react";
 import { jwtDecode } from "jwt-decode";
 import { isTokenExpired } from "../util/jwt";
-import { getProfileImage } from "../util/get-images";
+import { getMyInfo } from "../api/userService";
 
-const AuthContext = createContext();
+export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [userId, setUserId] = useState(null);
+  const [username, setUsername] = useState(null);
+  const [bio, setBio] = useState(null);
   const [userImage, setUserImage] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -15,15 +17,25 @@ export const AuthProvider = ({ children }) => {
 
     const token = localStorage.getItem("token");
 
-    if (token) {
+    if (token && !isTokenExpired(token)) {
+      
       try {
-        if (!isTokenExpired(token)) {
-          const decoded = jwtDecode(token);
-          setUser(decoded);
-          setUserId(decoded?.id || null);
-          setUserImage(getProfileImage());
-          setIsLoggedIn(true);
+        const decoded = jwtDecode(token);
+        setUser(decoded);
+        setUserId(decoded?.id || null);
+        setIsLoggedIn(true);
+
+        const cachedUserInfo = localStorage.getItem("userInfo");
+
+        if (cachedUserInfo) {
+          const data = JSON.parse(cachedUserInfo);
+          setUserInfo(data);
         } else {
+          getMyInfo().then((res) => {
+            console.log(res.data);
+            localStorage.setItem("userInfo", JSON.stringify(res.data));
+            setUserInfo(res.data);
+          })
         }
       } catch (err) {
         console.error("Invalid token");
@@ -38,24 +50,46 @@ export const AuthProvider = ({ children }) => {
       const decoded = jwtDecode(token);
       setUser(decoded);
       setUserId(decoded?.id || null);
-      setUserImage(getProfileImage());
+
+      getMyInfo().then((res) => {
+        console.log(res.data);
+        localStorage.setItem("userInfo", JSON.stringify(res.data));
+        setUserInfo(res.data);
+      })
+
       setIsLoggedIn(true);
     } catch {
-      logout();
+      setLogout();
     }
   };
 
   const setLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("userInfo");
     setUser(null);
     setUserId(null);
     setUserImage(null);
+    setUsername(null);
+    setBio(null);
     setIsLoggedIn(false);
     console.log("로그아웃 완료");
   };
 
+  const setUserInfo = (data) => {
+    setUserImage(`https://mylog-image-bucket.s3.ap-northeast-2.amazonaws.com/${data.imageKey}`);
+    setUsername(data.username);
+    setBio(data.bio);
+  }
+  
+
   return (
-    <AuthContext.Provider value={{ user, userId, userImage, isLoggedIn, setLogin, setLogout }}>
+    <AuthContext.Provider
+      value={{
+        user, userId, userImage, username, bio, isLoggedIn,
+        setUserImage, setUsername, setBio,
+        setLogin, setLogout
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
