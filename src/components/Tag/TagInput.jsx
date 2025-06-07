@@ -4,14 +4,20 @@ import Tag from "./Tag";
 
 const TagInput = ({ tags = [], onAdd, onRemove }) => {
   const [input, setInput] = useState("");
+  const [isComposing, setIsComposing] = useState(false);
+
+
+  const handleCompositionStart = () => setIsComposing(true);
+  const handleCompositionEnd = () => setIsComposing(false);
 
   const handleChange = (e) => setInput(e.target.value);
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter" && input.trim() !== "") {
+      if (isComposing) return;
+      e.preventDefault();
       onAdd(input.trim());
       setInput("");
-      e.preventDefault();
     }
   };
 
@@ -36,6 +42,8 @@ const TagInput = ({ tags = [], onAdd, onRemove }) => {
         value={input}
         onChange={handleChange}
         onKeyDown={handleKeyDown}
+        onCompositionStart={handleCompositionStart}
+        onCompositionEnd={handleCompositionEnd}
       />
     </div>
   );
