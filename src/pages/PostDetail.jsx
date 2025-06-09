@@ -145,11 +145,11 @@ const PostDetail = () => {
         <div className="post-author">
           <img
             className="author-img"
-            src={post.user.profileImageUrl || getProfileImage()}
+            src={`https://mylog-image-bucket.s3.ap-northeast-2.amazonaws.com/${post.user.profileImageUrl}` || getProfileImage()}
             alt={`${post.user.username}의 프로필 이미지`}
           />
           <div>
-            <div className="author-name">{post.user.username}</div>
+            <div className="author-name" onClick={() => navigate(`/${post.user.userId}`)}>{post.user.username}</div>
             <div className="author-bio">안녕하세요. 테스트 소개입니다.</div>
           </div>
         </div>
