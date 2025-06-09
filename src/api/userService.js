@@ -7,3 +7,7 @@ export const updateMyInfo = async (request) => {
 export const getMyInfo = async () => {
     return await axios.get("/users/me");
 }
+
+export const getUser = async (userId) => {
+    return await axios.get(`/users/${userId}`);
+}
