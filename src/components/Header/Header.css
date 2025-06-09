@@ -40,6 +40,7 @@
     width: 2rem;
     aspect-ratio: 1/ 1;
     object-fit: cover;
+    cursor: pointer;
     transition: opacity var(--transition);
 }
 
@@ -50,6 +51,11 @@
 .header-username {
     font-family: "DefaultFontBold";
     font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.header-username:hover {
+    text-decoration: none;
 }
 
 .icon-button {
