@@ -1,8 +1,11 @@
 import React, { useState } from "react";
+import google_logo from '../../assets/google_logo.png'
+import kakao_logo from '../../assets/kakao_logo.png'
+import naver_logo from '../../assets/naver_logo.png'
+import github_logo from '../../assets/github_logo.png'
 import { useNavigate, Link, replace } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { login } from "../../api/authService";
-import axios from "../../api/axios";
 import { getLogoImage } from '../../util/get-images';
 
 import "./Login.css";
@@ -57,7 +60,7 @@ const Login = () => {
     <div className="login-wrapper">
 
       <div className="login-logo">
-        <img className="logo-image" src={getLogoImage()} />
+        <img className="logo-image" src={getLogoImage()} onClick={() => navigate("/")} />
       </div>
 
       <div className="login-container">
@@ -93,10 +96,10 @@ const Login = () => {
       </div>
 
       <div className="social-buttons">
-        <button className="social-circle" title="Google 로그인" onClick={() => handleSocialLogin("google")}></button>
-        <button className="social-circle" title="Kakao 로그인" onClick={() => handleSocialLogin("kakao")}></button>
-        <button className="social-circle" title="Naver 로그인"></button>
-        <button className="social-circle" title="GitHub 로그인"></button>
+        <img src={google_logo} alt="Google 로그인" className="social-circle" onClick={() => handleSocialLogin("google")}></img>
+        <img src={kakao_logo} alt="Kakao 로그인" className="social-circle" onClick={() => handleSocialLogin("kakao")}></img>
+        <img src={naver_logo} alt="Naver 로그인" className="social-circle"></img>
+        <img src={github_logo} alt="Github 로그인" className="social-circle"></img>
       </div>
 
     </div>
