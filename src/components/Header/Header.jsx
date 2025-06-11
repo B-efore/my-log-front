@@ -1,12 +1,18 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { FiSearch, FiEdit3 } from 'react-icons/fi';
 import { getLogoImage } from '../../util/get-images';
 import { useAuth } from '../../context/AuthContext';
 import HeaderDropdown from './HeaderDropDown';
 import './Header.css';
 
-const Header = ({ leftChild, rightChild }) => {
+const Header = ({
+    leftChild,
+    rightChild,
+    showTabs = false,
+    tabs = [],
+    defaultTab = 'home'
+}) => {
 
     const navigate = useNavigate();
     const goHome = () => navigate("/");
@@ -16,6 +22,21 @@ const Header = ({ leftChild, rightChild }) => {
 
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const toggleDropdown = () => setIsDropdownOpen(prev => !prev);
+
+    const [searchParams, setSearchParams] = useSearchParams();
+    const activeTab = searchParams.get('tab') || defaultTab;
+
+    const handleTabChange = (tabName) => {
+        if (tabName === defaultTab) {
+            const newParams = new URLSearchParams(searchParams);
+            newParams.delete('tab');
+            setSearchParams(newParams);
+        } else {
+            const newParams = new URLSearchParams(searchParams);
+            newParams.set('tab', tabName);
+            setSearchParams(newParams);
+        }
+    };
 
     const handleLogout = () => {
         setLogout();
@@ -65,17 +86,24 @@ const Header = ({ leftChild, rightChild }) => {
                     )}
                 </div>
             </div>
-            {/* <div className="header-bottom">
-                <div className="header-nav">
+            
+            {showTabs && tabs.length > 0 && (
+                <div className="nav-body">
                     <nav>
-                        <ul>
-                            <li>홈</li>
-                            <li>게시글</li>
+                        <ul className="nav-list">
+                            {tabs.map((tab) => (
+                                <li
+                                    key={tab.key}
+                                    className={activeTab === tab.key ? 'tab active' : 'tab'}
+                                    onClick={() => handleTabChange(tab.key)}
+                                >
+                                    {tab.label}
+                                </li>
+                            ))}
                         </ul>
                     </nav>
                 </div>
-            </div> */}
-
+            )}
         </header>
     );
 }

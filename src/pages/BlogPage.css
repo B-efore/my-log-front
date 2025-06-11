@@ -24,19 +24,17 @@
 .blog-container {
     display: flex;
     flex-direction: column;
-    padding: 0 1rem;
+    width: 100vw;
+    height: 100vh;
 }
 
 .blog-body {
     display: flex;
     flex-direction: row;
+    width: 90vw;
     gap: 5rem;
-    min-width: 720px;
-    max-width: 1024px;
-    margin-right: auto;
-    margin-left: auto;
-    padding-top: 100px;
-    flex: 1;
+    margin: 0 1rem;
+    padding-top: 3rem;
 }
 
 .blog-profile-section {
@@ -147,4 +145,14 @@ span:hover {
 
 b {
     margin-bottom: 5px;
+}
+
+.tab-content {
+    display: flex;
+    min-width: 360px;
+    max-width: 1024px;
+    margin: 0 1rem;
+    justify-content: center;
+    align-self: center;
+    box-sizing: border-box;
 }
