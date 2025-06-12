@@ -9,9 +9,11 @@ import usePost from "../hooks/usePost";
 import PostPublishModal from "../components/post/PostPublishModal";
 import ToastMessage from "../components/common/ToastMessage";
 import "./PostWrite.css";
+import { useAuth } from "../context/AuthContext";
 
 const PostEdit = () => {
 
+  const { userId } = useAuth();
   const { postId } = useParams();
   const navigate = useNavigate();
 
@@ -22,7 +24,7 @@ const PostEdit = () => {
 
   useEffect(() => {
 
-    getCategories().then(setUserCategories).catch(() => {
+    getCategories(userId).then(setUserCategories).catch(() => {
       setUserCategories([{ categoryId: 0, name: "전체" }]);
     });
 

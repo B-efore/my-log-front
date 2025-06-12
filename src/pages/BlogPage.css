@@ -1,5 +1,5 @@
 @media (max-width: 1024px) {
-    .blog-body {
+    .blog-home-body {
         display: flex;
         flex-direction: column !important;
         min-width: auto;
@@ -25,10 +25,10 @@
     display: flex;
     flex-direction: column;
     width: 100vw;
-    height: 100vh;
+    height: 100%;
 }
 
-.blog-body {
+.blog-home-body {
     display: flex;
     flex-direction: row;
     width: 90vw;
@@ -62,7 +62,7 @@
     word-break: break-all;
 }
 
-.blog-home-section {
+.blog-profile-activity-section {
     display: flex;
     flex-direction: column;
     text-align: left;
@@ -98,7 +98,7 @@
     gap: 16px;
 }
 
-.post {
+.main-post {
     height: 115px;
     border: 1px solid #ccc;
     border-radius: 8px;
@@ -155,4 +155,127 @@ b {
     justify-content: center;
     align-self: center;
     box-sizing: border-box;
+}
+
+.blog-posts-body {
+    display: flex;
+    flex-direction: row;
+    width: 90vw;
+    gap: 2rem;
+    margin: 0 1rem;
+    padding-top: 3rem;
+}
+
+.blog-sidebar-section {
+    text-align: start;
+    flex: 1;
+}
+
+.sidebar-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #8b5cf6;
+}
+
+.sidebar-title:hover {
+    text-decoration: none;
+}
+
+.sidebar-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    margin-bottom: 3rem;
+}
+
+.sidebar-item {
+    margin-top: 5px;
+}
+
+.sidebar-link {
+    color: #333;
+    text-decoration: none;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.sidebar-link:hover {
+    color: #8b5cf6;
+}
+
+.blog-posts-section {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    flex: 3;
+}
+
+.blog-search-section {
+    margin: 30px 0;
+    display: flex;
+    justify-content: center;
+}
+
+.search-bar {
+    width: 100%;
+    height: 2rem;
+    background-color: #e0e0e0;
+    border-radius: 20px;
+}
+
+.blog-posts {
+    margin-top: 1rem;
+}
+
+.blog-post {
+    padding: 1.5rem 0;
+    text-align: left;
+    /* background-color: #8b5cf6; */
+    border-bottom: 1px solid silver;
+}
+
+
+.blog-post:last-of-type {
+    border-bottom: none;
+}
+
+.post-date {
+    font-size: 0.8rem;
+    color: black;
+}
+
+.post-title {
+    width: fit-content;
+    font-family: "DefaultFontBold";
+    font-size: 1.3rem;
+    margin: 0.5rem 0;
+    /* cursor: pointer; */
+}
+
+.post-content {
+    width: fit-content;
+    font-size: 1rem;
+    margin: 0;
+    /* cursor: pointer; */
+}
+
+.post-title:hover,
+.post-content:hover {
+    cursor:pointer;
+}
+
+.pagination {
+    margin: 0 auto;
+    margin-top: 3rem;
+}
+
+.page-nav,
+.page-number {
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+.page-nav:hover,
+.page-number:hover {
+    color: #8b5cf6;
 }

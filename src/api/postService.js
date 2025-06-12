@@ -15,3 +15,13 @@ export const getPost = async (postId) => {
 export const deletePost = async (postId) => {
     return axios.delete(`/posts/${postId}`);
 }
+
+export const getAllPosts = async (
+    userId,
+    page = 0,
+    size = 10) => {
+
+    return await axios.get(`/users/${userId}/posts`, {
+        params: { size, page },
+    });
+}

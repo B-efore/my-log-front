@@ -9,16 +9,18 @@ import PostPublishModal from "../components/post/PostPublishModal";
 import usePost from "../hooks/usePost";
 import "./PostWrite.css";
 import ToastMessage from "../components/common/ToastMessage";
+import { useAuth } from "../context/AuthContext";
 
 const PostWrite = () => {
 
+  const { userId } = useAuth();
   const navigate = useNavigate();
   const { post, handleChange, addTag, removeTag, validatePost } = usePost();
   const [userCategories, setUserCategories] = useState([]);
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    getCategories().then(setUserCategories).catch(() => {
+    getCategories(userId).then(setUserCategories).catch(() => {
       setUserCategories([{ categoryId: 0, name: "전체" }]);
     });
   }, []);

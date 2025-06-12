@@ -1,6 +1,5 @@
 import Header from "../components/header/Header";
 import { useEffect, useState } from "react";
-import { useAuth } from "../context/AuthContext";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import defaultProfileImage from "../assets/mini왹.png";
@@ -8,11 +7,32 @@ import "./BlogPage.css"
 import { getUser } from "../api/userService";
 import { useParams, useSearchParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { showErrorToast } from "../util/toast";
+import { getAllPosts } from "../api/postService";
+import { getCategories } from "../api/categoryService";
+import { getAllTags } from "../api/tagService";
 
 const BlogPage = () => {
 
     const [user, setUser] = useState(null);
+    const [pinnedPosts, setPinnedPosts] = useState([]);
     const [posts, setPosts] = useState([]);
+    const [categories, setCategories] = useState([]);
+    const [tags, setTags] = useState([]);
+
+    const [dataLoaded, setDataLoaded] = useState({
+        user: false,
+        posts: false,
+        categories: false,
+        tags: false
+    });
+
+    const [pagination, setPagination] = useState({
+        currentPage: 1,
+        totalPages: 1,
+        totalPosts: 0,
+        size: 10
+    });
 
     const [loading, setLoading] = useState(!user);
 
@@ -27,23 +47,134 @@ const BlogPage = () => {
         { key: 'posts', label: '게시글' }
     ];
 
+    const generatePageNumbers = () => {
+        const { currentPage, totalPages } = pagination;
+        const maxVisiblePages = 5;
+
+        if (totalPages <= maxVisiblePages) {
+            return Array.from({ length: totalPages }, (_, i) => i + 1);
+        }
+
+        let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+        let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+
+        if (endPage === totalPages) {
+            startPage = Math.max(1, endPage - maxVisiblePages + 1);
+        }
+
+        const visibleCount = endPage - startPage + 1;
+
+        return Array.from({ length: visibleCount }, (_, i) => startPage + i);
+    };
+
+    const handlePageChange = async (pageNumber) => {
+        if (pageNumber < 1 || pageNumber > pagination.totalPages || pageNumber === pagination.currentPage) {
+            return;
+        }
+
+        try {
+            setLoading(true);
+            setPagination(prev => ({
+                ...prev,
+                currentPage: pageNumber
+            }));
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        } catch (error) {
+            console.error('페이지 로딩 실패:', error);
+            setPagination(prev => ({
+                ...prev,
+                currentPage: pagination.currentPage
+            }));
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const fetchPosts = async (page = 0, size = 10) => {
+        try {
+            const res = await getAllPosts(userId, page, size);
+            setPosts(res.data.posts);
+            setPagination({
+                currentPage: res.data.page + 1,
+                size: res.data.size,
+                totalPages: res.data.totalPages,
+                totalPosts: res.data.totalElements
+            });
+            console.log(res);
+        } catch (err) {
+            showErrorToast("게시글을 불러오는데 실패했습니다.");
+        }
+    }
+
+    const fetchCategories = async () => {
+        try {
+            const res = await getCategories(userId);
+            console.log("fetchCategories: ", res);
+            setCategories(res);
+        } catch (err) {
+            showErrorToast("카테고리를 불러오는데 실패했습니다.");
+        }
+    };
+
+    const fetchTags = async () => {
+        try {
+            const res = await getAllTags(userId);
+            console.log(res);
+            setTags(res.data);
+        } catch (err) {
+            showErrorToast("태그를 불러오는데 실패했습니다.");
+        }
+    };
 
     useEffect(() => {
-
-        if (!user) {
-            getUser(userId)
-                .then((res) => {
-                    console.log(res.data);
-                    setUser(res.data);
-                    setPosts(res.data.pinnedPosts)
-                    setLoading(false);
-                })
-                .catch((err) => {
-                    showErrorToast("유저 정보를 불러오는데 실패했습니다.");
-                    navigate("/");
-                });
+        const initHomeTabData = async () => {
+            try {
+                setLoading(true);
+                const res = await getUser(userId);
+                console.log(res);
+                setUser(res.data);
+                setPinnedPosts(res.data.pinnedPosts);
+                setDataLoaded(prev => ({ ...prev, user: true }));
+            } catch (err) {
+                showErrorToast("유저 정보를 불러오는데 실패했습니다.");
+                navigate("/");
+            } finally {
+                setLoading(false);
+            }
         }
+
+        initHomeTabData();
     }, [userId]);
+
+    useEffect(() => {
+        const loadPostsTabData = async () => {
+            if (activeTab === 'posts') {
+                if (!dataLoaded.posts) {
+                    setLoading(true);
+                    try {
+                        await Promise.all([
+                            !dataLoaded.categories && fetchCategories(),
+                            !dataLoaded.tags && fetchTags(),
+                            fetchPosts(0, 10)
+                        ]);
+                        setDataLoaded(prev => ({
+                            ...prev,
+                            posts: true,
+                            categories: true,
+                            tags: true
+                        }));
+                    } catch (err) {
+                        showErrorToast("게시글을 불러오는데 실패했습니다.");
+                    } finally {
+                        setLoading(false);
+                    }
+                }
+            }
+        };
+
+        loadPostsTabData();
+    }, [activeTab, dataLoaded]);
 
     if (loading || !user) {
         return <div></div>
@@ -54,7 +185,7 @@ const BlogPage = () => {
         switch (activeTab) {
             case 'home':
                 return (
-                    <div className="blog-body">
+                    <div className="blog-home-body">
                         <div className="blog-profile-section">
                             <img
                                 src={`https://mylog-image-bucket.s3.ap-northeast-2.amazonaws.com/${user.imageKey}` || defaultProfileImage}
@@ -64,7 +195,7 @@ const BlogPage = () => {
                             <b className="owner-name">{user.username}</b>
                             <p className="owner-bio">{user.bio}</p>
                         </div>
-                        <div className="blog-home-section">
+                        <div className="blog-profile-activity-section">
                             <b>소개</b>
                             <div className="blog-introduce-section">
                                 <ReactMarkdown remarkPlugins={remarkGfm}>소개md파일</ReactMarkdown>
@@ -72,10 +203,10 @@ const BlogPage = () => {
                             <b>메인</b>
                             <div className="blog-main-section">
                                 <ol className="blog-main-posts">
-                                    {posts && posts.length > 0 ? (
-                                        posts.map((post, index) => (
-                                            <li className="post">
-                                                <div key={post.postId || index} className="post-card">
+                                    {pinnedPosts && pinnedPosts.length > 0 ? (
+                                        pinnedPosts.map((post, index) => (
+                                            <li key={post.postId || index} className="main-post">
+                                                <div className="post-card">
                                                     <span
                                                         className="post-card-title"
                                                         onClick={() => navigate(`/posts/${post.postId}`)}
@@ -100,7 +231,100 @@ const BlogPage = () => {
                 );
             case 'posts':
                 return (
-                    <div></div>
+                    <div className="blog-posts-body">
+                        <div className="blog-sidebar-section">
+                            {categories.length > 0 && (
+                                <span className="sidebar-title">카테고리</span>
+                            )}
+                            <ul className="sidebar-list">
+                                {categories.map((category) => (
+                                    <li key={category.id} className="sidebar-item">
+                                        <span className="sidebar-link">
+                                            {category.name}
+                                            {category.count && <span className="count"> ({category.count})</span>}
+                                        </span>
+
+                                    </li>
+                                ))}
+                            </ul>
+                            {tags.length > 0 && (
+                                <span className="sidebar-title">태그</span>
+                            )}
+                            <ul className="sidebar-list">
+                                {tags.map((tag) => (
+                                    <li key={tag.id} className="sidebar-item">
+                                        <span className="sidebar-link">
+                                            {tag.name}
+                                            {tag.count && <span className="count"> ({tag.count})</span>}
+                                        </span>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                        <div className="blog-posts-section">
+                            <div className="blog-searching-section">
+                                <div className="search-bar"></div>
+                            </div>
+                            <div className="blog-posts">
+                                {posts.map((post) => (
+                                    <article key={post.postId} className="blog-post">
+                                        <div className="post-date">2025.06.11</div>
+                                        <h2 className="post-title" onClick={() => navigate(`/posts/${post.postId}`)}>{post.title}</h2>
+                                        {post.contentPreview && <p className="post-content" onClick={() => navigate(`/posts/${post.postId}`)}>{post.contentPreview}</p>}
+                                    </article>
+                                ))}
+                            </div>
+
+                            <div className="pagination">
+
+                                {pagination.currentPage > 1 && (
+                                    <span
+                                        className="page-nav"
+                                        onClick={() => handlePageChange(1)}
+                                    >
+                                        {'<<'}
+                                    </span>
+                                )}
+
+                                {pagination.currentPage > 1 && (
+                                    <span
+                                        className="page-nav"
+                                        onClick={() => handlePageChange(pagination.currentPage - 1)}
+                                    >
+                                        {'<'}
+                                    </span>
+                                )}
+
+                                {generatePageNumbers().map(pageNum => (
+                                    <span
+                                        key={pageNum}
+                                        className={`page-number ${pagination.currentPage === pageNum ? 'active' : ''}`}
+                                        onClick={() => handlePageChange(pageNum)}
+                                    >
+                                        {pageNum}
+                                    </span>
+                                ))}
+
+                                {pagination.currentPage < pagination.totalPages && (
+                                    <span
+                                        className="page-nav"
+                                        onClick={() => handlePageChange(pagination.currentPage + 1)}
+                                    >
+                                        {'>'}
+                                    </span>
+                                )}
+
+                                {pagination.currentPage < pagination.totalPages && (
+                                    <span
+                                        className="page-nav"
+                                        onClick={() => handlePageChange(pagination.totalPages)}
+                                    >
+                                        {'>>'}
+                                    </span>
+                                )}
+                            </div>
+                        </div>
+                    </div>
                 );
             default:
                 return <div>페이지를 찾을 수 없습니다.</div>
@@ -114,7 +338,8 @@ const BlogPage = () => {
                 tabs={tabConfig}
                 defaultTab="home"
             />
-            <div className="header-spacer with-tabs"></div> 
+            <div className="header-spacer with-tabs"></div>
+
             <div className="blog-container">
                 <div className="tab-content">
                     {renderContent()}

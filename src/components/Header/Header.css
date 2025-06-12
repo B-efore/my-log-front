@@ -136,6 +136,5 @@
 }
 
 .header-spacer.with-tabs {
-    /* height: 5.5rem; */
     height: calc(3rem + 2.5rem);
 }
