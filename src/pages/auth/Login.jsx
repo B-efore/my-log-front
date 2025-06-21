@@ -16,14 +16,14 @@ const Login = () => {
   const navigate = useNavigate();
   const { setLogin } = useAuth();
 
-  const [email, setEmail] = useState("");
+  const [accountId, setAccountId] = useState("");
   const [password, setPassword] = useState("");
 
   const handleLogin = async (e) => {
     try {
 
       const requestBody = {
-        email: email,
+        accountId: accountId,
         password: password,
       };
 
@@ -69,8 +69,8 @@ const Login = () => {
             type="text"
             placeholder="아이디"
             className="login-input"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={accountId}
+            onChange={(e) => setAccountId(e.target.value)}
           />
           <input
             type="password"
@@ -80,13 +80,13 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
           <button className="login-button">
-            이메일로 로그인
+            아이디로 로그인
           </button>
         </form>
       </div>
 
       <div className="login-links">
-        <Link to="/">아이디 찾기</Link>
+        <Link to="/accountId/find">아이디 찾기</Link>
         <Link to="/password/find">비밀번호 찾기</Link>
         <Link to="/register" replace>회원가입</Link>
       </div>

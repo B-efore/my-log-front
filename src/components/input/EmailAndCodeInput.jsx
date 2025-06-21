@@ -16,7 +16,7 @@ const EmailAndCodeInput = ({ form, handlers, state }) => {
                         id="email"
                         name="email"
                         type="email"
-                        placeholder="아이디"
+                        placeholder="이메일"
                         value={email}
                         onChange={onChange}
                         required

@@ -9,6 +9,8 @@ import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
 import NotFound from "./pages/NotFound";
 import PostDetail from './pages/PostDetail';
+import FindAccountId from './pages/auth/FindAccountId';
+import FindAccountIdResult from './pages/auth/FindAccountIdResult';
 import FindPassword from './pages/auth/FindPassword';
 import ResetPassword from './pages/auth/ResetPassword';
 import OAuth2Callback from './pages/auth/OAuth2Callback';
@@ -25,6 +27,9 @@ function App() {
         <Route path="/oauth2/callback" element={<OAuth2Callback />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        
+        <Route path="/accountId/find" element={<FindAccountId />} />
+        <Route path="/accountId/find/result" element={<FindAccountIdResult />} />
         <Route path="/password/find" element={<FindPassword />} />
         <Route path="/password/reset" element={<ResetPassword />} />
 

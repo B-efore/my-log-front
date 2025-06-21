@@ -12,8 +12,8 @@ export const reissueToken = async () => {
     return axios.post("/auth/reissue");
 }
 
-export const verifyCode = async (mailVerifyRequest) => {
-    return axios.post("/auth/verify", mailVerifyRequest);
+export const findAccountId = async (mailRequest) => {
+    return axios.post("/auth/accountId", mailRequest);
 }
 
 export const findPassword = async (mailRequest) => {

@@ -26,3 +26,7 @@ export const uploadProfile = async (file) => {
         params: { fileName : file.name }
     });
 }
+
+export const deleteProfile = async (userId) => {
+    return axios.delete(`/images/profile/${userId}`);
+}

@@ -3,17 +3,28 @@ import { updateMyInfo } from "../api/userService";
 import Header from "../components/header/Header";
 import './Settings.css'
 import { showErrorToast, showSuccessToast } from "../util/toast";
-import { uploadImageToS3, uploadProfile } from "../api/imageService";
+import { deleteProfile, uploadImageToS3, uploadProfile } from "../api/imageService";
 import defaultProfileImage from "../assets/mini왹.png";
 import { useAuth } from "../context/AuthContext";
 
 const Settings = () => {
 
-    const { userImage, username, bio, setUserImage, setUsername, setBio } = useAuth();
+    const { userId, userImage, username, bio, setUserImage, setUsername, setBio } = useAuth();
     const fileInputRef = useRef(null);
 
     const handleClickImage = () => {
         fileInputRef.current.click();
+    }
+
+    const handleFileDelete = async () => {
+        try {
+            const res = await deleteProfile(userId);
+            console.log(res);
+            showSuccessToast("이미지 삭제 완료!");
+        } catch (err) {
+            console.log(err);
+            showErrorToast("이미지 삭제 실패");
+        }
     }
 
     const handleFileChange = async (e) => {
@@ -68,6 +79,8 @@ const Settings = () => {
                             className="settings-profile-image"
                             onClick={handleClickImage}
                         />
+
+                        <button onClick={handleFileDelete}>이미지 삭제</button>
 
                         <input
                             type="file"

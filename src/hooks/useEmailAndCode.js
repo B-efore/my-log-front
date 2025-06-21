@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { sendMail } from "../api/mailService";
-import { findPassword, verifyCode } from "../api/authService";
+import { verifyCode } from "../api/mailService";
+import { findPassword } from "../api/authService";
 import { showErrorToast, showSuccessToast } from "../util/toast";
 
 export const useEmailVerification = () => {
@@ -32,9 +33,9 @@ export const useEmailVerification = () => {
 
     const verify = async ({ email, code }) => {
         try {
-            const response = await verifyCode({ email, code });
+            const response = await verifyCode({email, code});
             setCodeVerified(true);
-            showSuccessToast(response.data);
+            showSuccessToast("인증에 성공했습니다.");
         } catch (error) {
             console.log(error);
             showErrorToast("인증 실패");

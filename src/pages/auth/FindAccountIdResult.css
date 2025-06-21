@@ -1,0 +1,17 @@
+.find-id-result-wrapper {
+    display: flex;
+    justify-content: center;
+    padding-top: 10vh;
+}
+
+.find-password-logo {
+    width: 80px;
+}
+
+.find-id-result-body {
+    width: 50vw;
+    padding: 2rem 2rem;
+    margin-bottom: 1rem;
+    background-color: var(--color-sub-light);
+    border-radius: 5px;
+}

@@ -15,6 +15,7 @@ const Register = () => {
   const [form, setForm] = useState({
     email: "",
     code: "",
+    accountId: "",
     password: "",
     confirmPassword: "",
     username: "",
@@ -61,6 +62,21 @@ const Register = () => {
           }}
           state={{ emailSent, codeVerified }}
         />
+
+        <div className="form-group">
+          <label htmlFor="accountId">아이디</label>
+          <input
+            className="register-input"
+            id="accountId"
+            name="accountId"
+            type="text"
+            placeholder="아이디"
+            value={form.accountId}
+            onChange={handleChange}
+            required
+          />
+          <small>아이디는 영문, 숫자, '-', '_' 조합의 6~20자리를 사용하세요.</small>
+        </div>
 
         <PasswordInput
           form={form}
