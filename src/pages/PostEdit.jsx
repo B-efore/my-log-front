@@ -23,26 +23,37 @@ const PostEdit = () => {
   const [loading, setLoading] = useState(!post);
 
   useEffect(() => {
-
-    getCategories(userId).then(setUserCategories).catch(() => {
-      setUserCategories([{ categoryId: 0, name: "전체" }]);
-    });
-
-    getPost(postId)
-      .then((res) => {
-        setPost({
-          title: res.data.title,
-          content: res.data.content,
-          tags: res.data.tags.map(tag => tag.name),
-          categoryId: res.data.category.categoryId,
-          visibility: res.data.visibility,
-          pinned: res.data.pinned,
+    if (userId) {
+      getCategories(userId)
+        .then((categories) => {
+          console.log("cate: ", categories)
+          setUserCategories(categories)
+        })
+        .catch((err) => {
+          console.err(err);
         });
-        setLoading(false);
-      })
-      .catch((err) => {
-        ToastMessage("게시글을 불러오는데 실패했습니다.", { type: "error" });
-      });
+    }
+  }, [userId]);
+
+  useEffect(() => {
+    if (postId) {
+      getPost(postId)
+        .then((res) => {
+          setPost({
+            title: res.data.title,
+            content: res.data.content,
+            tags: res.data.tags.map(tag => tag.name),
+            categoryId: res.data.category === null ? 0 : res.data.category.categoryId,
+            visibility: res.data.visibility,
+            pinned: res.data.pinned,
+          });
+          setLoading(false);
+        })
+        .catch((err) => {
+          console.log(err);
+          ToastMessage("게시글을 불러오는데 실패했습니다.", { type: "error" });
+        });
+    }
   }, [postId, setPost]);
 
   const handleSave = async () => {
@@ -57,7 +68,7 @@ const PostEdit = () => {
       content: post.content,
       contentPreview: post.content.slice(0, 100),
       visibility: post.visibility,
-      categoryId: post.categoryId,
+      categoryId: post.categoryId === 0 ? null : post.categoryId,
       tagRequests: post.tags.map((tag) => ({ name: tag })),
       pinned: post.pinned || false,
     };

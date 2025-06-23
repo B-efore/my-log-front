@@ -42,7 +42,7 @@ const PostWrite = () => {
       content: post.content,
       contentPreview: post.content.slice(0, 100),
       visibility: post.visibility,
-      categoryId: post.categoryId,
+      categoryId: post.categoryId === 0 ? null : post.categoryId,
       tagRequests: post.tags.map((tag) => ({ name: tag })),
       pinned: post.pinned || false,
     };

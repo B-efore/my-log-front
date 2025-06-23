@@ -25,3 +25,19 @@ export const getAllPosts = async (
         params: { size, page },
     });
 }
+
+export const getPostsByCategoryAndTags = async (
+    userId, categoryId, tags, page = 0, size = 10) => {
+
+    return axios.get(`/users/${userId}/categories/${categoryId}/posts`, {
+        params: { tags, page, size },
+        paramsSerializer: params =>
+            new URLSearchParams(
+                Object.entries(params).flatMap(([key, value]) =>
+                    Array.isArray(value)
+                        ? value.map(v => [key, v])
+                        : [[key, value]]
+                )
+            ).toString()
+    });
+}

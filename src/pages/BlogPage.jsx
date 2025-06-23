@@ -8,9 +8,9 @@ import { getUser } from "../api/userService";
 import { useParams, useSearchParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { showErrorToast } from "../util/toast";
-import { getAllPosts } from "../api/postService";
-import { getCategories } from "../api/categoryService";
-import { getAllTags } from "../api/tagService";
+import { getAllPosts, getPostsByCategoryAndTags } from "../api/postService";
+import { getCategoriesWithCount } from "../api/categoryService";
+import { getAllTagsWithCount } from "../api/tagService";
 
 const BlogPage = () => {
 
@@ -19,6 +19,9 @@ const BlogPage = () => {
     const [posts, setPosts] = useState([]);
     const [categories, setCategories] = useState([]);
     const [tags, setTags] = useState([]);
+
+    const [selectedCategoryId, setSelectedCategoryId] = useState(0);
+    const [selectedTagIds, setSelectedTagIds] = useState([]);
 
     const [dataLoaded, setDataLoaded] = useState({
         user: false,
@@ -46,6 +49,22 @@ const BlogPage = () => {
         { key: 'home', label: '홈' },
         { key: 'posts', label: '게시글' }
     ];
+
+    const getProfileImage = (key) => {
+        return key ? `https://mylog-image-bucket.s3.ap-northeast-2.amazonaws.com/${key}` : defaultProfileImage;
+    }
+
+    const handleCategoryClick = (id) => {
+        setSelectedCategoryId(id === selectedCategoryId ? 0 : id);
+    }
+
+    const handleTagClick = (tagId) => {
+        setSelectedTagIds(prev =>
+            prev.includes(tagId)
+            ? prev.filter(id => id !== tagId)
+            : [...prev, tagId]
+        );
+    }
 
     const generatePageNumbers = () => {
         const { currentPage, totalPages } = pagination;
@@ -109,9 +128,11 @@ const BlogPage = () => {
 
     const fetchCategories = async () => {
         try {
-            const res = await getCategories(userId);
-            console.log("fetchCategories: ", res);
-            setCategories(res);
+            const res = await getCategoriesWithCount(userId);
+            setCategories([{categoryId: 0, name: '전체', postCount: res.data.totalCount},
+                ...res.data.categories
+            ]);
+            console.log("categories: ", res);
         } catch (err) {
             showErrorToast("카테고리를 불러오는데 실패했습니다.");
         }
@@ -119,9 +140,9 @@ const BlogPage = () => {
 
     const fetchTags = async () => {
         try {
-            const res = await getAllTags(userId);
+            const res = await getAllTagsWithCount(userId);
             console.log(res);
-            setTags(res.data);
+            setTags(res.data.tags);
         } catch (err) {
             showErrorToast("태그를 불러오는데 실패했습니다.");
         }
@@ -176,6 +197,20 @@ const BlogPage = () => {
         loadPostsTabData();
     }, [activeTab, dataLoaded]);
 
+    useEffect(()=>{
+        getPostsByCategoryAndTags(userId, selectedCategoryId, selectedTagIds)
+        .then((res) => {
+            setPosts(res.data.posts);
+            setPagination({
+                currentPage: res.data.page + 1,
+                size: res.data.size,
+                totalPages: res.data.totalPages,
+                totalPosts: res.data.totalElements
+            });
+        });
+
+    }, [selectedCategoryId, selectedTagIds]);
+
     if (loading || !user) {
         return <div></div>
     }
@@ -188,7 +223,7 @@ const BlogPage = () => {
                     <div className="blog-home-body">
                         <div className="blog-profile-section">
                             <img
-                                src={`https://mylog-image-bucket.s3.ap-northeast-2.amazonaws.com/${user.imageKey}` || defaultProfileImage}
+                                src={getProfileImage(user.imageKey)}
                                 alt="profile"
                                 className="blog-profile"
                             />
@@ -238,10 +273,14 @@ const BlogPage = () => {
                             )}
                             <ul className="sidebar-list">
                                 {categories.map((category) => (
-                                    <li key={category.id} className="sidebar-item">
+                                    <li
+                                        key={category.categoryId}
+                                        className={`sidebar-item ${selectedCategoryId === category.categoryId ? "active" : ""}`}
+                                        onClick={()=> handleCategoryClick(category.categoryId)}
+                                    >
                                         <span className="sidebar-link">
                                             {category.name}
-                                            {category.count && <span className="count"> ({category.count})</span>}
+                                            {category.postCount >= 0 && <span className="count"> ({category.postCount})</span>}
                                         </span>
 
                                     </li>
@@ -252,10 +291,14 @@ const BlogPage = () => {
                             )}
                             <ul className="sidebar-list">
                                 {tags.map((tag) => (
-                                    <li key={tag.id} className="sidebar-item">
+                                    <li
+                                        key={tag.id}
+                                        className={`sidebar-item ${selectedTagIds.includes(tag.id) ? "active" : ""}`}
+                                        onClick={()=> handleTagClick(tag.id)}
+                                    >
                                         <span className="sidebar-link">
                                             {tag.name}
-                                            {tag.count && <span className="count"> ({tag.count})</span>}
+                                            {tag.postCount && <span className="count"> ({tag.postCount})</span>}
                                         </span>
                                     </li>
                                 ))}

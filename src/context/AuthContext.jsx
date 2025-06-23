@@ -23,6 +23,7 @@ export const AuthProvider = ({ children }) => {
         const decoded = jwtDecode(token);
         setUser(decoded);
         setUserId(decoded?.id || null);
+        console.log(decoded);
         setIsLoggedIn(true);
 
         const cachedUserInfo = localStorage.getItem("userInfo");
@@ -39,6 +40,7 @@ export const AuthProvider = ({ children }) => {
         }
       } catch (err) {
         console.error("Invalid token");
+        setLogout();
       }
     }
   }, []);
@@ -52,7 +54,6 @@ export const AuthProvider = ({ children }) => {
       setUserId(decoded?.id || null);
 
       getMyInfo().then((res) => {
-        console.log(res.data);
         localStorage.setItem("userInfo", JSON.stringify(res.data));
         setUserInfo(res.data);
       })

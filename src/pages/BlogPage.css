@@ -192,8 +192,13 @@ b {
     margin-top: 5px;
 }
 
+.sidebar-item.active {
+    font-weight: bold;
+    color: #8b5cf6;
+}
+
 .sidebar-link {
-    color: #333;
+    color: inherit;
     text-decoration: none;
     font-size: 0.9rem;
     cursor: pointer;
