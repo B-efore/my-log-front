@@ -1,10 +1,16 @@
 import logo from './../assets/earth.png';
-import profile from './../assets/mini왹.png'
+import defaultProfile from './../assets/mini왹.png'
 
 export function getLogoImage() {
     return logo;
 }
 
-export function getProfileImage() {
-    return profile;
+export function getDefaultImage() {
+    return defaultProfile;
+}
+
+export const getProfileImage = (key) => {
+      return key 
+    ? `https://mylog-image-bucket.s3.ap-northeast-2.amazonaws.com/${key}` 
+    : defaultProfile;
 }
