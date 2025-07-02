@@ -9,17 +9,18 @@ const OAuth2Callback = () => {
     const { setLogin } = useAuth();
   
     useEffect(() => {
+      console.log("Oauth2Callback");
       const fetchAccessToken = async () => {
         try {
           const res = await reissueToken();
-  
           const accessToken = res.data.accessToken;
           setLogin(accessToken);
   
           navigate("/");
         } catch (error) {
           showErrorToast("로그인에 실패했습니다. 다시 시도해주세요.");
-          navigate("/login");
+          console.log(error);
+          // navigate("/login");
         }
       };
   

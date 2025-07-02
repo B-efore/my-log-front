@@ -13,6 +13,8 @@ import { showErrorToast } from "../../util/toast";
 
 const Login = () => {
 
+  const oAuth2BaseUrl = import.meta.env.VITE_OAUTH2_BASE_URL;
+
   const navigate = useNavigate();
   const { setLogin } = useAuth();
 
@@ -52,7 +54,8 @@ const Login = () => {
   }
 
   const handleSocialLogin = (provider) => {
-    window.location.href = `http://localhost:8080/oauth2/authorization/${provider}`;
+    console.log(`${oAuth2BaseUrl}/api/oauth2/authorization/${provider}`);
+    window.location.href = `${oAuth2BaseUrl}/api/oauth2/authorization/${provider}`;
   };
 
 
