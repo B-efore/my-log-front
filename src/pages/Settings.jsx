@@ -1,88 +1,118 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { updateMyInfo } from "../api/userService";
 import Header from "../components/header/Header";
 import './Settings.css'
 import { showErrorToast, showSuccessToast } from "../util/toast";
 import { deleteProfile, uploadImageToS3, uploadProfile } from "../api/imageService";
-import defaultProfileImage from "../assets/mini왹.png";
 import { useAuth } from "../context/AuthContext";
+import ProfileImageSection from "../components/setting/ProfileImageSection";
+import UserInfoForm from "../components/setting/UserInfoForm";
+
+const FILE_CONSTRAINTS = {
+    MAX_SIZE: 1 * 1024 * 1024,
+    ALLOWED_EXTENSIONS: ['jpg', 'jpeg', 'png']
+};
+
+const MESSAGES = {
+    INVALID_FILE_TYPE: '지원하지 않는 파일 형식입니다.',
+    FILE_TOO_LARGE: '최대 1MB까지 업로드 가능합니다.',
+    IMAGE_DELETE_SUCCESS: '이미지 삭제 완료!',
+    IMAGE_DELETE_FAILED: '이미지 삭제 실패',
+    IMAGE_UPLOAD_SUCCESS: '이미지가 변경 되었습니다.',
+    IMAGE_UPLOAD_FAILED: '이미지 업로드에 실패했습니다.',
+    SAVE_SUCCESS: '정보가 성공적으로 저장되었습니다.',
+    SAVE_FAILED: '정보 저장에 실패했습니다.'
+};
 
 const Settings = () => {
 
-    const MAX_SIZE = 1 * 1024 * 1024;
-    const ALLOWED_EXTENSIONS = ["jpg", "jpeg", "png"];
-
     const { userId, userImage, username, bio, setUserImage, setUsername, setBio } = useAuth();
+    const [formData, setFormData] = useState({username: username || '', bio: bio || ''});
     const fileInputRef = useRef(null);
 
-    const isValidFile = (file) => {
+    const validateFile = (file) => {
+
+        if (!file) return false;
+
         const extension = file.name.split(".").pop()?.toLowerCase();
 
-        if (!extension || !ALLOWED_EXTENSIONS.includes(extension)) {
-            showErrorToast("지원하지 않는 파일 형식입니다.");
+        if (!extension || !FILE_CONSTRAINTS.ALLOWED_EXTENSIONS.includes(extension)) {
+            showErrorToast(MESSAGES.INVALID_FILE_TYPE);
             return false;
         }
 
         if (file.size > MAX_SIZE) {
-            showErrorToast("최대 1MB까지 업로드 가능합니다.");
+            showErrorToast(MESSAGES.FILE_TOO_LARGE);
             return false;
         }
 
         return true;
     };
 
-    const handleClickImage = () => {
-        fileInputRef.current.click();
+    const handleImageClick = () => {
+        fileInputRef.current?.click();
     }
 
-    const handleFileDelete = async () => {
+    const handleInputChange = (field, value) => {
+        setFormData(prev => ({
+            ...prev,
+            [field]: value
+        }));
+    }
+
+    const handleImageDelete = async () => {
         try {
             const res = await deleteProfile(userId);
             console.log(res);
-            showSuccessToast("이미지 삭제 완료!");
+            showSuccessToast(MESSAGES.IMAGE_DELETE_SUCCESS);
         } catch (err) {
             console.log(err);
-            showErrorToast("이미지 삭제 실패");
+            showErrorToast(MESSAGES.IMAGE_DELETE_FAILED);
         }
     }
 
-    const handleFileChange = async (e) => {
+    const handleImageUpload= async (e) => {
         const file = e.target.files?.[0];
-        
-        if (!file || !isValidFile(file)) return;
+
+        if (!file || !validateFile(file)) {
+            e.target.value = '';
+            return;
+        }
 
         try {
             const res = await uploadProfile(file);
-            console.log(res);
-
             const { presignedUrl } = res?.data;
 
-            const s3Res = await uploadImageToS3(presignedUrl, file);
-            console.log(s3Res);
-
+            await uploadImageToS3(presignedUrl, file);
             const preview = presignedUrl.split("?")[0];
             setUserImage(preview);
-            showSuccessToast("이미지가 변경 되었습니다.");
+            showSuccessToast(IMAGE_UPLOAD_SUCCESS);
         } catch (err) {
-            console.log("프로필 업로드 실패", err);
-            showErrorToast("이미지 업로드에 실패했습니다.");
+            console.log(err);
+            showErrorToast(IMAGE_UPLOAD_FAILED);
         }
     }
 
     const handleConfirm = async (e) => {
         e.preventDefault()
 
-        const requestBody = { username, bio };
-
         try {
-            const res = await updateMyInfo(requestBody);
+            const res = await updateMyInfo(formData);
             localStorage.setItem("userInfo", JSON.stringify(res.data));
-            console.log(res.data);
-            showSuccessToast("성공적으로 저장되었습니다.");
+            setUsername(formData.username);
+            setBio(formData.bio);
+            showSuccessToast(MESSAGES.SAVE_SUCCESS);
         } catch (error) {
-            showErrorToast("정보 저장에 실패했습니다.");
-            console.error("정보 업데이트 실패");
+            showErrorToast(MESSAGES.SAVE_FAILED);
+            console.error(error);
         }
+    }
+
+    const handleCancel = () => {
+        setFormData({
+            username: username || '',
+            bio: bio || ''
+        })
     }
 
     return (
@@ -90,46 +120,21 @@ const Settings = () => {
             <Header />
             <div className="settings-body">
                 <div className="setting-container" >
-                    <div className="profile-div">
-                        <h4>프로필 사진</h4>
 
-                        <img
-                            src={userImage || defaultProfileImage}
-                            alt="profile"
-                            className="settings-profile-image"
-                            onClick={handleClickImage}
-                        />
-
-                        <button onClick={handleFileDelete}>이미지 삭제</button>
-
-                        <input
-                            type="file"
-                            accept="image/*"
-                            ref={fileInputRef}
-                            onChange={handleFileChange}
-                            style={{ display: "none" }}
-                        />
-                    </div>
-                    <form onSubmit={handleConfirm} >
-                        <div className="username-div">
-                            <h4>닉네임</h4>
-                            <input
-                                value={username || ""}
-                                onChange={(e) => setUsername(e.target.value)}
-                            />
-                        </div>
-                        <div className="bio-div">
-                            <h4>소개글</h4>
-                            <input
-                                value={bio || ""}
-                                onChange={(e) => setBio(e.target.value)}
-                            />
-                        </div>
-                        <div className="setting-form-btn-div">
-                            <button type="submit">확인</button>
-                            <button type="button">취소</button>
-                        </div>
-                    </form>
+                    <ProfileImageSection
+                        userImage={userImage}
+                        onImageClick={handleImageClick}
+                        onImageDelete={handleImageDelete}
+                        onImageUpload={handleImageUpload}
+                        fileInputRef={fileInputRef}
+                    />
+                    
+                    <UserInfoForm
+                        formData={formData}
+                        onInputChange={handleInputChange}
+                        onSubmit={handleConfirm}
+                        onCancel={handleCancel}
+                    />
                 </div>
             </div>
         </div>

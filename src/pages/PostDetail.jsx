@@ -150,7 +150,7 @@ const PostDetail = () => {
           />
           <div>
             <div className="author-name" onClick={() => navigate(`/${post.user.userId}`)}>{post.user.username}</div>
-            <div className="author-bio">안녕하세요. 테스트 소개입니다.</div>
+            <div className="author-bio">{post.user.bio}</div>
           </div>
         </div>
       </div>
