@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { updateMyInfo } from "../api/userService";
 import Header from "../components/header/Header";
 import './Settings.css'
@@ -26,9 +26,30 @@ const MESSAGES = {
 
 const Settings = () => {
 
-    const { userId, userImage, username, bio, setUserImage, setUsername, setBio } = useAuth();
-    const [formData, setFormData] = useState({username: username || '', bio: bio || ''});
+    const { userId, userImage, username, bio,
+        setUserImage, setUsername, setBio,
+        isLoading, isAuthenticated } = useAuth();
+    const [formData, setFormData] = useState({ username: '', bio: '' });
     const fileInputRef = useRef(null);
+
+    useEffect(() => {
+        if (isAuthenticated) {
+            setFormData({
+                username: username || '',
+                bio: bio || ''
+            })
+        }
+    }, [username, bio, isAuthenticated]);
+
+    const updateLocalStorageUserInfo = (updates) => {
+        try {
+            const currentUserInfo = JSON.parse(localStorage.getItem('userInfo') || '{}');
+            const updatedUserInfo = { ...currentUserInfo, ...updates };
+            localStorage.setItem('userInfo', JSON.stringify(updatedUserInfo));
+        } catch (err) {
+            console.error(err);
+        }
+    }
 
     const validateFile = (file) => {
 
@@ -41,7 +62,7 @@ const Settings = () => {
             return false;
         }
 
-        if (file.size > MAX_SIZE) {
+        if (file.size > FILE_CONSTRAINTS.MAX_SIZE) {
             showErrorToast(MESSAGES.FILE_TOO_LARGE);
             return false;
         }
@@ -61,9 +82,13 @@ const Settings = () => {
     }
 
     const handleImageDelete = async () => {
+
+        if (userImage == null) return;
+
         try {
-            const res = await deleteProfile(userId);
-            console.log(res);
+            await deleteProfile(userId);
+            setUserImage(null);
+            updateLocalStorageUserInfo({userImage: null});
             showSuccessToast(MESSAGES.IMAGE_DELETE_SUCCESS);
         } catch (err) {
             console.log(err);
@@ -71,11 +96,10 @@ const Settings = () => {
         }
     }
 
-    const handleImageUpload= async (e) => {
+    const handleImageUpload = async (e) => {
         const file = e.target.files?.[0];
 
-        if (!file || !validateFile(file)) {
-            e.target.value = '';
+        if (!validateFile(file)) {
             return;
         }
 
@@ -86,10 +110,12 @@ const Settings = () => {
             await uploadImageToS3(presignedUrl, file);
             const preview = presignedUrl.split("?")[0];
             setUserImage(preview);
-            showSuccessToast(IMAGE_UPLOAD_SUCCESS);
+            updateLocalStorageUserInfo({userImage: preview});
+
+            showSuccessToast(MESSAGES.IMAGE_UPLOAD_SUCCESS);
         } catch (err) {
             console.log(err);
-            showErrorToast(IMAGE_UPLOAD_FAILED);
+            showErrorToast(MESSAGES.IMAGE_UPLOAD_FAILED);
         }
     }
 
@@ -98,9 +124,12 @@ const Settings = () => {
 
         try {
             const res = await updateMyInfo(formData);
-            localStorage.setItem("userInfo", JSON.stringify(res.data));
+
+            const updatedInfo = { ...res.data, userImage: userImage};
+            localStorage.setItem("userInfo", JSON.stringify(updatedInfo));
             setUsername(formData.username);
             setBio(formData.bio);
+
             showSuccessToast(MESSAGES.SAVE_SUCCESS);
         } catch (error) {
             showErrorToast(MESSAGES.SAVE_FAILED);
@@ -121,20 +150,28 @@ const Settings = () => {
             <div className="settings-body">
                 <div className="setting-container" >
 
-                    <ProfileImageSection
-                        userImage={userImage}
-                        onImageClick={handleImageClick}
-                        onImageDelete={handleImageDelete}
-                        onImageUpload={handleImageUpload}
-                        fileInputRef={fileInputRef}
-                    />
-                    
-                    <UserInfoForm
-                        formData={formData}
-                        onInputChange={handleInputChange}
-                        onSubmit={handleConfirm}
-                        onCancel={handleCancel}
-                    />
+                    {isLoading ? (
+                        <div className="loading-container">
+                            <p>정보를 불러오는 중</p>
+                        </div>
+                    ) : (
+                        <>
+                            <ProfileImageSection
+                                userImage={userImage}
+                                onImageClick={handleImageClick}
+                                onImageDelete={handleImageDelete}
+                                onImageUpload={handleImageUpload}
+                                fileInputRef={fileInputRef}
+                            />
+
+                            <UserInfoForm
+                                formData={formData}
+                                onInputChange={handleInputChange}
+                                onSubmit={handleConfirm}
+                                onCancel={handleCancel}
+                            />
+                        </>
+                    )}
                 </div>
             </div>
         </div>

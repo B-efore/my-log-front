@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { FiSearch, FiEdit3 } from 'react-icons/fi';
+import { getDefaultImage } from "../../util/get-images";
 import { getLogoImage, getSearchBtnImage, getSearchHoverBtnImage, getWriteBtnImage } from '../../util/get-images';
 import { useAuth } from '../../context/AuthContext';
 import HeaderDropdown from './HeaderDropDown';
@@ -70,7 +70,7 @@ const Header = ({
                                     />
                                     <div className="profile-wrapper">
                                         <img
-                                            src={userImage}
+                                            src={userImage || getDefaultImage()}
                                             alt="profile"
                                             className="header-profile-image"
                                             onClick={toggleDropdown}
