@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { FiSearch, FiEdit3 } from 'react-icons/fi';
-import { getLogoImage } from '../../util/get-images';
+import { getLogoImage, getSearchBtnImage, getSearchHoverBtnImage, getWriteBtnImage } from '../../util/get-images';
 import { useAuth } from '../../context/AuthContext';
 import HeaderDropdown from './HeaderDropDown';
 import './Header.css';
@@ -55,10 +55,19 @@ const Header = ({
                 <div className="header-right">
                     {rightChild ? rightChild : (
                         <>
-                            <FiSearch className="icon-button" title="검색" />
+                            <img
+                                className="icon-button"
+                                src={getSearchHoverBtnImage()}
+                                alt="관찰하다"
+                            />
                             {isLoggedIn ? (
                                 <>
-                                    <FiEdit3 className="icon-button" title="편집" onClick={goWrite} />
+                                    <img
+                                        className="icon-button"
+                                        src={getWriteBtnImage()}
+                                        alt="쏘다"
+                                        onClick={goWrite}
+                                    />
                                     <div className="profile-wrapper">
                                         <img
                                             src={userImage}

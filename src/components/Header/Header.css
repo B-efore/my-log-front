@@ -51,14 +51,15 @@
 }
 
 .icon-button {
-    display: flex;
-    font-size: 1.8rem;
-    border-radius: 50%;
+    width: 2rem;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    cursor: pointer;
     transition: background-color var(--transition);
 }
 
 .icon-button:hover {
-    background-color: var(--color-sub-light);
+    opacity: 0.8;
 }
 
 .profile-wrapper {
