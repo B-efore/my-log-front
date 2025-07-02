@@ -2,7 +2,7 @@ const BlogPostList = ({ posts, onPostClick }) => {
     if (!posts || posts.length === 0) {
         return (
             <div className="no-posts-message">
-                게시글이 없습니다.
+                행성 점령도 0% 분발하라.
             </div>
         );
     }

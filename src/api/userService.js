@@ -11,3 +11,14 @@ export const getMyInfo = async () => {
 export const getUser = async (userId) => {
     return await axios.get(`/users/${userId}`);
 }
+
+export const searchWithUsername = async (username, page = 0, size = 10) => {
+    console.log("username: ", username);
+    return await axios.get("/users/search", {
+        params: {
+            username,
+            page,
+            size,
+        },
+    });
+}

@@ -8,6 +8,16 @@
   src: url("/AppleSDGothicNeo-Bold.ttf");
 }
 
+@font-face {
+  font-family: "Star";
+  src: url("/PF.ttf");
+}
+
+@font-face {
+  font-family: "Star-B";
+  src: url("/PF-B.ttf");
+}
+
 html, body {
   margin: 0px;
   width: 100%;

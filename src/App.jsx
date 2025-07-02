@@ -16,6 +16,7 @@ import ResetPassword from './pages/auth/ResetPassword';
 import OAuth2Callback from './pages/auth/OAuth2Callback';
 import Settings from './pages/Settings';
 import BlogPage from './pages/BlogPage';
+import Search from './pages/Search';
 
 function App() {
 
@@ -34,6 +35,8 @@ function App() {
         <Route path="/password/reset" element={<ResetPassword />} />
 
         <Route path="/settings" element={<Settings />} />
+
+        <Route path="/search" element={<Search />} />
 
         <Route path="/:userId" element={<BlogPage />} />
 

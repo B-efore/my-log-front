@@ -1,0 +1,94 @@
+.search-root {
+    width: 100vw;
+    height: 100vh;
+    padding-top: 3.4rem;
+}
+
+.search-container {
+    display: flex;
+    flex-direction: column;
+    width: 90vw;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.search-bar-t {
+    display: flex;
+    width: 50vw;
+    height: fit-content;
+    padding: 0.2rem;
+    border: 2px solid var(--color-box-main);
+    border-radius: 5px;
+    gap: 1rem;
+    margin: 2rem 0;
+}
+
+.search-bar-icon {
+    width: 2rem;
+}
+
+.search-bar-input {
+    width: 100%;
+    border: none;
+    font-size: 1rem;
+}
+
+.search-bar-input:focus {
+  outline: none;
+}
+
+.no-search-result-message {
+    margin-top: 5rem;
+}
+
+.no-search-result-message p{
+    font-family: 'Star';
+    font-size: 2rem;
+    color: green;
+}
+
+.no-search-result-message img {
+    width: fit-content;
+}
+
+.search-results-user {
+  display: flex;
+  flex-direction: column;
+}
+
+.result-user-box:last-of-type {
+    border-bottom: none;
+}
+
+.result-user-box {
+    display: flex;
+    width: 50vw;
+    flex-direction: row;
+    align-items: center;
+    text-align: left;
+    gap: 1.5rem;
+    border-bottom: 1px solid silver;
+    padding: 0.5rem 0;
+    cursor: pointer;
+}
+
+.result-user-img {
+    flex: 1;
+    width: 3rem;
+    border: 2px solid var(--color-box-main);
+    border-radius: 50%;
+}
+
+.result-user-name {
+    flex: 4;
+    font-size: 1rem;
+    font-weight: bolder;
+}
+
+.result-user-bio {
+    flex: 8;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

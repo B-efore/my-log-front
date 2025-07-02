@@ -3,6 +3,7 @@ import defaultProfile from './../assets/mini왹.png'
 import searchBtn from './../assets/search.png'
 import searchAlienBtn from './../assets/search-alien.png'
 import writeBtn from './../assets/write.png'
+import notFoundImg from './../assets/not_found.png'
 
 export function getLogoImage() {
     return logo;
@@ -10,6 +11,10 @@ export function getLogoImage() {
 
 export function getDefaultImage() {
     return defaultProfile;
+}
+
+export function getNotFound() {
+    return notFoundImg;
 }
 
 export const getProfileImage = (key) => {

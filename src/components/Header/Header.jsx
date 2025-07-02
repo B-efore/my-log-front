@@ -17,6 +17,7 @@ const Header = ({
     const navigate = useNavigate();
     const goHome = () => navigate("/");
     const goLogin = () => navigate("/login");
+    const goSearch = () => navigate("/search");
     const goWrite = () => navigate("/write");
     const { userId, username, isLoggedIn, userImage, setLogout } = useAuth();
 
@@ -59,6 +60,7 @@ const Header = ({
                                 className="icon-button"
                                 src={getSearchHoverBtnImage()}
                                 alt="관찰하다"
+                                onClick={goSearch}
                             />
                             {isLoggedIn ? (
                                 <>
