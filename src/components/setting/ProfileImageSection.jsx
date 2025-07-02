@@ -25,6 +25,10 @@ const ProfileImageSection = ({
             이미지 삭제
         </button>
 
+        <p className="setting-profile-image-explain">
+            파일 업로드: jpg, jpeg, png 및 1MB 이하의 파일만 지원
+        </p>
+
         <input
             type="file"
             accept="image/*"

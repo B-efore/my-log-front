@@ -18,8 +18,22 @@
     width: 150px;
     aspect-ratio: 1;
     border-radius: 50%;
-    border: 1px solid var(--color-box-main);
+    border: 2px solid var(--color-box-main);
     cursor: pointer;
+}
+
+.image-delete-btn {
+    width: fit-content;
+    font-size: 0.8rem;
+    color: white;
+    border-radius: 5px;
+    border: none;
+    background-color: var(--color-main);
+}
+
+.setting-profile-image-explain {
+    font-size: 0.9rem;
+    color: grey;
 }
 
 .setting-container {
