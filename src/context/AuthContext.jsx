@@ -2,6 +2,7 @@ import { createContext, useState, useEffect, useContext } from "react";
 import { jwtDecode } from "jwt-decode";
 import { isTokenExpired } from "../util/jwt";
 import { getMyInfo } from "../api/userService";
+import { getProfileImage } from "../util/get-images";
 
 export const AuthContext = createContext();
 
@@ -77,7 +78,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const setUserInfo = (data) => {
-    setUserImage(`https://mylog-image-bucket.s3.ap-northeast-2.amazonaws.com/${data.imageKey}`);
+    setUserImage(getProfileImage(data.imageKey));
     setUsername(data.username);
     setBio(data.bio);
   }

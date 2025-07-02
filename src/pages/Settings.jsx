@@ -9,8 +9,27 @@ import { useAuth } from "../context/AuthContext";
 
 const Settings = () => {
 
+    const MAX_SIZE = 1 * 1024 * 1024;
+    const ALLOWED_EXTENSIONS = ["jpg", "jpeg", "png"];
+
     const { userId, userImage, username, bio, setUserImage, setUsername, setBio } = useAuth();
     const fileInputRef = useRef(null);
+
+    const isValidFile = (file) => {
+        const extension = file.name.split(".").pop()?.toLowerCase();
+
+        if (!extension || !ALLOWED_EXTENSIONS.includes(extension)) {
+            showErrorToast("지원하지 않는 파일 형식입니다.");
+            return false;
+        }
+
+        if (file.size > MAX_SIZE) {
+            showErrorToast("최대 1MB까지 업로드 가능합니다.");
+            return false;
+        }
+
+        return true;
+    };
 
     const handleClickImage = () => {
         fileInputRef.current.click();
@@ -29,7 +48,8 @@ const Settings = () => {
 
     const handleFileChange = async (e) => {
         const file = e.target.files?.[0];
-        if (!file) return;
+        
+        if (!file || !isValidFile(file)) return;
 
         try {
             const res = await uploadProfile(file);

@@ -11,6 +11,7 @@ import { useCategories } from "../hooks/useCategories";
 import { useTags } from "../hooks/useTags";
 import BlogHome from "../components/blog/BlogHome";
 import BlogSidebar from "../components/blog/BlogSidebar";
+import BlogPostList from "../components/blog/BlogPostList";
 import Pagination from "../components/pagination/Pagination";
 import "./BlogPage.css"
 
@@ -101,15 +102,10 @@ const BlogPage = () => {
 
                     {showPosts
                         ?
-                        <div className="blog-posts">
-                            {posts.map((post) => (
-                                <article key={post.postId} className="blog-post">
-                                    <div className="post-date">2025.06.11</div>
-                                    <h2 className="post-title" onClick={() => navigate(`/posts/${post.postId}`)}>{post.title}</h2>
-                                    {post.contentPreview && <p className="post-content" onClick={() => navigate(`/posts/${post.postId}`)}>{post.contentPreview}</p>}
-                                </article>
-                            ))}
-                        </div>
+                        <BlogPostList
+                            posts={posts}
+                            onPostClick={(postId) => navigate(`/posts/${postId}`)}
+                        />
                         : <></>
                     }
                     <Pagination

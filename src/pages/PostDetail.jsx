@@ -8,13 +8,13 @@ import CommentInput from "../components/comment/CommentInput";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import Tag from "../components/tag/Tag";
-import { getProfileImage } from "../util/get-images";
 import { formatDate } from "../util/formatDate";
 import ConfirmModal from "../components/common/ConfirmModal";
 import CommentList from "../components/comment/CommentList";
 
 import "./PostDetail.css"
 import { showErrorToast, showSuccessToast } from "../util/toast";
+import { getProfileImage } from "../util/get-images";
 
 const PostDetail = () => {
 
@@ -145,7 +145,7 @@ const PostDetail = () => {
         <div className="post-author">
           <img
             className="author-img"
-            src={`https://mylog-image-bucket.s3.ap-northeast-2.amazonaws.com/${post.user.profileImageUrl}` || getProfileImage()}
+            src={getProfileImage(post.user.profileImageUrl)}
             alt={`${post.user.username}의 프로필 이미지`}
           />
           <div>
