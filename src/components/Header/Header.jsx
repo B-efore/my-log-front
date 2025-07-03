@@ -91,7 +91,7 @@ const Header = ({
                                     </div>
                                 </>
                             ) : (
-                                <button className="header-login-button" onClick={goLogin}>로그인</button>
+                                <button className="header-login-button" onClick={goLogin}>시작하다</button>
                             )}
                         </>
                     )}

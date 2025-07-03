@@ -78,19 +78,19 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
           <button className="login-button">
-            아이디로 로그인
+            발사!
           </button>
         </form>
       </div>
 
       <div className="login-links">
-        <Link to="/accountId/find">아이디 찾기</Link>
-        <Link to="/password/find">비밀번호 찾기</Link>
-        <Link to="/register" replace>회원가입</Link>
+        <Link to="/accountId/find">아이디를 보다</Link>
+        <Link to="/password/find">비밀번호를 보다</Link>
+        <Link to="/register" replace>회원이 되다</Link>
       </div>
 
       <div className="login-divider">
-        <span>간편 로그인</span>
+        <span>간편!</span>
       </div>
 
       <div className="social-buttons">

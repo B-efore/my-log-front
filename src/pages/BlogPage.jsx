@@ -16,8 +16,8 @@ import Pagination from "../components/pagination/Pagination";
 import "./BlogPage.css"
 
 const TAB_CONFIG = [
-    { key: 'home', label: '홈' },
-    { key: 'posts', label: '게시글' }
+    { key: 'home', label: '고향' },
+    { key: 'posts', label: '적은것' }
 ];
 
 const BlogPage = () => {
@@ -125,7 +125,7 @@ const BlogPage = () => {
             case 'posts':
                 return renderPostsContent();
             default:
-                return <div>페이지를 찾을 수 없습니다.</div>
+                return <div>우주 미아가 되다.</div>
         }
     }
 

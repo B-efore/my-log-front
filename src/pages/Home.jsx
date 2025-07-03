@@ -19,7 +19,7 @@ const Home = () => {
                         className="mylog-btn"
                         onClick={() => navigate(`/${userId}`)}
                     >
-                        나의 로그
+                        기록을 보다
                     </button>
                 ) : (
                     <button
