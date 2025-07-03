@@ -31,8 +31,6 @@ const Login = () => {
 
       const res = await login(requestBody);
 
-      console.log(res);
-
       if (res.status === 200) {
         setLogin(res.data.accessToken);
         navigate("/");
@@ -40,11 +38,8 @@ const Login = () => {
         showErrorToast("이메일 또는 비밀번호가 올바르지 않습니다.");
       }
     } catch (error) {
-      console.log("응답 상태:", error.response?.status);
-
-      console.error("서버 응답 없음 또는 기타 오류", error);
-
-      showErrorToast("이메일 또는 비밀번호가 올바르지 않습니다.");
+      console.log("응답 상태:", error);
+      showErrorToast("서버 에러");
     }
   }
 

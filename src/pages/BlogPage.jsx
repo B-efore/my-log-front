@@ -68,7 +68,7 @@ const BlogPage = () => {
 
     useEffect(() => {
         loadPostsTabData();
-    }, [loadPostsTabData]);
+    }, [loadPostsTabData, activeTab]);
 
     const renderHomeContent = () => {
         if (userLoading || !user) {

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { getPost, updatePost } from "../api/postService";
 import { getCategories } from "../api/categoryService";
 import Header from "../components/header/Header";
@@ -12,6 +12,9 @@ import "./PostWrite.css";
 import { useAuth } from "../context/AuthContext";
 
 const PostEdit = () => {
+
+  const location = useLocation();
+  const postFromState = location.state?.post;
 
   const { userId } = useAuth();
   const { postId } = useParams();
@@ -36,25 +39,36 @@ const PostEdit = () => {
   }, [userId]);
 
   useEffect(() => {
-    if (postId) {
-      getPost(postId)
-        .then((res) => {
-          setPost({
-            title: res.data.title,
-            content: res.data.content,
-            tags: res.data.tags.map(tag => tag.name),
-            categoryId: res.data.category === null ? 0 : res.data.category.categoryId,
-            visibility: res.data.visibility,
-            pinned: res.data.pinned,
-          });
-          setLoading(false);
-        })
-        .catch((err) => {
-          console.log(err);
-          ToastMessage("게시글을 불러오는데 실패했습니다.", { type: "error" });
+
+    if (!postFromState) {
+      const fetchPost = async () => {
+        const res = await getPost(postId);
+        setPost({
+          title: res.data.title,
+          content: res.data.content,
+          tags: res.data.tags.map(tag => tag.name),
+          categoryId: res.data.category === null ? 0 : res.data.category.categoryId,
+          visibility: res.data.visibility,
+          pinned: res.data.pinned,
+        });
+      }
+
+      if (postId) {
+        fetchPost();
+      }
+    } else {
+      console.log(postFromState);
+      setPost({
+          title: postFromState.title,
+          content: postFromState.content,
+          tags: postFromState.tags.map(tag => tag.name),
+          categoryId: postFromState.category === null ? 0 : postFromState.category.categoryId,
+          visibility: postFromState.visibility,
+          pinned: postFromState.pinned,
         });
     }
-  }, [postId, setPost]);
+
+  }, [postFromState]);
 
   const handleSave = async () => {
     const { valid, message } = validatePost();

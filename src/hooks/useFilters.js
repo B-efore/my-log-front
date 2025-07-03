@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export const useFilters = (fetchPostsByFilter, updatePagination) => {
 
+    const render = useRef(false);
     const [selectedCategoryId, setSelectedCategoryId] = useState(0);
     const [selectedTagIds, setSelectedTagIds] = useState([]);
 
@@ -18,6 +19,14 @@ export const useFilters = (fetchPostsByFilter, updatePagination) => {
     };
 
     useEffect(() => {
+
+        if (!render.current) {
+            render.current = false;
+            return;
+        }
+
+        if (selectedCategoryId == null || selectedTagIds == null) return;
+
         const applyFilters = async () => {
             try {
                 const res = await fetchPostsByFilter(selectedCategoryId, selectedTagIds);
@@ -26,6 +35,7 @@ export const useFilters = (fetchPostsByFilter, updatePagination) => {
                 console.log(error);
             }
         };
+
 
         applyFilters();
     }, [selectedCategoryId, selectedTagIds]);

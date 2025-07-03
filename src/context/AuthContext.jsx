@@ -88,6 +88,7 @@ export const AuthProvider = ({ children }) => {
         userInfo = getFromStorage(STORAGE_KEYS.USER_INFO);
         if (userInfo) {
           updateUserInfo(userInfo);
+          return userInfo;
         }
       }
 
