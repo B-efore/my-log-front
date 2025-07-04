@@ -12,7 +12,11 @@
     --transition: 0.3s ease;
     --border-radius: 10px;
 
-    --blog-home-line: #d8dfdb;
+    --blog-home-line: #dde6e1;
+
+    --alien-green-hover: #0e4c11;
+    --alien-green: #1E6E22;
+    --alien-green-light: #BBE4A9;
 
     --font-title: 2.5rem;
     --font-small: 0.9rem;

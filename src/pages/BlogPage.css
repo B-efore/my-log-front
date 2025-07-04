@@ -310,3 +310,45 @@ b {
     stroke: #1989c2;
     stroke-width: 1px;
 }
+
+.follow-btn {
+    width: 100%;
+    margin: 1rem 0;
+    padding: 0.3rem 0;
+    font-size: 1.2rem;
+    color: white;
+    background-color: var(--alien-green);
+    border: none;
+    border-radius: 5px;
+    font-family: 'Star';
+}
+
+.follow-btn:hover{
+    transition: background-color var(--transition);
+    background-color: var(--alien-green-hover);
+}
+
+.follow-section {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.follow-section p {
+    font-size: 1rem;
+    padding-top: 0.2rem;
+    margin: 0;
+    font-family: 'Star';
+    color: var(--alien-green-hover);
+}
+
+.follow-section p:hover {
+    color: var(--alien-green);
+    cursor: pointer;
+}
+
+.follow-section strong {
+    font-size: 1rem;
+    font-family: 'Star-B';
+    color: var(--alien-green-hover);
+}
