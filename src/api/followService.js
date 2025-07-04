@@ -12,6 +12,10 @@ export const checkFollowing = async (currentUserId, targetUserId) => {
     return axios.get(`/users/${currentUserId}/followings/${targetUserId}`)
 }
 
+export const getFollowCounts = async (userId) => {
+    return axios.get(`/users/${userId}/follows`);
+}
+
 export const getFollowers = async (userId) => {
     return axios.get(`/users/${userId}/followers`);
 }

@@ -5,7 +5,7 @@ import remarkGfm from "remark-gfm";
 import CalendarHeatmap from 'react-calendar-heatmap';
 import 'react-calendar-heatmap/dist/styles.css';
 import React, { useCallback, useEffect, useState } from "react";
-import { follow, unfollow, checkFollowing, getFollowers, getFollowings } from "../../api/followService";
+import { follow, unfollow, checkFollowing, getFollowers, getFollowings, getFollowCounts } from "../../api/followService";
 import { showErrorToast, showSuccessToast } from "../../util/toast";
 import { HttpStatusCode } from "axios";
 import { useAuth } from "../../context/AuthContext";
@@ -14,12 +14,23 @@ import { useAuth } from "../../context/AuthContext";
 const BlogHome = ({ user, pinnedPosts, activities }) => {
     const { userId, isLoggedIn } = useAuth();
     const [followStatue, setFollowStatue] = useState(null);
-    const [followers, setFollowers] = useState([]);
-    const [followings, setFollowings] = useState([]);
+    const [followerCount, setFollowerCount] = useState(0);
+    const [followingCount, setFollowingCount] = useState(0);
 
     const navigate = useNavigate();
     const [start, setStart] = useState(null);
     const [end, setEnd] = useState(null);
+
+    const fetchFollowData = useCallback(async () => {
+        try {
+            const res = await getFollowCounts(userId);
+            console.log("값: ", res.data);
+            setFollowerCount(res.data.followerCount);
+            setFollowingCount(res.data.followingCount);
+        } catch (error) {
+            console.error(error);
+        }
+    }, [userId]);
 
     useEffect(() => {
         const today = new Date();
@@ -31,26 +42,10 @@ const BlogHome = ({ user, pinnedPosts, activities }) => {
     }, []);
 
     useEffect(() => {
-        const fetchFollowData = async () => {
-            try {
-                const [followersRes, followingsRes] = await Promise.all([
-                    getFollowers(userId),
-                    getFollowings(userId),
-                ]);
-
-                setFollowers(followersRes.data.follows);
-                setFollowings(followingsRes.data.follows);
-            } catch (error) {
-                console.error(error);
-            }
-        };
-
         if (userId) {
             fetchFollowData();
         }
-
-    }, [userId]);
-
+    }, [userId, fetchFollowData]);
 
     const checkFollowStatus = useCallback(async () => {
         try {
@@ -74,6 +69,10 @@ const BlogHome = ({ user, pinnedPosts, activities }) => {
         } else {
             handleFollow(e);
         }
+
+        setTimeout(() => {
+            fetchFollowData();
+        }, 500);
     }
 
     const handleFollow = async (e) => {
@@ -126,8 +125,8 @@ const BlogHome = ({ user, pinnedPosts, activities }) => {
                     <></>
                 }
                 <div className="follow-section">
-                    <p><strong>{followers.length}</strong> 잡혔다!</p>
-                    <p><strong>{followings.length}</strong>  잡았다!</p>
+                    <p><strong>{followerCount}</strong> 잡혔다!</p>
+                    <p><strong>{followingCount}</strong>  잡았다!</p>
                 </div>
             </div>
             <div className="blog-profile-activity-section">
