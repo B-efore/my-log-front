@@ -27,7 +27,7 @@ const BlogPage = () => {
     const activeTab = searchParams.get('tab') || 'home';
     const navigate = useNavigate();
 
-    const { user, pinnedPosts, loading: userLoading } = useUserProfile(userId);
+    const { user, pinnedPosts, activityDate, loading: userLoading } = useUserProfile(userId);
     const { posts, loading: postsLoading, fetchAllPosts, fetchPostsWithFilter } = usePostList(userId);
     const { categories, lodaing: categoriesLoading, fetchCategoriesWithCount } = useCategories(userId);
     const { tags, loading: tagsLoading, fetchTagsWithCount } = useTags(userId);
@@ -75,7 +75,7 @@ const BlogPage = () => {
             return <div></div>
         }
 
-        return <BlogHome user={user} pinnedPosts={pinnedPosts} />
+        return <BlogHome user={user} pinnedPosts={pinnedPosts} activities={activityDate} />
     };
 
     const renderPostsContent = () => {

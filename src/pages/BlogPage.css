@@ -23,16 +23,18 @@
 
 .blog-container {
     display: flex;
-    flex-direction: column;
-    width: 100vw;
+    width: 100%;
     height: 100%;
+    flex-direction: column;
+    box-sizing: border-box;
+
 }
 
 .blog-home-body {
     display: flex;
     flex-direction: row;
     width: 90vw;
-    gap: 5rem;
+    gap: 4rem;
     margin: 0 1rem;
     padding-top: 3rem;
 }
@@ -48,7 +50,7 @@
     width: 100%;
     aspect-ratio: 1;
     border-radius: 50%;
-    border: 2px solid var(--color-box-main);
+    border: 2px solid var(--blog-home-line);
     cursor: pointer;
 }
 
@@ -66,7 +68,7 @@
     display: flex;
     flex-direction: column;
     text-align: left;
-    flex: 3;
+    flex: 4;
 }
 
 .blog-introduce-section,
@@ -79,7 +81,7 @@
 .blog-introduce-section {
     height: fit-content;
     padding: 0 1rem;
-    border: 1px solid #ccc;
+    border: 1px solid var( --blog-home-line);
     border-radius: 8px;
 }
 
@@ -100,7 +102,7 @@
 
 .main-post {
     height: 115px;
-    border: 1px solid #ccc;
+    border: 1px solid var( --blog-home-line);
     border-radius: 8px;
     padding: 15px;
     box-sizing: border-box;
@@ -137,10 +139,10 @@ span:hover {
 }
 
 .blog-activity-section {
-    flex: 1;
-    padding: 0 1rem;
-    border: 1px solid #ccc;
-    padding: 5rem;
+    width: 100%;
+    border: 1px solid var( --blog-home-line);
+    padding: 1rem 1rem;
+    box-sizing: border-box;
 }
 
 b {
@@ -266,7 +268,7 @@ b {
 
 .post-title:hover,
 .post-content:hover {
-    cursor:pointer;
+    cursor: pointer;
 }
 
 .pagination {
@@ -283,4 +285,28 @@ b {
 .page-nav:hover,
 .page-number:hover {
     color: #8b5cf6;
+}
+
+.color-empty {
+    fill: #f1f4f5;
+    stroke: rgb(226, 231, 233);
+    stroke-width: 1px;
+}
+
+.color-scale-1 {
+    fill: #cce4f0;
+    stroke: #c2d9e4;
+    stroke-width: 1px;
+}
+
+.color-scale-2 {
+    fill: #9dcfe8;
+    stroke: #95c7e0;
+    stroke-width: 1px;
+}
+
+.color-scale-3 {
+    fill: #1e91ca;
+    stroke: #1989c2;
+    stroke-width: 1px;
 }
