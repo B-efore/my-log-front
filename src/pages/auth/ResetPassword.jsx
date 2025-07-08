@@ -3,7 +3,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { getLogoImage } from "../../util/get-images";
 import { resetPassword } from "../../api/authService";
 import PasswordInput from "../../components/input/PasswordInput";
-import "./ResetPassword.css"
 import { showErrorToast, showSuccessToast } from "../../util/toast";
 
 const ResetPassword = () => {

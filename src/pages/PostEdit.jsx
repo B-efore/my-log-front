@@ -117,7 +117,7 @@ const PostEdit = () => {
           <>
             <button className="save-button" onClick={handleSave}>저장</button>
             <div className="publish-button-wrapper" >
-              <button className="publish-button" onClick={() => setShowModal(true)}>발행</button>
+            <button className="publish-button" onClick={() => setShowModal(true)}>발행</button>
 
               {showModal && (
                 <PostPublishModal

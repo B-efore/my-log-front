@@ -1,18 +1,11 @@
 import Header from "../components/header/Header";
-import Loading from "./Loading";
-import { useAuth } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
-import "./Home.css";
 import { useEffect, useState } from "react";
 import { getPosts } from "../api/postService";
-import PinnedPostList from "../components/blog/PinnedPostList";
 import MainPostList from "../components/blog/MainPostList";
 
 const Home = () => {
 
     const [mainPosts, setMainPosts] = useState([]);
-    const { userId, isLoggedIn } = useAuth();
-    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchMainPosts = async () => {
@@ -30,12 +23,10 @@ const Home = () => {
     return (
         <div>
             <Header />
-            <div className="home-body">
-                <div className="home-posts-section">
-                    {/* <h2 className="main-title">안녕!</h2> */}
-                    <ol className="home-blog-main-posts">
-                        <MainPostList posts={mainPosts} size={mainPosts.length} />
-                    </ol>
+            <div className="flex flex-col items-center justify-center gap-4 min-h-screen mt-14">
+                <div className="flex flex-col flex-1 w-full h-fit px-20 py-8 box-border">
+                    <h3 className="w-fit font-alien-violet mb-8">* ✯⌁(⚫︎◕  ‧̫ ◕⚫︎)⚡︎✰----◓ 방가 요정! 오늘 외계인은 ■■이야~ *</h3>
+                    <MainPostList posts={mainPosts} />
                 </div>
             </div>
         </div>
