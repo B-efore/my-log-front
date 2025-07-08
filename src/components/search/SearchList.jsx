@@ -1,4 +1,4 @@
-import { getDefaultImage, getNotFound } from "../../util/get-images";
+import { getDefaultImage, getNotFound, getProfileImage } from "../../util/get-images";
 
 const SearchList = ({ users, onUserClick, message }) => {
     if (!users || users.length === 0) {
@@ -33,7 +33,7 @@ const SearchResult = ({ user, onUserClick }) => {
         <div className="result-user-box" onClick={handleClick}>
             <img
                 className="result-user-img"
-                src={getDefaultImage(user.imageKey)}
+                src={getProfileImage(user.imageKey)}
             />
             <span className="result-user-name">{user.username}</span>
             <strong className="result-user-bio">{user.bio}</strong>

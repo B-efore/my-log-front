@@ -21,7 +21,7 @@ const PostDetail = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { postId } = useParams();
-  const { userId: loggedInUserId } = useAuth();
+  const { userId: loggedInUserId, isLoggedIn } = useAuth();
 
   const [post, setPost] = useState(location.state?.post || null);
   const [comments, setComments] = useState([]);
@@ -64,7 +64,7 @@ const PostDetail = () => {
   };
 
   const handleCreateComment = (newComment) => {
-    setComments((prev) => [...prev, newComment]);
+    setComments((prev) => [newComment, ...prev]);
   };
 
   const handleUpdateComment = (updatedComment) => {
@@ -82,7 +82,7 @@ const PostDetail = () => {
     await new Promise(resolve => setTimeout(resolve, 0));
 
     try {
-      await deleteComment(targetId);
+      await deleteComment(postId, targetId);
       setComments((prev) =>
         prev.map((c) =>
           c.commentId === targetId ? { ...c, content: "삭제된 댓글입니다." } : c
@@ -157,10 +157,11 @@ const PostDetail = () => {
 
       <div className="comment-input-section">
         <h3 className="comment-title">댓글 {comments.length}</h3>
-        <CommentInput className="comment-input-wrapped" postId={postId} onCommentSubmit={handleCreateComment} />
+        {isLoggedIn && (<CommentInput className="comment-input-wrapped" postId={postId} onCommentSubmit={handleCreateComment} />)}
         {comments.length > 0 && (
           <div className="comment-section">
             <CommentList
+              postId={postId}
               comments={comments}
               loggedInUserId={loggedInUserId}
               editingCommentId={editingCommentId}

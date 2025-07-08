@@ -19,13 +19,12 @@ const CommentInput = ({ postId, onCommentSubmit, mode = "create", initialValue =
             if (mode == "create") {
 
                 const requestBody = {
-                    postId: postId,
                     parentId: null,
                     content: content,
                     visibility: "공개",
                 };
 
-                const res = await createComment(requestBody);
+                const res = await createComment(postId, requestBody);
                 onCommentSubmit(res.data);
                 setContent("");
             } else {
@@ -35,7 +34,7 @@ const CommentInput = ({ postId, onCommentSubmit, mode = "create", initialValue =
                     visibility: "공개",
                 };
 
-                const res = await updateComment(commentId, requestBody);
+                const res = await updateComment(postId, commentId, requestBody);
                 onCommentSubmit(res.data);
             }
         } catch (err) {

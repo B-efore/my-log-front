@@ -2,6 +2,7 @@ import React from "react";
 import CommentItem from "./CommentItem";
 
 const CommentList = ({
+  postId,
   comments = [],
   loggedInUserId,
   editingCommentId,
@@ -15,6 +16,7 @@ const CommentList = ({
     <div className="comment-section">
       {comments.map((comment) => (
         <CommentItem
+          postId={postId}
           key={comment.commentId}
           comment={comment}
           loggedInUserId={loggedInUserId}
