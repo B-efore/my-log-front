@@ -1,10 +1,10 @@
 import { getDefaultImage, getNotFound } from "../../util/get-images";
 
-const SearchList = ({ users, onUserClick }) => {
+const SearchList = ({ users, onUserClick, message }) => {
     if (!users || users.length === 0) {
         return (
             <div className="no-search-result-message">
-                <p>! 생명체 신호 없음 !</p>
+                <p>{message}</p>
                 <img src={getNotFound()}/>
             </div>
         );

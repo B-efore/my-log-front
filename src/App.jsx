@@ -17,6 +17,8 @@ import OAuth2Callback from './pages/auth/OAuth2Callback';
 import Settings from './pages/Settings';
 import BlogPage from './pages/BlogPage';
 import Search from './pages/Search';
+import FollowerPage from './pages/FollowerPage';
+import FollowingPage from './pages/FollowingPage';
 
 function App() {
 
@@ -39,6 +41,8 @@ function App() {
         <Route path="/search" element={<Search />} />
 
         <Route path="/:userId" element={<BlogPage />} />
+        <Route path="/:userId/followings" element={<FollowingPage />}/>
+        <Route path="/:userId/followers" element={<FollowerPage />} />
 
         <Route path="/write" element={<PostWrite />} />
         <Route path="/posts/:postId" element={<PostDetail />} />

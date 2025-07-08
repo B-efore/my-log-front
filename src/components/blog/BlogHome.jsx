@@ -9,6 +9,7 @@ import { follow, unfollow, checkFollowing, getFollowers, getFollowings, getFollo
 import { showErrorToast, showSuccessToast } from "../../util/toast";
 import { HttpStatusCode } from "axios";
 import { useAuth } from "../../context/AuthContext";
+import PinnedPostList from "./PinnedPostList";
 
 
 const BlogHome = ({ user, pinnedPosts, activities }) => {
@@ -23,7 +24,7 @@ const BlogHome = ({ user, pinnedPosts, activities }) => {
 
     const fetchFollowData = useCallback(async () => {
         try {
-            const res = await getFollowCounts(userId);
+            const res = await getFollowCounts(user.userId);
             console.log("값: ", res.data);
             setFollowerCount(res.data.followerCount);
             setFollowingCount(res.data.followingCount);
@@ -42,7 +43,7 @@ const BlogHome = ({ user, pinnedPosts, activities }) => {
     }, []);
 
     useEffect(() => {
-        if (userId) {
+        if (user?.userId) {
             fetchFollowData();
         }
     }, [userId, fetchFollowData]);
@@ -58,7 +59,9 @@ const BlogHome = ({ user, pinnedPosts, activities }) => {
     }, [follow]);
 
     useEffect(() => {
-        checkFollowStatus();
+        if (isLoggedIn) {
+            checkFollowStatus();
+        }
     }, [checkFollowStatus]);
 
     const handleFollowBtn = async (e) => {
@@ -125,8 +128,8 @@ const BlogHome = ({ user, pinnedPosts, activities }) => {
                     <></>
                 }
                 <div className="follow-section">
-                    <p><strong>{followerCount}</strong> 잡혔다!</p>
-                    <p><strong>{followingCount}</strong>  잡았다!</p>
+                    <p onClick={() => navigate(`/${user.userId}/followers`)}><strong>{followerCount}</strong> 잡혔다!</p>
+                    <p onClick={() => navigate(`/${user.userId}/followings`)}><strong>{followingCount}</strong>  잡았다!</p>
                 </div>
             </div>
             <div className="blog-profile-activity-section">
@@ -137,24 +140,7 @@ const BlogHome = ({ user, pinnedPosts, activities }) => {
                 <b>찍다</b>
                 <div className="blog-main-section">
                     <ol className="blog-main-posts">
-                        {pinnedPosts && pinnedPosts.length > 0 ? (
-                            pinnedPosts.map((post, index) => (
-                                <li key={post.postId || index} className="main-post">
-                                    <div className="post-card">
-                                        <span
-                                            className="post-card-title"
-                                            onClick={() => navigate(`/posts/${post.postId}`)}
-                                        >
-                                            {post.title}
-                                        </span>
-                                        <p className="post-card-content">{post.contentPreview}</p>
-                                    </div>
-                                </li>
-
-                            ))
-                        ) : (
-                            <p>고정된 게시글이 없습니다.</p>
-                        )}
+                        <PinnedPostList posts={pinnedPosts} size={4}/>
                     </ol>
                 </div>
                 <b>행성 정복도</b>

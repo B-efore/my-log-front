@@ -40,7 +40,7 @@ const BlogSidebar = ({
                     >
                         <span className="sidebar-link">
                             {tag.name}
-                            {tag.postCount && <span className="count"> ({tag.postCount})</span>}
+                            {tag.usageCount && <span className="count"> ({tag.usageCount})</span>}
                         </span>
                     </li>
                 ))}

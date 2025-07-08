@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { getAllPosts, getPostsByCategoryAndTags } from "../api/postService";
+import { getUserPosts, getPostsByCategoryAndTags } from "../api/postService";
 import { showErrorToast } from "../util/toast";
 
 export function usePostList(userId) {
@@ -10,7 +10,7 @@ export function usePostList(userId) {
     const fetchAllPosts = async (page = 0, size = 10) => {
         try {
             setLoading(true);
-            const res = await getAllPosts(userId, page, size);
+            const res = await getUserPosts(userId, page, size);
             setPosts(res.data.posts);
 
             return {

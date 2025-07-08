@@ -59,6 +59,7 @@ const Search = () => {
                     <SearchList
                         users={users || []}
                         onUserClick={(userId) => navigate(`/${userId}`)}
+                        message={"! 생명체 신호 없음 !"}
                     />
                     {pagination.totalPosts > 0 ? (
                         <Pagination
