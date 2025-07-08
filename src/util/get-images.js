@@ -4,6 +4,7 @@ import searchBtn from './../assets/search.png'
 import searchAlienBtn from './../assets/search-alien.png'
 import writeBtn from './../assets/write.png'
 import notFoundImg from './../assets/not_found.png'
+import strongAlien from './../assets/strong-alien.png'
 
 export function getLogoImage() {
     return logo;
@@ -33,4 +34,8 @@ export function getSearchHoverBtnImage() {
 
 export function getWriteBtnImage() {
     return writeBtn;
+}
+
+export function getStrongAlien() {
+    return strongAlien;
 }

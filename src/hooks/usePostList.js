@@ -11,7 +11,7 @@ export function usePostList(userId) {
         try {
             setLoading(true);
             const res = await getUserPosts(userId, page, size);
-            setPosts(res.data.posts);
+            setPosts(res.data.objects);
 
             return {
                 currentPage: res.data.page + 1,
@@ -31,7 +31,7 @@ export function usePostList(userId) {
         try {
             setLoading(true);
             const res = await getPostsByCategoryAndTags(userId, categoryId, tagIds);
-            setPosts(res.data.posts);
+            setPosts(res.data.objects);
             
             return {
                 currentPage: res.data.page + 1,

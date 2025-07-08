@@ -3,7 +3,6 @@ import { getLogoImage } from "../../util/get-images";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import { findAccountId } from "../../api/authService";
 import { showErrorToast } from "../../util/toast";
-import "./FindAccountIdResult.css"
 
 const FindAccountIdResult = () => {
 
@@ -33,15 +32,15 @@ const FindAccountIdResult = () => {
     }, email);
 
     return (
-        <div className="find-id-result-wrapper">
-            <div className="find-id-result-container">
-                <img onClick={goHome} src={getLogoImage()} alt="logo" className="find-password-logo" />
-                <div className="title-wrapper">
-                    <h2 className="title">
+        <div className="w-full">
+            <div className="w-full flex flex-col justify-center items-center mt-30">
+                <img onClick={goHome} src={getLogoImage()} alt="logo" className="icon-btn w-20" />
+                <div className="my-4">
+                    <h2 className="font-default-bold text-xl">
                         아이디 찾기 결과입니다.
                     </h2>
                 </div>
-                <div className="find-id-result-body">
+                <div className="round-box-border p-20 bg-gray-50 mb-4">
                     {result ?
                         (result.provider === 'local' ? (
                             <div>

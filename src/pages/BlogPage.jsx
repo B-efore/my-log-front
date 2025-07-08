@@ -83,7 +83,7 @@ const BlogPage = () => {
         const showPosts = !postsLoading;
 
         return (
-            <div className="blog-posts-body">
+            <div className="flex flex-row w-90vw gap-4 pt-12">
                 {showSidebar && (
                     <BlogSidebar
                         categories={categories}
@@ -95,11 +95,11 @@ const BlogPage = () => {
                     />
                 )}
 
-                <div className="blog-posts-section">
-                    <div className="blog-searching-section">
-                        <div className="search-bar"></div>
-                    </div>
-
+                <div className="flex flex-col text-left flex-3">
+                    <h3
+                        className="font-alien-violet"
+                    >ଲ༼Ꙩ Ꙩ ଲ༽ * 외계 모아 우주인 * .･:*◢▅◣Ξ◥▅◤Ξ ҉ ◢▅◣Ξ ҉ ◥▅◤☾*
+                    </h3>
                     {showPosts
                         ?
                         <BlogPostList
@@ -113,6 +113,7 @@ const BlogPage = () => {
                         onPageChange={handlePageChange}
                         generatePageNumbers={generatePageNumbers}
                     />
+                    <h3 className="font-alien-violet mb-12">.･:*◢▅◣Ξ◥▅◤Ξ ҉ ◢▅◣Ξ ҉ ◥▅◤☾* * 우주 모아 외계인 * ଲ༼Ꙩ Ꙩ ଲ༽</h3>
                 </div>
             </div>
         );
@@ -130,7 +131,7 @@ const BlogPage = () => {
     }
 
     return (
-        <div className="blog-page">
+        <div className="pt-24 w-full h-full flex flex-col">
             <Header
                 showTabs={true}
                 tabs={TAB_CONFIG}
@@ -138,8 +139,8 @@ const BlogPage = () => {
             />
             <div className="header-spacer with-tabs"></div>
 
-            <div className="blog-container">
-                <div className="tab-content">
+            <div className="flex w-full h-full flex-col box-border">
+                <div className="flex min-w-[360px] max-w-[1024px] mx-4 justify-center self-center box-border">
                     {renderContent()}
                 </div>
             </div>

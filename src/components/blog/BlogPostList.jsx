@@ -1,14 +1,17 @@
+import { getStrongAlien } from "../../util/get-images";
+
 const BlogPostList = ({ posts, onPostClick }) => {
     if (!posts || posts.length === 0) {
         return (
-            <div className="no-posts-message">
-                행성 점령도 0% 분발하라.
+            <div className="flex flex-col items-center">
+                <p className="mt-4 font-alien text-green-700 text-center">행성 점령도 0% 분발하라.</p>
+                <img className="w-1/2" src={getStrongAlien()}/>
             </div>
         );
     }
 
     return (
-        <div className="blog-posts">
+        <div className="">
             {posts.map((post) => (
                 <BlogPostItem
                     key={post.postId}
@@ -41,15 +44,15 @@ const BlogPostItem = ({ post, onPostClick }) => {
     };
 
     return (
-        <article className="blog-post">
-            <div className="post-date">
+        <article className="py-6 text-left border-b-2 border-gray-200 last:border-b-0">
+            <div className="text-sm text-black">
                 {post.createdAt ? formatDate(post.createdAt) : ''}
             </div>
-            <h2 className="post-title" onClick={handleClick}>
+            <h2 className="w-fit font-extrabold text-2xl mt-2 mb-2 hover:cursor-pointer" onClick={handleClick}>
                 {post.title}
             </h2>
             {post.contentPreview && (
-                <p className="post-content" onClick={handleClick}>
+                <p className="w-fit text-base m-0 hover:cursor-pointer" onClick={handleClick}>
                     {post.contentPreview}
                 </p>
             )}

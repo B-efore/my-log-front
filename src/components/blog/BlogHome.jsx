@@ -113,40 +113,39 @@ const BlogHome = ({ user, pinnedPosts, activities }) => {
     };
 
     return (
-        <div className="blog-home-body">
-            <div className="blog-profile-section">
+        <div className="flex flex-row w-[90vw] gap-16 mx-4 pt-12">
+            <div className="flex flex-col items-start flex-1">
                 <img
                     src={getProfileImage(user.imageKey)}
                     alt="profile"
-                    className="blog-profile"
+                    className="w-full aspect-square rounded-full border-2 border-gray-200 cursor-pointer"
                 />
-                <b className="owner-name">{user.username}</b>
-                <p className="owner-bio">{user.bio}</p>
+                <b className="mt-4 text-2xl">{user.username}</b>
+                <p className="mt-0 text-base text-pretty">{user.bio}</p>
                 {userId != user.userId && isLoggedIn ?
-                    <button className="follow-btn" onClick={handleFollowBtn}>{followStatue ? '방생하다' : '포획하다'}</button>
+                    <button className="w-full my-4 py-0.5 text-white rounded-md border-none font-alien bg-green-700 hover:bg-green-800 transition-colors" onClick={handleFollowBtn}>{followStatue ? '방생하다' : '포획하다'}</button>
                     :
                     <></>
                 }
-                <div className="follow-section">
-                    <p onClick={() => navigate(`/${user.userId}/followers`)}><strong>{followerCount}</strong> 잡혔다!</p>
-                    <p onClick={() => navigate(`/${user.userId}/followings`)}><strong>{followingCount}</strong>  잡았다!</p>
+                <div className="flex flex-col text-left font-alien">
+                    <p className="pt-0 m-0 text-green-700 hover:text-green-800 hover:cursor-pointer" onClick={() => navigate(`/${user.userId}/followers`)}><strong>{followerCount}</strong> 잡혔다!</p>
+                    <p className="pt-0 m-0 text-green-700 hover:text-green-800 hover:cursor-pointer" onClick={() => navigate(`/${user.userId}/followings`)}><strong>{followingCount}</strong>  잡았다!</p>
                 </div>
             </div>
-            <div className="blog-profile-activity-section">
-                <b>보라</b>
-                <div className="blog-introduce-section">
+            <div className="flex flex-col text-left flex-4">
+                <b>외계인 파일</b>
+                <div className="round-box-border p-4 h-fit mb-4">
                     <ReactMarkdown remarkPlugins={remarkGfm}>소개md파일</ReactMarkdown>
                 </div>
-                <b>찍다</b>
-                <div className="blog-main-section">
-                    <ol className="blog-main-posts">
+                <b>외계 수집</b>
+                <div className="mb-4 border-box">
+                    <ol className="grid grid-cols-2 gap-4 w-full h-full p-0 m-0">
                         <PinnedPostList posts={pinnedPosts} size={4}/>
                     </ol>
                 </div>
                 <b>행성 정복도</b>
-                <div className="blog-activity-section">
+                <div className="round-box-border p-4 w-full box-border">
                     <CalendarHeatmap
-                        className="blog-calendar"
                         startDate={start}
                         endDate={end}
                         values={activities}

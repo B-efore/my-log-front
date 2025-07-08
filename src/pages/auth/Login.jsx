@@ -8,7 +8,6 @@ import { useAuth } from "../../context/AuthContext";
 import { login } from "../../api/authService";
 import { getLogoImage } from '../../util/get-images';
 
-import "./Login.css";
 import { showErrorToast } from "../../util/toast";
 
 const Login = () => {
@@ -55,49 +54,51 @@ const Login = () => {
 
 
   return (
-    <div className="login-wrapper">
+    <div className="flex flex-col justify-center items-center h-screen">
 
-      <div className="login-logo">
-        <img className="logo-image" src={getLogoImage()} onClick={() => navigate("/")} />
+      <div className="mb-8 cursor-pointer">
+        <img className="icon-btn w-20" src={getLogoImage()} onClick={() => navigate("/")} />
       </div>
 
-      <div className="login-container">
-        <form className="login-box" onSubmit={handleSubmit}>
+      <div className="p-12 w-screen max-w-md bg-white text-center round-box-border">
+        <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
           <input
             type="text"
             placeholder="아이디"
-            className="login-input"
+            className="round-box-border input-form"
             value={accountId}
             onChange={(e) => setAccountId(e.target.value)}
           />
           <input
             type="password"
             placeholder="비밀번호"
-            className="login-input"
+            className="round-box-border input-form"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <button className="login-button">
+          <button className="btn-primary text-base py-3">
             발사!
           </button>
         </form>
       </div>
 
-      <div className="login-links">
+      <div className="flex gap-8 text-sm text-gray-500 mt-6">
         <Link to="/accountId/find">아이디를 보다</Link>
         <Link to="/password/find">비밀번호를 보다</Link>
         <Link to="/register" replace>회원이 되다</Link>
       </div>
 
-      <div className="login-divider">
-        <span>간편!</span>
+      <div className="w-full max-w-md flex items-center text-center my-12">
+        <div className="flex-1 border-1 border-gray-200 mr-2" />
+        <span className="text-base text-gray-500">간편!</span>
+        <div className="flex-1 border-1 border-gray-200 ml-2" />
       </div>
 
-      <div className="social-buttons">
-        <img src={google_logo} alt="Google 로그인" className="social-circle" onClick={() => handleSocialLogin("google")}></img>
-        <img src={kakao_logo} alt="Kakao 로그인" className="social-circle" onClick={() => handleSocialLogin("kakao")}></img>
-        <img src={naver_logo} alt="Naver 로그인" className="social-circle"></img>
-        <img src={github_logo} alt="Github 로그인" className="social-circle"></img>
+      <div className="flex justify-between gap-8">
+        <img src={google_logo} alt="Google 로그인" className="icon-btn w-16" onClick={() => handleSocialLogin("google")}></img>
+        <img src={kakao_logo} alt="Kakao 로그인" className="icon-btn w-16" onClick={() => handleSocialLogin("kakao")}></img>
+        <img src={naver_logo} alt="Naver 로그인" className="icon-btn w-16"></img>
+        <img src={github_logo} alt="Github 로그인" className="icon-btn w-16"></img>
       </div>
 
     </div>

@@ -10,37 +10,43 @@ const BlogSidebar = ({
 }) => {
 
     return (
-        <div className="blog-sidebar-section">
+        <div className="text-left flex-1">
             {categories.length > 0 && (
-                <span className="sidebar-title">카테고리</span>
+                <strong className="text-base font-default-bold text-violet-500 no-underline">카테고리</strong>
             )}
-            <ul className="sidebar-list">
+            <ul className="list-none p-0 mb-12">
                 {categories.map((category) => (
                     <li
                         key={category.categoryId}
-                        className={`sidebar-item ${selectedCategoryId === category.categoryId ? "active" : ""}`}
+                        className={`mt-1 cursor-pointer text-sm ${selectedCategoryId === category.categoryId
+                            ? "font-default-bold text-violet-500"
+                            : "text-inherit"
+                            }`}
                         onClick={() => onCategoryClick(category.categoryId)}
                     >
-                        <span className="sidebar-link">
+                        <span className="text-inherit no-underline text-sm cursor-pointer hover:text-violet-500">
                             {category.name}
-                            {category.postCount >= 0 && <span className="count"> ({category.postCount})</span>}
+                            {category.postCount >= 0 && <span> ({category.postCount})</span>}
                         </span>
                     </li>
                 ))}
             </ul>
             {tags.length > 0 && (
-                <span className="sidebar-title">태그</span>
+                <strong className="text-base font-default-bold text-violet-500 no-underline">태그</strong>
             )}
-            <ul className="sidebar-list">
+            <ul className="list-none p-0 mb-12">
                 {tags.map((tag) => (
                     <li
                         key={tag.id}
-                        className={`sidebar-item ${selectedTagIds.includes(tag.id) ? "active" : ""}`}
+                        className={`mt-1 cursor-pointer text-sm ${selectedTagIds.includes(tag.id)
+                            ? "font-default-bold text-violet-500"
+                            : "text-inherit"
+                            }`}
                         onClick={() => onTagClick(tag.id)}
                     >
-                        <span className="sidebar-link">
+                        <span className="text-inherit no-underline text-sm cursor-pointer hover:text-violet-500">
                             {tag.name}
-                            {tag.usageCount && <span className="count"> ({tag.usageCount})</span>}
+                            {tag.usageCount && <span> ({tag.usageCount})</span>}
                         </span>
                     </li>
                 ))}

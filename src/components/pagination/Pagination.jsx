@@ -4,7 +4,7 @@ const Pagination = ({
     generatePageNumbers
 }) => {
     return (
-        <div className="pagination">
+        <div className="mx-auto my-12">
 
             {pagination.currentPage > 1 && (
                 <span

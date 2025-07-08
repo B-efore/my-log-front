@@ -7,7 +7,6 @@ import { showErrorToast } from "../../util/toast";
 import { useEmailVerification } from "../../hooks/useEmailAndCode";
 import EmailAndCodeInput from "../../components/input/EmailAndCodeInput";
 import PasswordInput from "../../components/input/PasswordInput";
-import "./Register.css";
 
 const Register = () => {
 
@@ -48,9 +47,9 @@ const Register = () => {
   };
 
   return (
-    <div className="register-wrapper">
-      <img onClick={goHome} src={getLogoImage()} alt="logo" className="register-logo" />
-      <form className="register-box" onSubmit={handleSubmit}>
+    <div className="flex flex-col items-center h-screen">
+      <img onClick={goHome} src={getLogoImage()} alt="logo" className="icon-btn w-20 my-5" />
+      <form className="round-box-border p-10" onSubmit={handleSubmit}>
 
         <EmailAndCodeInput
           form={{ email: form.email, code: form.code }}
@@ -63,10 +62,10 @@ const Register = () => {
           state={{ emailSent, codeVerified }}
         />
 
-        <div className="form-group">
+        <div className="flex flex-col text-left x-full box-border my-2">
           <label htmlFor="accountId">아이디</label>
           <input
-            className="register-input"
+            className="round-box-border input-form"
             id="accountId"
             name="accountId"
             type="text"
@@ -75,7 +74,7 @@ const Register = () => {
             onChange={handleChange}
             required
           />
-          <small>아이디는 영문, 숫자, '-', '_' 조합의 6~20자리를 사용하세요.</small>
+          <small className="text-gray-500">아이디는 영문, 숫자, '-', '_' 조합의 6~20자리를 사용하세요.</small>
         </div>
 
         <PasswordInput
@@ -83,10 +82,10 @@ const Register = () => {
           handleChange={handleChange}
         />
 
-        <div className="form-group">
+        <div className="flex flex-col text-left x-full box-border my-2">
           <label htmlFor="username">닉네임</label>
           <input
-            className="register-input"
+            className="round-box-border input-form"
             id="username"
             name="username"
             type="text"
@@ -95,13 +94,13 @@ const Register = () => {
             onChange={handleChange}
             required
           />
-          <small>닉네임은 한글, 영문, 숫자, '-', '_' 조합의 2~10자리를 사용하세요.</small>
+          <small className="text-gray-500">닉네임은 한글, 영문, 숫자, '-', '_' 조합의 2~10자리를 사용하세요.</small>
         </div>
 
-        <div className="form-group">
+        <div className="flex flex-col text-left x-full box-border my-2">
           <button
             type="submit"
-            className="submit-btn"
+            className="btn-primary p-3 disabled: bg-gray-300"
             disabled={!codeVerified | !form.email | !form.password | !form.confirmPassword | !form.username}>
             확인
           </button>
@@ -109,8 +108,8 @@ const Register = () => {
       </form>
 
 
-      <div className="register-footer">
-        계정이 이미 존재합니다. <Link to="/login" replace>로그인</Link>
+      <div className="text-sm py-8">
+        계정이 이미 존재합니다. <Link className="hover:underline" to="/login" replace>로그인</Link>
       </div>
     </div>
   );

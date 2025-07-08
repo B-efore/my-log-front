@@ -55,26 +55,25 @@ const ResetPassword = () => {
     };
 
     return (
-        <div className="reset-password-wrapper">
-            <img src={getLogoImage()} alt="logo" className="reset-password-logo" />
-            <div className="title-wrapper">
-                <h2 className="title">
-                    새로운 비밀번호를 입력해주세요.
-                </h2>
-            </div>
+        <div className="flex flex-col justify-center items-center pt-30 gap-2">
+            <img src={getLogoImage()} alt="logo" className="icon-btn w-20" />
+            <h2 className="font-default-bold text-xl mb-8">
+                새로운 비밀번호를 입력해주세요.
+            </h2>
 
-            <form className="reset-password-box" onSubmit={handleSubmit}>
+            <form className="w-full max-w-lg" onSubmit={handleSubmit}>
                 <PasswordInput
                     form={form}
                     handleChange={handleChange}
                 />
-                <button
-                    className="reset-btn"
-                    type="submit"
-                    disabled={!form.password || !form.confirmPassword
-                    }>
-                    확인
-                </button>
+                <div className="flex flex-col text-left x-full box-border my-4">
+                    <button
+                        type="submit"
+                        className="btn-primary p-3 disabled: bg-gray-300"
+                        disabled={!form.password || !form.confirmPassword}>
+                        확인
+                    </button>
+                </div>
             </form>
         </div>
     );

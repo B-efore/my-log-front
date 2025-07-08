@@ -19,6 +19,7 @@ import BlogPage from './pages/BlogPage';
 import Search from './pages/Search';
 import FollowerPage from './pages/FollowerPage';
 import FollowingPage from './pages/FollowingPage';
+import './styles/tailwind-utilities.css';
 
 function App() {
 

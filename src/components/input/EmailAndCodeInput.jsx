@@ -7,12 +7,12 @@ const EmailAndCodeInput = ({ form, handlers, state }) => {
     const { emailSent, codeVerified } = state;
 
     return (
-        <div className="email-code-wrapper">
-            <div className="form-group">
+        <div className="flex flex-col gap-2 w-full">
+            <div className="w-full text-left">
                 <label htmlFor="email">이메일</label>
-                <div className="btn-input-wrapper">
+                <div className="flex flex-row gap-2">
                     <input
-                        className="register-input"
+                        className="w-100 round-box-border input-form"
                         id="email"
                         name="email"
                         type="email"
@@ -21,17 +21,17 @@ const EmailAndCodeInput = ({ form, handlers, state }) => {
                         onChange={onChange}
                         required
                     />
-                    <button type="button" className="code-btn" onClick={() => onSend(email)} disabled={codeVerified}>
+                    <button type="button" className="btn-primary w-30 text-sm" onClick={() => onSend(email)} disabled={codeVerified}>
                         {emailSent ? "코드 재발송" : "코드 발송"}
                     </button>
                 </div>
             </div>
 
-            <div className="form-group">
+            <div className="w-full text-left">
                 <label htmlFor="code">인증 코드</label>
-                <div className="btn-input-wrapper">
+                <div className="flex flex-row gap-2">
                     <input
-                        className="register-input"
+                        className="w-100 round-box-border input-form"
                         id="code"
                         name="code"
                         type="text"
@@ -42,7 +42,7 @@ const EmailAndCodeInput = ({ form, handlers, state }) => {
                     />
                     <button
                         type="button"
-                        className="code-btn"
+                        className="btn-primary w-30 text-sm"
                         disabled={codeVerified}
                         onClick={async () => {
                             try {
