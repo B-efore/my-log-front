@@ -1,6 +1,6 @@
 import React from "react";
-import { FaUserCircle } from "react-icons/fa";
 import CommentInput from "./CommentInput";
+import { getProfileImage } from "../../util/get-images";
 
 const CommentItem = ({
   comment,
@@ -17,7 +17,10 @@ const CommentItem = ({
 
   return (
     <div className="comment">
-      <FaUserCircle className="comment-avatar" />
+      <img
+        src={getProfileImage(comment.user.profileImageUrl)}
+        className="w-[50px] h-[50px] rounded-full"
+      />
       <div className="comment-body">
         <div className="comment-meta">
           <span className="comment-author">{comment.user.username}</span>

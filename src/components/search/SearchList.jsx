@@ -33,7 +33,7 @@ const SearchResult = ({ user, onUserClick }) => {
         <div className="result-user-box" onClick={handleClick}>
             <img
                 className="result-user-img"
-                src={getDefaultImage()}
+                src={getDefaultImage(user.imageKey)}
             />
             <span className="result-user-name">{user.username}</span>
             <strong className="result-user-bio">{user.bio}</strong>
