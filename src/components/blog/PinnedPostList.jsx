@@ -15,14 +15,14 @@ const PinnedPostList = ({ posts, size }) => {
           key={post.postId || index}
           className="round-box-border p-4 h-[115px] box-border list-none"
         >
-          <div className="flex flex-col box-content">
+          <div className="flex flex-col box-content cursor-pointer">
             <span
-              className="w-fit font-default-bold text-2xl cursor-pointer hover:underline"
+              className="text-xl font-default-bold mb-2 text-black line-clamp-1"
               onClick={() => navigate(`/posts/${post.postId}`)}
             >
               {post.title}
             </span>
-            <p className="line-clamp-3 text-base w-fit cursor-pointer">{post.contentPreview}</p>
+            <p className="text-sm text-gray-600 mb-4 line-clamp-2">{post.contentPreview}</p>
           </div>
         </li>
       ))}

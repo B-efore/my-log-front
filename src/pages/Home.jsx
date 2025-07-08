@@ -23,7 +23,7 @@ const Home = () => {
     return (
         <div>
             <Header />
-            <div className="flex flex-col items-center justify-center gap-4 min-h-screen mt-14">
+            <div className="flex flex-col items-center justify-center gap-4 min-h-full mt-14">
                 <div className="flex flex-col flex-1 w-full h-fit px-20 py-8 box-border">
                     <h3 className="w-fit font-alien-violet mb-8">* ✯⌁(⚫︎◕  ‧̫ ◕⚫︎)⚡︎✰----◓ 방가 요정! 오늘 외계인은 ■■이야~ *</h3>
                     <MainPostList posts={mainPosts} />

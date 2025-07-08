@@ -16,11 +16,11 @@ const MainPostList = ({ posts }) => {
   };
 
   return (
-    <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-6 w-full">
+    <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-6 w-full auto-rows-[1fr]">
       {posts.map((post) => (
         <div
           key={post.postId}
-          className="round-box-border p-5 text-left cursor-pointer hover:shadow-sm transition-shadow bg-white"
+          className="flex flex-col h-full min-h-[200px] round-box-border p-5 text-left cursor-pointer hover:shadow-sm transition-shadow bg-white"
           onClick={() => navigate(`/posts/${post.postId}`)}
         >
           <h2 className="text-xl font-default-bold mb-2 text-black line-clamp-1">
@@ -31,8 +31,7 @@ const MainPostList = ({ posts }) => {
             {post.contentPreview}
           </p>
 
-          <div className="flex items-center gap-2"
-          >
+          <div className="flex items-center gap-2 mt-auto pt-4">
             <img
               src={getProfileImage(post.user.profileImageUrl)}
               alt="작성자"

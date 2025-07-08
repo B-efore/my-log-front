@@ -73,7 +73,7 @@ const Header = ({
                                         <img
                                             src={userImage || getDefaultImage()}
                                             alt="profile"
-                                            className="w-9 rounded-full border-2 border-gray-300 cursor-pointer"
+                                            className="w-9 aspect-square rounded-full border-2 border-gray-300 cursor-pointer"
                                             onClick={toggleDropdown}
                                         />
                                         {isDropdownOpen && (
