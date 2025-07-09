@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "./TagInput.css"
 import Tag from "./Tag";
 
 const TagInput = ({ tags = [], onAdd, onRemove }) => {
@@ -26,7 +25,7 @@ const TagInput = ({ tags = [], onAdd, onRemove }) => {
   }
 
   return (
-    <div className="tags">
+    <div className="flex flex-wrap w-full justify-start items-center gap-3 list-none">
       {tags.map((tag, index) => (
         <Tag
           key={`${tag}-${index}`}
@@ -36,7 +35,7 @@ const TagInput = ({ tags = [], onAdd, onRemove }) => {
       ))}
       
       <input
-        className="tag-input"
+        className="min-w-[220px] max-w-full text-base border-none outline-none box-border"
         type="text"
         placeholder="Enter를 입력해 태그를 추가하세요."
         value={input}

@@ -3,15 +3,15 @@ import { getDefaultImage, getNotFound, getProfileImage } from "../../util/get-im
 const SearchList = ({ users, onUserClick, message }) => {
     if (!users || users.length === 0) {
         return (
-            <div className="no-search-result-message">
-                <p>{message}</p>
-                <img src={getNotFound()}/>
+            <div className="mt-20">
+                <p className="font-alien text-3xl text-green-700">{message}</p>
+                <img className="w-[fit h-fit]" src={getNotFound()}/>
             </div>
         );
     }
 
     return (
-        <div className="search-results-user">
+        <div className="flex flex-col">
             {users.map((user) => (
                 <SearchResult
                     key={user.userId}
@@ -30,13 +30,13 @@ const SearchResult = ({ user, onUserClick }) => {
     };
 
     return (
-        <div className="result-user-box" onClick={handleClick}>
+        <div className="flex w-50vw border-b-2 border-gray-300 items-center text-left gap-6 py-3 cursor-pointer result-user-box last:border-none" onClick={handleClick}>
             <img
-                className="result-user-img"
+                className="round-box-border rounded-full profile w-[4rem] h-[4rem]"
                 src={getProfileImage(user.imageKey)}
             />
-            <span className="result-user-name">{user.username}</span>
-            <strong className="result-user-bio">{user.bio}</strong>
+            <span className="flex-4 font-default-bold whitespace-nowrap overflow-hidden text-ellipsis">{user.username}</span>
+            <strong className="flex-8 whitespace-nowrap overflow-hidden text-ellipsis">{user.bio}</strong>
         </div>
     );
 };

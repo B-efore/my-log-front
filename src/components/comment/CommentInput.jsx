@@ -45,18 +45,27 @@ const CommentInput = ({ postId, onCommentSubmit, mode = "create", initialValue =
     };
 
     return (
-        <div className="comment-input">
+        <div className="flex flex-col w-full max-w-[720px]">
             <textarea
-                className="comment-text"
+                className="round-box-border w-full px-5 py-4 outline-none box-border resize-none"
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
                 placeholder="댓글을 입력하세요"
                 rows={3}
                 disabled={loading}
             />
-            <div style={{ display: "flex", justifyContent: "flex-end", gap: "0.5rem", marginTop: "0.5rem" }}>
-                {mode === "edit" && <button onClick={onCancel}>취소</button>}
-                <button onClick={handleSubmit} disabled={loading || !content.trim()}>
+            <div 
+                className="flex justify-end gap-2 mt-2"
+                >
+                {mode === "edit" && 
+                <button className="btn-second px-5 py-2" onClick={onCancel}>
+                    취소
+                </button>}
+                <button
+                    className="btn-primary px-5 py-2 disabled:bg-gray-300"
+                    onClick={handleSubmit}
+                    disabled={loading || !content.trim()}
+                >
                     {mode === "edit" ? "저장" : "등록"}
                 </button>
             </div>

@@ -1,10 +1,9 @@
 import React from "react";
-import "./Tag.css";
 
 const Tag = ({ label, onClick }) => {
     return (
       <div
-        className="tag"
+        className="btn-primary text-sm px-3 py-1 cursor-pointer"
         onClick={onClick}
       >
         {label}

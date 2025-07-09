@@ -2,13 +2,13 @@
 export default {
   content: [
     './index.html',
-    './src/**/*.{js,jsx,ts}',
+    './src/**/*.{js,jsx,ts,tsx}',
     './src/styles/**/*.{css}',
   ],
   theme: {
     extend: {
       colors: {
-        main: 'FFFFFF',
+        main: '#FFFFFF',
       },
       fontFamily: {
         alien: ['"Star"', 'sans-serif'],
@@ -16,5 +16,5 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [require('@tailwindcss/typography')],
 };

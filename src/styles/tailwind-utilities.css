@@ -39,9 +39,17 @@
   .w-90vw {
     width: 90vw;
   }
+  .w-50vw {
+    width: 50vw;
+  }
 }
 
 @layer components {
+
+  .profile {
+    @apply w-[150px] aspect-square rounded-full cursor-pointer
+  }
+
   .input-form {
     @apply p-3 text-base focus:outline-none focus:ring-2 focus:ring-green-600;
   }
@@ -54,8 +62,20 @@
     @apply px-4 py-2 text-sm cursor-pointer whitespace-nowrap text-left hover:bg-gray-100;
   }
 
+  .btn-small-text {
+    @apply text-sm text-gray-500 cursor-pointer hover:underline
+  }
+
   .btn-primary {
     @apply font-bold text-white bg-green-600 rounded-lg transition-colors hover:bg-green-700;
+  }
+
+  .btn-second {
+    @apply font-bold text-green-700 bg-white  rounded-lg transition-colors hover:bg-green-50;
+  }
+
+  .divider {
+    @apply border-1 border-gray-200
   }
 
   .round-box-border {

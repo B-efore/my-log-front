@@ -7,7 +7,6 @@ import PostEditor from "../components/post/PostEditor";
 import MarkdownPreview from "../components/post/MarkdownPreview";
 import PostPublishModal from "../components/post/PostPublishModal";
 import usePost from "../hooks/usePost";
-import "./PostWrite.css";
 import ToastMessage from "../components/common/ToastMessage";
 import { useAuth } from "../context/AuthContext";
 
@@ -32,6 +31,7 @@ const PostWrite = () => {
   const handlePublish = async () => {
 
     const { valid, message } = validatePost();
+
     if(!valid) {
       ToastMessage(message, { type : "error"});
       return;
@@ -40,7 +40,7 @@ const PostWrite = () => {
     const requestBody = {
       title: post.title,
       content: post.content,
-      contentPreview: post.content.slice(0, 100),
+      contentPreview: post.contentPreview,
       visibility: post.visibility,
       categoryId: post.categoryId === 0 ? null : post.categoryId,
       tagRequests: post.tags.map((tag) => ({ name: tag })),
@@ -67,14 +67,18 @@ const PostWrite = () => {
 
 
   return (
-    <div className="post-editor">
+    <div className="flex flex-col h-screen">
 
         <Header
             rightChild={
             <>
-                <button className="save-button" onClick={handleSave}>저장</button>
+                <button className="btn-second px-10 py-2" onClick={handleSave}>저장</button>
                 <div className="publish-button-wrapper" >
-                  <button className="publish-button" onClick={() => setShowModal(true)}>발행</button>
+                  <button className="btn-primary px-10 py-2" onClick={() => 
+                    {
+                      handleChange("contentPreview", post.content.slice(0, 100));
+                      setShowModal(true);
+                    }}>발행</button>
                 
                   {showModal && (
                     <PostPublishModal
@@ -91,10 +95,11 @@ const PostWrite = () => {
             }
         />
 
-        <div className="post-editor__body">
+        <div className="flex flex-1 mt-14 min-h-0">
             <PostEditor
                 title={post.title}
                 content={post.content}
+                contentPreview={post.contentPreview}
                 tags={post.tags}
                 onChange={handleChange}
                 addTag={addTag}
@@ -103,8 +108,6 @@ const PostWrite = () => {
 
             <MarkdownPreview title={post.title} content={post.content} />
         </div>
-
-        
       </div>
   );
 };

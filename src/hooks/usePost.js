@@ -4,6 +4,7 @@ const usePost = () => {
   const [post, setPost] = useState({
     title: "",
     content: "",
+    contentPreview: "",
     tags: [],
     categoryId: null,
     pinned: false,

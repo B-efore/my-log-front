@@ -5,16 +5,14 @@ import { deletePost, getPost } from "../api/postService";
 import { deleteComment } from "../api/commentService";
 import Header from "../components/header/Header";
 import CommentInput from "../components/comment/CommentInput";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
 import Tag from "../components/tag/Tag";
 import { formatDate } from "../util/formatDate";
 import ConfirmModal from "../components/common/ConfirmModal";
 import CommentList from "../components/comment/CommentList";
 
-import "./PostDetail.css"
 import { showErrorToast, showSuccessToast } from "../util/toast";
 import { getProfileImage } from "../util/get-images";
+import MarkdownView from "../components/post/MarkdownView";
 
 const PostDetail = () => {
 
@@ -74,7 +72,6 @@ const PostDetail = () => {
     setEditingCommentId(null);
   };
 
-  // TO-DO: 삭제된 댓글은 수정/삭제 버튼 안보이게 변경해야 함
   const handleConfirmDeleteComment = async () => {
 
     const { targetId } = showCommentConfirm;
@@ -110,67 +107,68 @@ const PostDetail = () => {
   }, [postId]);
 
   if (loading || !post) {
-    return <div className="post-detail">로딩중...</div>
+    return <div>로딩중...</div>
   }
 
   return (
-    <div className="post-detail">
+    <div className="flex flex-col w-full items-center box-border px-8">
       <Header />
-      <div className="post-detail__body">
-        <h1 className="post-title">{post.title}</h1>
-        <hr className="post-title-underline" />
+      <div className="mt-20 flex flex-col w-full max-w-[720px] text-left">
+        <h1 className="font-default-bold text-4xl mb-3">
+          {post.title}
+        </h1>
+        <hr className="border-0.5 border-gray-300 mb-3" />
 
-        <div className="post-meta">
-          <span className="post-date">{formatDate(post.createdAt)}</span>
+        <div className="flex flex-row items-center justify-between">
+          <span className="text-sm text-gray-500">{formatDate(post.createdAt)}</span>
           {isAuthor && (
-            <div className="post-actions">
-              <button className="edit-btn" onClick={goEdit}>수정</button>
-              <button className="delete-btn" onClick={handleDeletePost}>삭제</button>
+            <div className="flex gap-2">
+              <button className="btn-small-text" onClick={goEdit}>수정</button>
+              <button className="btn-small-text" onClick={handleDeletePost}>삭제</button>
             </div>
           )}
         </div>
 
         {post.tags?.length > 0 && (
-          <div className="post-tags">
+          <div className="flex flex-wrap items-center justify-start gap-2 my-2">
             {post.tags.map((tag) => (
               <Tag
-                key={tag.id} className="tag"
+                key={tag.id}
                 label={tag.name} />
             ))}
           </div>
         )}
 
-        <ReactMarkdown remarkPlugins={remarkGfm}>{post.content}</ReactMarkdown>
+        <MarkdownView content={post.content} />
 
-        <div className="post-author">
+        <div className="flex items-center gap-8 py-20">
           <img
-            className="author-img"
+            className="profile"
             src={getProfileImage(post.user.profileImageUrl)}
             alt={`${post.user.username}의 프로필 이미지`}
+            onClick={() => navigate(`/${post.user.userId}`)}
           />
           <div>
-            <div className="author-name" onClick={() => navigate(`/${post.user.userId}`)}>{post.user.username}</div>
-            <div className="author-bio">{post.user.bio}</div>
+            <div className="w-fit font-default-bold text-xl cursor-pointer" onClick={() => navigate(`/${post.user.userId}`)}>{post.user.username}</div>
+            <div className="w-fit text-base cursor-pointer" onClick={() => navigate(`/${post.user.userId}`)}>{post.user.bio}</div>
           </div>
         </div>
       </div>
 
-      <div className="comment-input-section">
-        <h3 className="comment-title">댓글 {comments.length}</h3>
-        {isLoggedIn && (<CommentInput className="comment-input-wrapped" postId={postId} onCommentSubmit={handleCreateComment} />)}
+      <div className="flex flex-col items-center w-full max-w-[720px] mb-8">
+        <h3 className="self-start text-base font-default-bold mb-2">댓글 {comments.length}</h3>
+        {isLoggedIn && (<CommentInput postId={postId} onCommentSubmit={handleCreateComment} />)}
         {comments.length > 0 && (
-          <div className="comment-section">
-            <CommentList
-              postId={postId}
-              comments={comments}
-              loggedInUserId={loggedInUserId}
-              editingCommentId={editingCommentId}
-              onEditClick={setEditingCommentId}
-              onCancelEdit={() => setEditingCommentId(null)}
-              onUpdate={handleUpdateComment}
-              onDelete={handleDeleteComment}
-            />
-          </div>
+          <CommentList
+            postId={postId}
+            comments={comments}
+            loggedInUserId={loggedInUserId}
+            editingCommentId={editingCommentId}
+            onEditClick={setEditingCommentId}
+            onCancelEdit={() => setEditingCommentId(null)}
+            onUpdate={handleUpdateComment}
+            onDelete={handleDeleteComment}
+          />
         )}
       </div>
 

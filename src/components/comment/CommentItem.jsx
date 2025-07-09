@@ -17,21 +17,21 @@ const CommentItem = ({
   const isEditing = editingCommentId === comment.commentId;
 
   return (
-    <div className="comment">
+    <div className="flex gap-4 mb-8">
       <img
         src={getProfileImage(comment.user.profileImageUrl)}
-        className="w-[50px] h-[50px] rounded-full"
+        className="profile w-[50px] h-[50px]"
       />
-      <div className="comment-body">
-        <div className="comment-meta">
-          <span className="comment-author">{comment.user.username}</span>
-          <span className="comment-date">{comment.createdAt}</span>
+      <div className="flex-1 text-left">
+        <div className="flex text-sm text-gray-500 mb-1 gap-2">
+          <span className="font-default-bold text-black">{comment.user.username}</span>
+          <span>{comment.createdAt}</span>
           {isOwner && !comment.deletedAt && (
-            <div className="comment-actions">
-              <button className="edit-btn" onClick={() => onEditClick(comment.commentId)}>
+            <div className="flex ml-auto gap-2">
+              <button className="btn-small-text" onClick={() => onEditClick(comment.commentId)}>
                 수정
               </button>
-              <button className="delete-btn" onClick={() => onDelete(comment.commentId)}>
+              <button className="btn-small-text" onClick={() => onDelete(comment.commentId)}>
                 삭제
               </button>
             </div>
@@ -47,7 +47,7 @@ const CommentItem = ({
             onCancel={onCancelEdit}
           />
         ) : (
-          <div className="comment-content">
+          <div className="text-base whitespace-pre-wrap">
             {comment.deletedAt ? "삭제된 댓글입니다." : comment.content}
             </div>
         )}

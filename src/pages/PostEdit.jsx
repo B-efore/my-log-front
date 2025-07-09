@@ -8,7 +8,6 @@ import MarkdownPreview from "../components/post/MarkdownPreview"
 import usePost from "../hooks/usePost";
 import PostPublishModal from "../components/post/PostPublishModal";
 import ToastMessage from "../components/common/ToastMessage";
-import "./PostWrite.css";
 import { useAuth } from "../context/AuthContext";
 
 const PostEdit = () => {
@@ -46,6 +45,7 @@ const PostEdit = () => {
         setPost({
           title: res.data.title,
           content: res.data.content,
+          contentPreview: res.data.contentPreview,
           tags: res.data.tags.map(tag => tag.name),
           categoryId: res.data.category === null ? 0 : res.data.category.categoryId,
           visibility: res.data.visibility,
@@ -61,6 +61,7 @@ const PostEdit = () => {
       setPost({
           title: postFromState.title,
           content: postFromState.content,
+          contentPreview: postFromState.contentPreview,
           tags: postFromState.tags.map(tag => tag.name),
           categoryId: postFromState.category === null ? 0 : postFromState.category.categoryId,
           visibility: postFromState.visibility,
@@ -80,7 +81,7 @@ const PostEdit = () => {
     const requestBody = {
       title: post.title,
       content: post.content,
-      contentPreview: post.content.slice(0, 100),
+      contentPreview: post.contentPreview,
       visibility: post.visibility,
       categoryId: post.categoryId === 0 ? null : post.categoryId,
       tagRequests: post.tags.map((tag) => ({ name: tag })),
@@ -110,14 +111,17 @@ const PostEdit = () => {
   if (loading) return <div>불러오는 중...</div>;
 
   return (
-    <div className="post-editor">
+    <div className="flex flex-col h-screen">
 
       <Header
         rightChild={
           <>
-            <button className="save-button" onClick={handleSave}>저장</button>
+            <button className="btn-second px-10 py-2" >저장</button>
             <div className="publish-button-wrapper" >
-            <button className="publish-button" onClick={() => setShowModal(true)}>발행</button>
+            <button className="btn-primary px-10 py-2" onClick={() => {
+                      handleChange("contentPreview", post.contentPreview);
+                      setShowModal(true);
+                    }}>발행</button>
 
               {showModal && (
                 <PostPublishModal
@@ -133,7 +137,7 @@ const PostEdit = () => {
         }
       />
 
-      <div className="post-editor__body">
+      <div className="flex flex-1 mt-14 min-h-0">
         <PostEditor
           title={post.title}
           content={post.content}
@@ -145,8 +149,6 @@ const PostEdit = () => {
 
         <MarkdownPreview title={post.title} content={post.content} />
       </div>
-
-
     </div>
   );
 };

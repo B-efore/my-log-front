@@ -100,7 +100,7 @@ const Register = () => {
         <div className="flex flex-col text-left x-full box-border my-2">
           <button
             type="submit"
-            className="btn-primary p-3 disabled: bg-gray-300"
+            className="btn-primary p-3 disabled:bg-gray-300"
             disabled={!codeVerified | !form.email | !form.password | !form.confirmPassword | !form.username}>
             확인
           </button>

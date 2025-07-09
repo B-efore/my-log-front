@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { updateMyInfo } from "../api/userService";
 import Header from "../components/header/Header";
-import './Settings.css'
 import { showErrorToast, showSuccessToast } from "../util/toast";
 import { deleteProfile, uploadImageToS3, uploadProfile } from "../api/imageService";
 import { useAuth } from "../context/AuthContext";
@@ -145,13 +144,13 @@ const Settings = () => {
     }
 
     return (
-        <div className="settings-root">
+        <div className="flex w-full h-full">
             <Header />
-            <div className="settings-body">
-                <div className="setting-container" >
+            <div className="mt-14 w-full h-full flex flex-col">
+                <div className="mt-10 min-w-md mx-auto text-left" >
 
                     {isLoading ? (
-                        <div className="loading-container">
+                        <div className="flex flex-col">
                             <p>정보를 불러오는 중</p>
                         </div>
                     ) : (

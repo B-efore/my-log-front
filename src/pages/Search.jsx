@@ -2,7 +2,6 @@ import { useCallback, useState } from "react";
 import Header from "../components/header/Header";
 import SearchList from "../components/search/SearchList";
 import { getSearchHoverBtnImage } from "../util/get-images";
-import './Search.css'
 import { searchWithUsername } from "../api/userService";
 import { usePagination } from "../hooks/usePagination";
 import Pagination from "../components/pagination/Pagination";
@@ -37,17 +36,17 @@ const Search = () => {
     }
 
     return (
-        <div className="search-root">
+        <div className="w-screen h-screen pt-16 box-border">
             <Header />
-            <div className="search-container">
-                <div className="search-bar-box">
-                    <div className="search-bar-t">
+            <div className="flex flex-col w-90vw items-center mx-auto">
+                <div className="flex mb-8">
+                    <div className="flex w-50vw h-fit px-2 py-0.5 round-box-border gap-4 mt-8">
                         <img
-                            className="search-bar-icon"
+                            className="w-[2rem]"
                             src={getSearchHoverBtnImage()}
                         />
                         <input
-                            className="search-bar-input"
+                            className="w-full border-none text-base outline-none"
                             placeholder={SEARCH_PLACEHOLDER}
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
@@ -55,7 +54,7 @@ const Search = () => {
                         />
                     </div>
                 </div>
-                <div className="search-result-box">
+                <div className="flex flex-col">
                     <SearchList
                         users={users || []}
                         onUserClick={(userId) => navigate(`/${userId}`)}

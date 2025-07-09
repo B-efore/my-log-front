@@ -13,7 +13,7 @@ const CommentList = ({
 }) => {
 
   return (
-    <div className="comment-section">
+    <div className="flex flex-col w-full max-w-[720px] mt-8">
       {comments.map((comment) => (
         <CommentItem
           postId={postId}
