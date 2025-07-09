@@ -28,7 +28,7 @@ const BlogPage = () => {
     const navigate = useNavigate();
 
     const { user, pinnedPosts, activityDate, loading: userLoading } = useUserProfile(userId);
-    const { posts, loading: postsLoading, fetchAllPosts, fetchPostsWithFilter } = usePostList(userId);
+    const { posts, loading: postsLoading, fetchPostsWithFilter } = usePostList(userId);
     const { categories, lodaing: categoriesLoading, fetchCategoriesWithCount } = useCategories(userId);
     const { tags, loading: tagsLoading, fetchTagsWithCount } = useTags(userId);
 
@@ -53,7 +53,7 @@ const BlogPage = () => {
                     !dataLoaded.categories && fetchCategoriesWithCount(),
                     !dataLoaded.tags && fetchTagsWithCount(),
                 ]);
-                const postsRes = await fetchAllPosts(0, 10)
+                const postsRes = await fetchPostsWithFilter();
                 updatePagination(postsRes);
                 updateDataLoaded({
                     posts: true,

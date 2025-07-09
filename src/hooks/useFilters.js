@@ -20,11 +20,6 @@ export const useFilters = (fetchPostsByFilter, updatePagination) => {
 
     useEffect(() => {
 
-        if (!render.current) {
-            render.current = false;
-            return;
-        }
-
         if (selectedCategoryId == null || selectedTagIds == null) return;
 
         const applyFilters = async () => {
@@ -38,6 +33,7 @@ export const useFilters = (fetchPostsByFilter, updatePagination) => {
 
 
         applyFilters();
+
     }, [selectedCategoryId, selectedTagIds]);
 
     return {
