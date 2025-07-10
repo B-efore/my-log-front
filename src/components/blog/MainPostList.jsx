@@ -33,11 +33,11 @@ const MainPostList = ({ posts }) => {
 
           <div className="flex items-center gap-2 mt-auto pt-4">
             <img
-              src={getProfileImage(post.user.profileImageUrl)}
+              src={getProfileImage(post.user?.profileImageUrl)}
               alt="작성자"
-              className="w-6 h-6 rounded-full object-contain border-2 border-gray-300"
+              className="profile w-6 h-6 rounded-full round-box-border"
             />
-            <span className="text-sm text-gray-500">{post.user.username}</span>
+            <span className="text-sm text-gray-500">{post.user?.username || '외계인? 이거 그런 거 아닌데요'}</span>
             <span className="text-xs text-gray-500 ml-auto">
               {formatDate(post.createdAt)}
             </span>

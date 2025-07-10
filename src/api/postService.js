@@ -16,6 +16,12 @@ export const deletePost = async (postId) => {
     return axios.delete(`/posts/${postId}`);
 }
 
+export const getAllNotices = async(page = 0, size = 10) => {
+    return await axios.get("/posts/notices", {
+        params: {size, page},
+    });
+}
+
 export const getPosts = async(page = 0, size = 10) => {
     return await axios.get("/posts", {
         params: {size, page},

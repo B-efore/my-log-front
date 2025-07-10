@@ -20,6 +20,8 @@ import Search from './pages/Search';
 import FollowerPage from './pages/FollowerPage';
 import FollowingPage from './pages/FollowingPage';
 import './styles/tailwind-utilities.css';
+import NoticeWrite from './pages/NoticeWrite';
+import Notice from './pages/Notice';
 
 function App() {
 
@@ -27,6 +29,9 @@ function App() {
     <>
       <ToastContainer />
       <Routes>
+        <Route path="/notices" element={<Notice />} />
+        <Route path="/admin/write" element={<NoticeWrite />} />
+
         <Route path="/" element={<Home />} />
         <Route path="/oauth2/callback" element={<OAuth2Callback />} />
         <Route path="/login" element={<Login />} />
