@@ -11,7 +11,7 @@ export function usePostList(userId) {
         try {
             setLoading(true);
             const res = await getUserPosts(userId, page, size);
-            setPosts(res.data.objects);
+            // setPosts(res.data.objects);
 
             return {
                 currentPage: res.data.page + 1,
@@ -27,13 +27,13 @@ export function usePostList(userId) {
         }
     };
 
-    const fetchPostsWithFilter = async (categoryId = 0, tagIds = []) => {
+    const fetchPostsWithFilter = async (categoryId = 0, tagIds = [], page, size) => {
         try {
             setLoading(true);
-            const res = await getPostsByCategoryAndTags(userId, categoryId, tagIds);
-            setPosts(res.data.objects);
+            const res = await getPostsByCategoryAndTags(userId, categoryId, tagIds, page, size);
             
             return {
+                posts: res.data.objects,
                 currentPage: res.data.page + 1,
                 size: res.data.size,
                 totalPages: res.data.totalPages,

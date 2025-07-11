@@ -5,8 +5,6 @@ import { useNavigate } from "react-router-dom";
 import { showErrorToast } from "../util/toast";
 import { useUserProfile } from "../hooks/useUserProfile";
 import { usePostList } from "../hooks/usePostList";
-import { usePagination } from "../hooks/usePagination";
-import { useFilters } from "../hooks/useFilters";
 import { useCategories } from "../hooks/useCategories";
 import { useTags } from "../hooks/useTags";
 import BlogHome from "../components/blog/BlogHome";
@@ -14,6 +12,7 @@ import BlogSidebar from "../components/blog/BlogSidebar";
 import BlogPostList from "../components/blog/BlogPostList";
 import Pagination from "../components/pagination/Pagination";
 import "./BlogPage.css"
+import { useFiltersWithPagination } from "../hooks/useFiltersWithPagination";
 
 const TAB_CONFIG = [
     { key: 'home', label: '고향' },
@@ -28,12 +27,11 @@ const BlogPage = () => {
     const navigate = useNavigate();
 
     const { user, pinnedPosts, activityDate, loading: userLoading } = useUserProfile(userId);
-    const { posts, loading: postsLoading, fetchPostsWithFilter } = usePostList(userId);
+    const { fetchPostsWithFilter } = usePostList(userId);
     const { categories, lodaing: categoriesLoading, fetchCategoriesWithCount } = useCategories(userId);
     const { tags, loading: tagsLoading, fetchTagsWithCount } = useTags(userId);
 
-    const { pagination, updatePagination, handlePageChange, generatePageNumbers } = usePagination();
-    const { selectedCategoryId, selectedTagIds, handleCategoryClick, handleTagClick } = useFilters(fetchPostsWithFilter, updatePagination);
+    const { selectedCategoryId, selectedTagIds, handleCategoryClick, handleTagClick, pagination, handlePageChange, generatePageNumbers, } = useFiltersWithPagination(fetchPostsWithFilter);
 
     const [dataLoaded, setDataLoaded] = useState({
         user: false,
@@ -53,8 +51,6 @@ const BlogPage = () => {
                     !dataLoaded.categories && fetchCategoriesWithCount(),
                     !dataLoaded.tags && fetchTagsWithCount(),
                 ]);
-                const postsRes = await fetchPostsWithFilter();
-                updatePagination(postsRes);
                 updateDataLoaded({
                     posts: true,
                     categories: true,
@@ -80,10 +76,9 @@ const BlogPage = () => {
 
     const renderPostsContent = () => {
         const showSidebar = !categoriesLoading && !tagsLoading;
-        const showPosts = !postsLoading;
 
         return (
-            <div className="flex flex-col md:flex-row w-full max-w-6xl gap-0 pt-12 mx-auto px-4 box-border">
+            <div className="flex flex-col sm:flex-row w-full max-w-6xl gap-0 pt-12 mx-auto px-4 box-border">
                 {showSidebar && (
                     <BlogSidebar
                         categories={categories}
@@ -100,14 +95,10 @@ const BlogPage = () => {
                         className="font-alien-violet text-base md:text-lg break-words"
                     >ଲ༼Ꙩ Ꙩ ଲ༽ * 외계 모아 우주인 * .･:*◢▅◣Ξ◥▅◤Ξ ҉ ◢▅◣Ξ ҉ ◥▅◤☾*
                     </h3>
-                    {showPosts
-                        ?
-                        <BlogPostList
-                            posts={posts}
-                            onPostClick={(postId) => navigate(`/posts/${postId}`)}
-                        />
-                        : <></>
-                    }
+                    <BlogPostList
+                        posts={pagination.posts}
+                        onPostClick={(postId) => navigate(`/posts/${postId}`)}
+                    />
                     <Pagination
                         pagination={pagination}
                         onPageChange={handlePageChange}
