@@ -64,19 +64,19 @@ const Home = () => {
         <div>
             <Header />
             <div className="flex flex-col items-center justify-center gap-4 min-h-full pt-14">
-                <div className="justify-center flex flex-row h-fit mt-12 round-box-border w-50vw px-4 py-2 select-none animate-rainbow">
+                <div className="justify-center flex flex-row h-fit mt-8 md:mt-12 round-box-border w-full max-w-md md:max-w-lg lg:max-w-xl mx-4 px-3 md:px-4 py-4 select-none animate-rainbow">
                     <button
-                        className="flex w-fit font-alien animate-bounce cursor-pointer"
+                        className="flex w-fit font-alien animate-bounce cursor-pointer text-sm md:text-base"
                         onClick={() => navigate("/notices")}
                     >
                         !확인! ▶▷ UFO ◁◀ !확인...?!
                     </button>
                 </div>
-                <div className="select-none flex flex-col flex-1 w-full h-fit px-20 py-8 box-border">
+                <div className="select-none flex flex-col flex-1 w-full h-fit px-4 sm:px-8 md:px-12 lg:px-20 py-4 md:py-8 box-border">
                     <button className="w-fit h-fit text-xs text-left text-gray-300" onClick={handleHello}>제가 보이시나요...?</button>
-                    <div className="flex flex-row justify-between content-center mb-2">
-                        <h3 className="w-fit font-alien-violet">* ✯⌁(⚫︎◕  ‧̫ ◕⚫︎)⚡︎✰----◓ 방가 요정! 오늘 외계인은 ■■이야~ *</h3>
-                        <img className="icon-btn" src={getCoinAlien()} onClick={handleCoinClick} />
+                    <div className="flex flex-row justify-between items-center gap-2 sm:gap-4 mb-4">
+                        <h3 className="w-fit font-alien-violet text-sm sm:text-base md:text-lg break-words">* ✯⌁(⚫︎◕  ‧̫ ◕⚫︎)⚡︎✰----◓ 운세 요정! (준비중이얌) *</h3>
+                        <img className="icon-btn flex-shrink-0" src={getCoinAlien()} onClick={handleCoinClick} />
                     </div>
                     <MainPostList posts={mainPosts} />
                 </div>

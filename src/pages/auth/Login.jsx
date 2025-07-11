@@ -54,44 +54,44 @@ const Login = () => {
 
 
   return (
-    <div className="flex flex-col justify-center items-center h-screen">
+    <div className="flex flex-col justify-center items-center min-h-screen px-4 py-8 sm:px-6 lg:px-8">
 
-      <div className="mb-8 cursor-pointer">
-        <img className="icon-btn w-20" src={getLogoImage()} onClick={() => navigate("/")} />
+      <div className="mb-6 sm:mb-8 cursor-pointer">
+        <img className="icon-btn w-16 sm:w-20" src={getLogoImage()} onClick={() => navigate("/")} />
       </div>
 
-      <div className="p-12 w-screen max-w-md bg-white text-center round-box-border">
+      <div className="p-6 sm:p-8 md:p-12 w-full max-w-sm sm:max-w-md bg-white text-center round-box-border">
         <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
           <input
             type="text"
             placeholder="아이디"
-            className="round-box-border input-form"
+            className="text-sm sm:text-base round-box-border input-form"
             value={accountId}
             onChange={(e) => setAccountId(e.target.value)}
           />
           <input
             type="password"
             placeholder="비밀번호"
-            className="round-box-border input-form"
+            className="text-sm sm:text-base round-box-border input-form"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <button className="btn-primary text-base py-3">
+          <button className="btn-primary py-3 text-sm sm:text-base">
             발사!
           </button>
         </form>
       </div>
 
-      <div className="flex gap-8 text-sm text-gray-500 mt-6">
+      <div className="flex gap-4 sm:gap-8 text-xs sm:text-sm text-gray-500 mt-4 sm:mt-6 text-center">
         <Link to="/accountId/find">아이디를 보다</Link>
         <Link to="/password/find">비밀번호를 보다</Link>
         <Link to="/register" replace>회원이 되다</Link>
       </div>
 
-      <div className="w-full max-w-md flex items-center text-center my-12">
-        <div className="flex-1 border-1 border-gray-200 mr-2" />
-        <span className="text-base text-gray-500">간편!</span>
-        <div className="flex-1 border-1 border-gray-200 ml-2" />
+      <div className="w-full max-w-sm sm:max-w-md flex items-center text-center my-8 sm:my-12">
+        <div className="flex-1 h-px bg-gray-200" />
+        <span className="text-sm sm:text-base text-gray-500 px-4">간편!</span>
+        <div className="flex-1 h-px bg-gray-200" />
       </div>
 
       <div className="flex justify-between gap-8">

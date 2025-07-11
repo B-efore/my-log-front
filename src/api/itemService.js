@@ -1,5 +1,9 @@
 import axios from "./axios"
 
+export const getAllItems = async() => {
+    return axios.get("/items");
+}
+
 export const createItem = async (data) => {
     return axios.post("/admin/items", data);
 };

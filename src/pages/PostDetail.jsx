@@ -31,7 +31,7 @@ const PostDetail = () => {
 
   const isAuthor = post?.user?.userId === loggedInUserId;
 
-  const goEdit = () =>
+  const goEdit = () => 
     navigate(`/write/${postId}`, {
       state: {
         post: post,

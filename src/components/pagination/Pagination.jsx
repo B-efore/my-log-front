@@ -27,7 +27,7 @@ const Pagination = ({
             {generatePageNumbers().map(pageNum => (
                 <span
                     key={pageNum}
-                    className={`page-number ${pagination.currentPage === pageNum ? 'active' : ''}`}
+                    className={`page-number px-2 ${pagination.currentPage === pageNum ? 'active' : ''}`}
                     onClick={() => onPageChange(pageNum)}
                 >
                     {pageNum}

@@ -83,7 +83,7 @@ const BlogPage = () => {
         const showPosts = !postsLoading;
 
         return (
-            <div className="flex flex-row w-90vw gap-4 pt-12">
+            <div className="flex flex-col md:flex-row w-full max-w-6xl gap-0 pt-12 mx-auto px-4 box-border">
                 {showSidebar && (
                     <BlogSidebar
                         categories={categories}
@@ -95,9 +95,9 @@ const BlogPage = () => {
                     />
                 )}
 
-                <div className="flex flex-col text-left flex-3">
+                <div className="flex flex-col text-left flex-1 md:flex-3 w-full">
                     <h3
-                        className="font-alien-violet"
+                        className="font-alien-violet text-base md:text-lg break-words"
                     >ଲ༼Ꙩ Ꙩ ଲ༽ * 외계 모아 우주인 * .･:*◢▅◣Ξ◥▅◤Ξ ҉ ◢▅◣Ξ ҉ ◥▅◤☾*
                     </h3>
                     {showPosts
@@ -113,7 +113,7 @@ const BlogPage = () => {
                         onPageChange={handlePageChange}
                         generatePageNumbers={generatePageNumbers}
                     />
-                    <h3 className="font-alien-violet mb-12">.･:*◢▅◣Ξ◥▅◤Ξ ҉ ◢▅◣Ξ ҉ ◥▅◤☾* * 우주 모아 외계인 * ଲ༼Ꙩ Ꙩ ଲ༽</h3>
+                    <h3 className="font-alien-violet text-base md:text-lg break-words mb-12">.･:*◢▅◣Ξ◥▅◤Ξ ҉ ◢▅◣Ξ ҉ ◥▅◤☾* * 우주 모아 외계인 * ଲ༼Ꙩ Ꙩ ଲ༽</h3>
                 </div>
             </div>
         );

@@ -36,17 +36,17 @@ const Search = () => {
     }
 
     return (
-        <div className="w-screen h-screen pt-16 box-border">
+        <div className="min-h-screen bg-white">
             <Header />
-            <div className="flex flex-col w-90vw items-center mx-auto">
-                <div className="flex mb-8">
-                    <div className="flex w-50vw h-fit px-2 py-0.5 round-box-border gap-4 mt-8">
+            <div className="flex flex-col w-full max-w-6xl items-center mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-8">
+                <div className="flex mb-6 md:mb-8 w-full justify-center">
+                    <div className="flex w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl h-fit px-3 md:px-4 py-2 md:py-3 round-box-border gap-3 md:gap-4 mt-4 md:mt-8 bg-white shadow-sm">
                         <img
-                            className="w-[2rem]"
+                            className="w-6 h-6 mx-auto md:w-8 md:h-8 flex-shrink-0"
                             src={getSearchHoverBtnImage()}
                         />
                         <input
-                            className="w-full border-none text-base outline-none"
+                            className="w-full border-none text-sm md:text-base outline-none bg-transparent"
                             placeholder={SEARCH_PLACEHOLDER}
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
@@ -54,18 +54,20 @@ const Search = () => {
                         />
                     </div>
                 </div>
-                <div className="flex flex-col">
+                <div className="flex flex-col w-full max-w-4xl">
                     <SearchList
                         users={users || []}
                         onUserClick={(userId) => navigate(`/${userId}`)}
                         message={"! 생명체 신호 없음 !"}
                     />
                     {pagination.totalPosts > 0 ? (
-                        <Pagination
-                            pagination={pagination}
-                            onPageChange={handlePageChange}
-                            generatePageNumbers={generatePageNumbers}
-                        />
+                        <div className="mt-6 md:mt-8">
+                            <Pagination
+                                pagination={pagination}
+                                onPageChange={handlePageChange}
+                                generatePageNumbers={generatePageNumbers}
+                            />
+                        </div>
                     ) : (<></>)}
                 </div>
             </div>
