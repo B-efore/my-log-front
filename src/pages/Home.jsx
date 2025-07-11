@@ -64,9 +64,9 @@ const Home = () => {
         <div>
             <Header />
             <div className="flex flex-col items-center justify-center gap-4 min-h-full pt-14">
-                <div className="justify-center flex flex-row h-fit mt-8 md:mt-12 round-box-border w-full max-w-md md:max-w-lg lg:max-w-xl mx-4 px-3 md:px-4 py-4 select-none animate-rainbow">
+                <div className="justify-center flex flex-row h-fit mt-12 round-box-border w-50vw px-4 py-2 select-none animate-rainbow">
                     <button
-                        className="flex w-fit font-alien animate-bounce cursor-pointer text-sm md:text-base"
+                        className="flex w-fit font-alien animate-bounce cursor-pointer text-sm md:text-lg"
                         onClick={() => navigate("/notices")}
                     >
                         !확인! ▶▷ UFO ◁◀ !확인...?!

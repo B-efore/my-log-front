@@ -35,16 +35,16 @@ const Notice = () => {
             <Header />
             <div className="flex flex-col items-center justify-center gap-4 min-h-screen pt-14 w-full h-full bg-green-700 text-white">
                 
-                <div className="flex justify-center mt-8 md:mt-12 round-box-border w-full max-w-md md:max-w-lg mx-4 px-3 md:px-4 py-2 select-none">
+                <div className="flex justify-center mt-8 md:mt-12 round-box-border w-50vw mx-4 px-3 md:px-4 py-2 select-none">
                     <button
-                        className="flex font-alien cursor-pointer text-sm md:text-base"
+                        className="flex font-alien cursor-pointer text-sm md:text-lg"
                         onClick={handleHello}
                     >
                         ...돌아갈까?
                     </button>
                 </div>
                 <div className="select-none flex flex-col flex-1 w-full h-fit px-4 sm:px-8 md:px-12 lg:px-20 py-4 md:py-8 box-border">
-                    <h3 className="w-fit font-alien mb-6 md:mb-8 text-sm sm:text-base md:text-lg break-words">* ?(°Д°≡°Д°)? 여긴 개발자의 방? *</h3>
+                    <h3 className="w-fit font-alien mb-2 md:mb-4 text-sm sm:text-base md:text-lg break-words">* ?(°Д°≡°Д°)? 여긴 개발자의 방? *</h3>
                     <MainPostList posts={notices} />
                 </div>
             </div>

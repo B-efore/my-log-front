@@ -36,7 +36,7 @@ const Ghost = () => {
             <div className="flex flex-col items-center justify-center gap-4 min-h-full pt-14">
                 <div className="justify-center flex flex-row h-fit mt-12 round-box-border w-50vw px-4 py-2 select-none">
                     <button
-                        className="flex w-fit font-alien cursor-pointer"
+                        className="flex w-fit font-alien cursor-pointer text-sm md:text-lg"
                     >
                         "유령...?"
                     </button>

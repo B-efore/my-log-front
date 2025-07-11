@@ -11,7 +11,7 @@ const SearchList = ({ users, onUserClick, message }) => {
     }
 
     return (
-        <div className="flex flex-col w-full">
+        <div className="flex flex-col w-full mx-auto">
             {users.map((user) => (
                 <SearchResult
                     key={user.userId}

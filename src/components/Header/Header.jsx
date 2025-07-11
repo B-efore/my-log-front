@@ -47,16 +47,16 @@ const Header = ({
     return (
         <header className="select-none flex flex-col w-full fixed top-0 left-0 right-0 z-[999] shadow bg-default-ligh">
             <div className="flex h-14 px-7 items-center justify-between bg-white">
-                <div className="flex items-center gap-4 cursor-pointer" onClick={goHome}>
-                    <img className="icon-btn" src={getLogoImage()} />
-                    <strong className="font-default-bold text-sm">{username}</strong>
+                <div className="flex items-center gap-3 md:gap-4 cursor-pointer" onClick={goHome}>
+                    <img className="icon-btn w-7 h-7 md:w-8 md:h-8" src={getLogoImage()} />
+                    <strong className="font-default-bold text-sm break-words">{username}</strong>
                 </div>
 
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-2 md:gap-4">
                     {rightChild ? rightChild : (
                         <>
                             <img
-                                className="icon-btn"
+                                className="icon-btn w-7 h-7 md:w-8 md:h-8"
                                 src={getSearchHoverBtnImage()}
                                 alt="관찰하다"
                                 onClick={goSearch}
@@ -64,7 +64,7 @@ const Header = ({
                             {isLoggedIn ? (
                                 <>
                                     <img
-                                        className="icon-btn"
+                                        className="icon-btn w-7 h-7 md:w-8 md:h-8"
                                         src={getWriteBtnImage()}
                                         alt="쏘다"
                                         onClick={goWrite}
@@ -73,7 +73,7 @@ const Header = ({
                                         <img
                                             src={userImage || getDefaultImage()}
                                             alt="profile"
-                                            className="w-9 aspect-square rounded-full border-2 border-gray-300 cursor-pointer"
+                                            className="w-7 h-7 md:w-8 md:h-8 aspect-square rounded-full border-2 border-gray-300 cursor-pointer"
                                             onClick={toggleDropdown}
                                         />
                                         {isDropdownOpen && (
@@ -91,7 +91,7 @@ const Header = ({
                                 </>
                             ) : (
                                 <button
-                                    className="btn-primary text-sm px-5 py-1.5"
+                                    className="btn-primary text-sm px-3 md:px-5 py-1.5"
                                     onClick={goLogin}
                                 >
                                     시작하다
@@ -105,7 +105,7 @@ const Header = ({
             {showTabs && tabs.length > 0 && (
                 <div className="w-full bg-white">
                     <nav className="w-full">
-                        <ul className="flex px-7 m-0">
+                        <ul className="flex px-4 md:px-7 m-0 whitespace-nowrap">
                             {tabs.map((tab) => (
                                 <li
                                     key={tab.key}
