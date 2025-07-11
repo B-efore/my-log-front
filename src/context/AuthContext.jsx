@@ -14,6 +14,7 @@ const INITIAL_USER_STATE = {
   userImage: null,
   userId: null,
   username: '',
+  role: 'ROLE_GUEST',
   bio: ''
 };
 
@@ -115,7 +116,8 @@ export const AuthProvider = ({ children }) => {
       setUserState(prev => ({
         ...prev,
         user: decoded,
-        userId: decoded?.id || null
+        userId: decoded?.id || null,
+        role: decoded?.role || 'ROLE_GUEST'
       }));
       setIsLoggedIn(true);
 
@@ -140,7 +142,8 @@ export const AuthProvider = ({ children }) => {
       setUserState(prev => ({
         ...prev,
         user: decoded,
-        userId: decoded?.id || null
+        userId: decoded?.id || null,
+        role: decoded?.role || 'ROLE_GUEST'
       }));
       setIsLoggedIn(true);
       await loadUserProfile(false);
@@ -211,6 +214,7 @@ export const AuthProvider = ({ children }) => {
     userId: userState.userId,
     userImage: userState.userImage,
     username: userState.username,
+    role: userState.role,
     bio: userState.bio,
     isLoggedIn,
     isLoading,

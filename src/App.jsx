@@ -20,8 +20,12 @@ import Search from './pages/Search';
 import FollowerPage from './pages/FollowerPage';
 import FollowingPage from './pages/FollowingPage';
 import './styles/tailwind-utilities.css';
-import NoticeWrite from './pages/NoticeWrite';
+import NoticeWrite from './pages/admin/NoticeWrite';
 import Notice from './pages/Notice';
+import Ghost from './pages/Ghost';
+import Shop from './pages/Shop';
+import AdminPage from './pages/admin/AdminPage';
+import ItemUpload from './pages/admin/ItemUpload';
 
 function App() {
 
@@ -29,8 +33,11 @@ function App() {
     <>
       <ToastContainer />
       <Routes>
-        <Route path="/notices" element={<Notice />} />
+        <Route path="/admin" element={<AdminPage />} />
         <Route path="/admin/write" element={<NoticeWrite />} />
+        <Route path="/admin/item/upload" element={<ItemUpload />} />
+
+        <Route path="/notices" element={<Notice />} />
 
         <Route path="/" element={<Home />} />
         <Route path="/oauth2/callback" element={<OAuth2Callback />} />
@@ -41,6 +48,9 @@ function App() {
         <Route path="/accountId/find/result" element={<FindAccountIdResult />} />
         <Route path="/password/find" element={<FindPassword />} />
         <Route path="/password/reset" element={<ResetPassword />} />
+
+        <Route path="/ghost" element={<Ghost />} />
+        <Route path="/ghost/shop" element={<Shop />} />
 
         <Route path="/settings" element={<Settings />} />
 

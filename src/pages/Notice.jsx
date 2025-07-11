@@ -24,7 +24,7 @@ const Notice = () => {
         fetchNotices();
     }, []);
 
-    const handleHello = async () => {
+    const handleHello = () => {
         showSuccessToast("삐-빠이");
         showErrorToast("어디선가 구슬픈 키보드 소리가 들리는 것 같다...")
         navigate("/")
@@ -33,7 +33,7 @@ const Notice = () => {
     return (
         <div>
             <Header />
-            <div className="flex flex-col items-center justify-center gap-4 min-h-full mt-14 w-full h-screen bg-green-700 text-white">
+            <div className="flex flex-col items-center justify-center gap-4 min-h-full pt-14 w-full h-screen bg-green-700 text-white">
                 
                 <div className="flex justify-center mt-12 round-box-border w-[50vw] px-4 py-2 select-none">
                     <button

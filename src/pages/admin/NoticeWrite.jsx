@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { createPost } from "../api/postService";
-import { getCategories } from "../api/categoryService";
-import Header from "../components/header/Header";
-import PostEditor from "../components/post/PostEditor";
-import MarkdownPreview from "../components/post/MarkdownPreview";
-import PostPublishModal from "../components/post/PostPublishModal";
-import usePost from "../hooks/usePost";
-import ToastMessage from "../components/common/ToastMessage";
-import { useAuth } from "../context/AuthContext";
-import { createNotice } from "../api/adminService";
+import { createPost } from "../../api/postService";
+import { getCategories } from "../../api/categoryService";
+import Header from "../../components/header/Header";
+import PostEditor from "../../components/post/PostEditor";
+import MarkdownPreview from "../../components/post/MarkdownPreview";
+import PostPublishModal from "../../components/post/PostPublishModal";
+import usePost from "../../hooks/usePost";
+import ToastMessage from "../../components/common/ToastMessage";
+import { useAuth } from "../../context/AuthContext";
+import { createNotice } from "../../api/adminService";
 
 const NoticeWrite = () => {
 

@@ -25,8 +25,14 @@
   src: url("/PF-EB.ttf") format("truetype");
 }
 
+@font-face {
+  font-family: "Ghost";
+  src: url("/BMKkubulimTTF.ttf") format("truetype");
+}
+
 @theme {
   --font-alien: "Star", sans-serif;
+  --font-ghost: "Ghost", sans-serif;
   --animate-rainbow: rainbow-color-change 3s linear infinite;
 
   @keyframes rainbow-color-change {
@@ -62,10 +68,6 @@
 }
 
 @layer utilities {
-
-  .color-change {
-    animation:
-  }
 
   .w-90vw {
     width: 90vw;

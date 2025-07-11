@@ -45,7 +45,7 @@ const Header = ({
     };
 
     return (
-        <header className="flex flex-col w-full fixed top-0 left-0 right-0 z-[999] shadow bg-default-ligh">
+        <header className="select-none flex flex-col w-full fixed top-0 left-0 right-0 z-[999] shadow bg-default-ligh">
             <div className="flex h-14 px-7 items-center justify-between bg-white">
                 <div className="flex items-center gap-4 cursor-pointer" onClick={goHome}>
                     <img className="icon-btn" src={getLogoImage()} />

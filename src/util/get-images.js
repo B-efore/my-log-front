@@ -5,6 +5,8 @@ import searchAlienBtn from './../assets/search-alien.png'
 import writeBtn from './../assets/write.png'
 import notFoundImg from './../assets/not_found.png'
 import strongAlien from './../assets/strong-alien.png'
+import coinAlien from './../assets/coin_alien.png'
+import ghost from './../assets/ghost.png'
 
 export function getLogoImage() {
     return logo;
@@ -38,4 +40,12 @@ export function getWriteBtnImage() {
 
 export function getStrongAlien() {
     return strongAlien;
+}
+
+export function getCoinAlien() {
+    return coinAlien;
+}
+
+export function getGhost() {
+    return ghost;
 }

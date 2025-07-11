@@ -7,12 +7,10 @@ export default {
   ],
   theme: {
     extend: {
-      colors: {
-        main: '#FFFFFF',
-      },
       fontFamily: {
         alien: ['"Star"', 'sans-serif'],
         alienBold: ['"StarBold"', 'sans-serif'],
+        ghost: ["Ghost", 'sans-serif'],
       },
     },
   },
