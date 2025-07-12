@@ -1,5 +1,4 @@
-
-const ItemList = ({ items }) => {
+const ItemList = ({ items, onClick }) => {
 
     return (
         <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-6 w-full auto-rows-[1fr]">
@@ -16,10 +15,15 @@ const ItemList = ({ items }) => {
                         {item.description}
                     </p>
 
-                    <div className="flex items-center gap-2 mt-auto pt-4">
+                    <div className="flex items-end justify-between mt-auto pt-4">
                         <p className="text-base text-gray-600 font-default-bold line-clamp-1">
                             {item.price} 포인트야...
                         </p>
+                        <button
+                            className="text-black round-box-border px-2 py-1 cursor-pointer hover:bg-gray-50 transition-colors"
+                            onClick={() => onClick(item.itemId, item.price)}
+                        >구매 요청
+                        </button>
                     </div>
                 </div>
             ))}
