@@ -1,11 +1,11 @@
 import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Header from "../components/header/Header";
-import SearchList from "../components/search/SearchList";
-import { getSearchHoverBtnImage } from "../util/get-images";
-import { searchWithUsername } from "../api/userService";
-import { usePagination } from "../hooks/usePagination";
-import Pagination from "../components/pagination/Pagination";
+import Header from "../../components/header/Header";
+import SearchList from "../../components/search/SearchList";
+import { getSearchHoverBtnImage } from "../../util/get-images";
+import { searchWithUsername } from "../../api/userService";
+import { usePagination } from "../../hooks/usePagination";
+import Pagination from "../../components/pagination/Pagination";
 
 const SEARCH_PLACEHOLDER = "생명체를 탐색하다.";
 

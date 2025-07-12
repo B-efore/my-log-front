@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from "react";
-import { updateMyProfile } from "../api/userService";
-import Header from "../components/header/Header";
-import { showErrorToast, showSuccessToast } from "../util/toast";
-import { deleteProfile, uploadImageToS3, uploadProfile } from "../api/imageService";
-import { useAuth } from "../context/AuthContext";
-import ProfileImageSection from "../components/setting/ProfileImageSection";
-import UserInfoForm from "../components/setting/UserInfoForm";
+import { updateMyProfile } from "../../api/userService";
+import Header from "../../components/header/Header";
+import { showErrorToast, showSuccessToast } from "../../util/toast";
+import { deleteProfile, uploadImageToS3, uploadProfile } from "../../api/imageService";
+import { useAuth } from "../../context/AuthContext";
+import ProfileImageSection from "../../components/setting/ProfileImageSection";
+import UserInfoForm from "../../components/setting/UserInfoForm";
 
 const FILE_CONSTRAINTS = {
     MAX_SIZE: 1 * 1024 * 1024,

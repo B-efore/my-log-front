@@ -1,29 +1,28 @@
+import './styles/tailwind-utilities.css';
 import './App.css'
-import './styles/variables.css'
 import { Routes, Route, Link, Navigate } from "react-router-dom";
 import { ToastContainer } from 'react-toastify';
-import Home from "./pages/Home";
-import PostWrite from "./pages/PostWrite";
-import PostEdit from './pages/PostEdit';
+import Home from "./pages/main/Home";
+import PostWrite from "./pages/post/PostWrite";
+import PostEdit from './pages/post/PostEdit';
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
 import NotFound from "./pages/NotFound";
-import PostDetail from './pages/PostDetail';
+import PostDetail from './pages/post/PostDetail';
 import FindAccountId from './pages/auth/FindAccountId';
 import FindAccountIdResult from './pages/auth/FindAccountIdResult';
 import FindPassword from './pages/auth/FindPassword';
 import ResetPassword from './pages/auth/ResetPassword';
 import OAuth2Callback from './pages/auth/OAuth2Callback';
-import Settings from './pages/Settings';
-import BlogPage from './pages/BlogPage';
-import Search from './pages/Search';
-import FollowerPage from './pages/FollowerPage';
-import FollowingPage from './pages/FollowingPage';
-import './styles/tailwind-utilities.css';
+import Settings from './pages/user/Settings';
+import BlogPage from './pages/user/BlogPage';
+import Search from './pages/main/Search';
+import FollowerPage from './pages/user/FollowerPage';
+import FollowingPage from './pages/user/FollowingPage';
 import NoticeWrite from './pages/admin/NoticeWrite';
-import Notice from './pages/Notice';
-import Ghost from './pages/Ghost';
-import Shop from './pages/Shop';
+import Notice from './pages/main/Notice';
+import Ghost from './pages/main/Ghost';
+import Shop from './pages/main/Shop';
 import AdminPage from './pages/admin/AdminPage';
 import ItemUpload from './pages/admin/ItemUpload';
 

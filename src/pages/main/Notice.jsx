@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router-dom";
-import MainPostList from "../components/blog/MainPostList";
-import Header from "../components/header/Header";
-import { showErrorToast, showSuccessToast } from "../util/toast";
+import MainPostList from "../../components/blog/MainPostList";
+import Header from "../../components/header/Header";
+import { showErrorToast, showSuccessToast } from "../../util/toast";
 import { useEffect, useState } from "react";
-import { getAllNotices } from "../api/postService";
+import { getAllNotices } from "../../api/postService";
 
 const Notice = () => {
 

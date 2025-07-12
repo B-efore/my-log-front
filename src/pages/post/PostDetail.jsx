@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 import { useLocation, useParams, useNavigate } from "react-router-dom";
-import { deletePost, getPost } from "../api/postService";
-import { deleteComment } from "../api/commentService";
-import Header from "../components/header/Header";
-import CommentInput from "../components/comment/CommentInput";
-import Tag from "../components/tag/Tag";
-import { formatDate } from "../util/formatDate";
-import ConfirmModal from "../components/common/ConfirmModal";
-import CommentList from "../components/comment/CommentList";
+import { deletePost, getPost } from "../../api/postService";
+import { deleteComment } from "../../api/commentService";
+import Header from "../../components/header/Header";
+import CommentInput from "../../components/comment/CommentInput";
+import Tag from "../../components/tag/Tag";
+import { formatDate } from "../../util/formatDate";
+import ConfirmModal from "../../components/common/ConfirmModal";
+import CommentList from "../../components/comment/CommentList";
 
-import { showErrorToast, showSuccessToast } from "../util/toast";
-import { getProfileImage } from "../util/get-images";
-import MarkdownView from "../components/post/MarkdownView";
+import { showErrorToast, showSuccessToast } from "../../util/toast";
+import { getProfileImage } from "../../util/get-images";
+import MarkdownView from "../../components/post/MarkdownView";
 
 const PostDetail = () => {
 

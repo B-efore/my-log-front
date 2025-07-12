@@ -116,7 +116,7 @@ const BlogHome = ({ user, pinnedPosts, activities }) => {
                 <img
                     src={getProfileImage(user.imageKey)}
                     alt="profile"
-                    className="w-48 md:w-full md:max-w-xs profile border-2 border-gray-200 object-contain"
+                    className="w-48 md:w-full md:max-w-xs profile border-2 border-gray-200"
                 />
                 <b className="mt-4 text-xl md:text-2xl text-center md:text-left break-words">{user.username}</b>
                 <p className="mt-0 text-sm md:text-base text-center md:text-left break-words">{user.bio}</p>

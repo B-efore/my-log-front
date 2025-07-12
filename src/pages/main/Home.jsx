@@ -1,12 +1,12 @@
-import Header from "../components/header/Header";
+import Header from "../../components/header/Header";
 import { useEffect, useState } from "react";
-import { getPosts } from "../api/postService";
-import MainPostList from "../components/blog/MainPostList";
-import { helloAdmin } from "../api/adminService";
-import { showAlienToast, showErrorToast, showSuccessToast } from "../util/toast";
+import { getPosts } from "../../api/postService";
+import MainPostList from "../../components/blog/MainPostList";
+import { helloAdmin } from "../../api/adminService";
+import { showAlienToast, showErrorToast, showSuccessToast } from "../../util/toast";
 import { useNavigate } from "react-router-dom";
-import { getCoinAlien } from "../util/get-images";
-import { useAuth } from "../context/AuthContext";
+import { getCoinAlien } from "../../util/get-images";
+import { useAuth } from "../../context/AuthContext";
 
 const Home = () => {
 

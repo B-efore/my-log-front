@@ -1,7 +1,7 @@
 import { useState } from "react";
-import Header from "../components/header/Header";
-import { getGhost } from "../util/get-images";
-import { showAlienToast } from "../util/toast";
+import Header from "../../components/header/Header";
+import { getGhost } from "../../util/get-images";
+import { showAlienToast } from "../../util/toast";
 import { useNavigate } from "react-router-dom";
 
 const GHOST_MESSAGE = [

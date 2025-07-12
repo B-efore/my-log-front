@@ -1,18 +1,18 @@
-import Header from "../components/header/Header";
+import Header from "../../components/header/Header";
 import { useCallback, useEffect, useState } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { showErrorToast } from "../util/toast";
-import { useUserProfile } from "../hooks/useUserProfile";
-import { usePostList } from "../hooks/usePostList";
-import { useCategories } from "../hooks/useCategories";
-import { useTags } from "../hooks/useTags";
-import BlogHome from "../components/blog/BlogHome";
-import BlogSidebar from "../components/blog/BlogSidebar";
-import BlogPostList from "../components/blog/BlogPostList";
-import Pagination from "../components/pagination/Pagination";
+import { showErrorToast } from "../../util/toast";
+import { useUserProfile } from "../../hooks/useUserProfile";
+import { usePostList } from "../../hooks/usePostList";
+import { useCategories } from "../../hooks/useCategories";
+import { useTags } from "../../hooks/useTags";
+import BlogHome from "../../components/blog/BlogHome";
+import BlogSidebar from "../../components/blog/BlogSidebar";
+import BlogPostList from "../../components/blog/BlogPostList";
+import Pagination from "../../components/pagination/Pagination";
 import "./BlogPage.css"
-import { useFiltersWithPagination } from "../hooks/useFiltersWithPagination";
+import { useFiltersWithPagination } from "../../hooks/useFiltersWithPagination";
 
 const TAB_CONFIG = [
     { key: 'home', label: '고향' },
@@ -78,7 +78,7 @@ const BlogPage = () => {
         const showSidebar = !categoriesLoading && !tagsLoading;
 
         return (
-            <div className="flex flex-col md:flex-row w-full max-w-6xl gap-2 md:gap-2 pt-12 px-4 box-border mx-auto">
+            <div className="flex flex-col md:flex-row w-full max-w-6xl gap-2 md:gap-2 lg:gap-3 pt-12 px-4 box-border mx-auto">
                 {showSidebar && (
                 <div className="w-full sm:w-auto flex-[1] min-w-[150px]">
 
@@ -93,9 +93,9 @@ const BlogPage = () => {
                     </div>
                 )}
 
-                <div className="flex flex-col text-left flex-1 sm:flex-[4] w-full min-w-[280px] sm:w-[600px] md:min-w-[600px]">
+                <div className="flex flex-col text-left flex-1 w-full sm:flex-[4] min-w-[280px] sm:min-w-[600px] md:min-w-[600px] lg:min-w-[750px]">
                     <h3
-                        className="font-alien-violet text-base md:text-lg break-words"
+                        className="font-alien-violet text-base md:text-lg lg:text-xl break-words"
                     >ଲ༼Ꙩ Ꙩ ଲ༽ * 외계 모아 우주인 * .･:*◢▅◣Ξ◥▅◤Ξ ҉ ◢▅◣Ξ ҉ ◥▅◤☾*
                     </h3>
                     <BlogPostList
@@ -107,7 +107,7 @@ const BlogPage = () => {
                         onPageChange={handlePageChange}
                         generatePageNumbers={generatePageNumbers}
                     />
-                    <h3 className="font-alien-violet text-base md:text-lg break-words mb-12">.･:*◢▅◣Ξ◥▅◤Ξ ҉ ◢▅◣Ξ ҉ ◥▅◤☾* * 우주 모아 외계인 * ଲ༼Ꙩ Ꙩ ଲ༽</h3>
+                    <h3 className="font-alien-violet text-base md:text-lg lg:text-xl break-words mb-12">.･:*◢▅◣Ξ◥▅◤Ξ ҉ ◢▅◣Ξ ҉ ◥▅◤☾* * 우주 모아 외계인 * ଲ༼Ꙩ Ꙩ ଲ༽</h3>
                 </div>
             </div>
         );

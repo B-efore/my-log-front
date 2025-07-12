@@ -1,12 +1,12 @@
 import { useNavigate } from "react-router-dom";
-import Header from "../components/header/Header";
-import { showAlienToast } from "../util/toast";
+import Header from "../../components/header/Header";
+import { showAlienToast } from "../../util/toast";
 import { useEffect, useState } from "react";
-import { useAuth } from "../context/AuthContext";
-import { getMyPoint } from "../api/pointService";
-import ItemList from "../components/ItemList";
-import { getAllItems } from "../api/itemService";
-import MainPostList from "../components/blog/MainPostList";
+import { useAuth } from "../../context/AuthContext";
+import { getMyPoint } from "../../api/pointService";
+import ItemList from "../../components/ItemList";
+import { getAllItems } from "../../api/itemService";
+import MainPostList from "../../components/blog/MainPostList";
 
 const Shop = () => {
 
@@ -65,7 +65,7 @@ const Shop = () => {
                     </button>
                 </div>
                 <div className="select-none flex flex-col flex-1 w-full h-fit px-20 py-8 box-border">
-                    <h3 className="w-fit font-alien mb-2">* |´∀｀●) 정식 오픈... 아직... 둘러봐... *</h3>
+                    <h3 className="w-fit font-alien mb-2">* |´∀｀●) 포인트...눅눅하면...더...좋아... *</h3>
                     <h3 className="w-fit font-alien mb-8">* 내 포인트: {myPoint} *</h3>
                     <ItemList items={items} />
                 </div>
