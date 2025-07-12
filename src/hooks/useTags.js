@@ -10,8 +10,8 @@ export function useTags(userId) {
         try {
             setLoading(true);
             const res = await getAllTagsWithCount(userId);
-            setTags(res.data.tags);
-            return res.data.tags;
+            setTags(res.data.objects);
+            return res.data.objects;
         } catch (error) {
             showErrorToast("태그를 불러오는데 실패했습니다.");
             throw error;

@@ -37,12 +37,12 @@ const BlogSidebar = ({
             <ul className="list-none p-0 mb-12">
                 {tags.map((tag) => (
                     <li
-                        key={tag.id}
-                        className={`mt-1 cursor-pointer text-sm ${selectedTagIds.includes(tag.id)
+                        key={tag.tagId}
+                        className={`mt-1 cursor-pointer text-sm ${selectedTagIds.includes(tag.tagId)
                             ? "font-default-bold text-violet-500"
                             : "text-inherit"
                             }`}
-                        onClick={() => onTagClick(tag.id)}
+                        onClick={() => onTagClick(tag.tagId)}
                     >
                         <span className="text-inherit no-underline text-sm cursor-pointer hover:text-violet-500">
                             {tag.name}

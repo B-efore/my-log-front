@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { updateMyInfo } from "../api/userService";
+import { updateMyProfile } from "../api/userService";
 import Header from "../components/header/Header";
 import { showErrorToast, showSuccessToast } from "../util/toast";
 import { deleteProfile, uploadImageToS3, uploadProfile } from "../api/imageService";
@@ -122,7 +122,7 @@ const Settings = () => {
         e.preventDefault()
 
         try {
-            const res = await updateMyInfo(formData);
+            const res = await updateMyProfile(formData);
 
             const updatedInfo = { ...res.data, userImage: userImage};
             localStorage.setItem("userInfo", JSON.stringify(updatedInfo));

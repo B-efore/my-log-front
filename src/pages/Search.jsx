@@ -1,11 +1,11 @@
 import { useCallback, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Header from "../components/header/Header";
 import SearchList from "../components/search/SearchList";
 import { getSearchHoverBtnImage } from "../util/get-images";
 import { searchWithUsername } from "../api/userService";
 import { usePagination } from "../hooks/usePagination";
 import Pagination from "../components/pagination/Pagination";
-import { useNavigate } from "react-router-dom";
 
 const SEARCH_PLACEHOLDER = "생명체를 탐색하다.";
 
@@ -20,7 +20,7 @@ const Search = () => {
     const handleSearch = useCallback(async () => {
         try {
             const res = await searchWithUsername(username, 0, 10);
-            setUsers(res.data.users);
+            setUsers(res.data.objects);
             updatePagination(res.data);
         } catch (err) {
             console.log(err);

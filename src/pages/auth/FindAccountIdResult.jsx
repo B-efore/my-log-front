@@ -24,7 +24,6 @@ const FindAccountIdResult = () => {
         if (email) {
             findAccountId({ email })
                 .then(res => {
-                    console.log(res);
                     setResult(res.data);
                 })
                 .catch(() => showErrorToast("정보를 불러올 수 없습니다."));

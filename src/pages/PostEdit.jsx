@@ -29,7 +29,6 @@ const PostEdit = () => {
     if (userId) {
       getCategories(userId)
         .then((categories) => {
-          console.log("cate: ", categories)
           setUserCategories(categories)
         })
         .catch((err) => {
@@ -58,7 +57,6 @@ const PostEdit = () => {
         fetchPost();
       }
     } else {
-      console.log(postFromState);
       setPost({
         title: postFromState.title,
         content: postFromState.content,

@@ -78,9 +78,9 @@ const BlogPage = () => {
         const showSidebar = !categoriesLoading && !tagsLoading;
 
         return (
-            <div className="flex flex-col sm:flex-row w-full max-w-6xl gap-2 md:gap-2 pt-12 px-4 box-border mx-auto">
+            <div className="flex flex-col md:flex-row w-full max-w-6xl gap-2 md:gap-2 pt-12 px-4 box-border mx-auto">
                 {showSidebar && (
-                <div className="w-full sm:w-auto flex-[1] min-w-[200px]">
+                <div className="w-full sm:w-auto flex-[1] min-w-[150px]">
 
                     <BlogSidebar
                         categories={categories}
@@ -93,7 +93,7 @@ const BlogPage = () => {
                     </div>
                 )}
 
-                <div className="flex flex-col text-left flex-1 sm:flex-[4] w-full min-w-0">
+                <div className="flex flex-col text-left flex-1 sm:flex-[4] w-full min-w-[280px] sm:w-[600px] md:min-w-[600px]">
                     <h3
                         className="font-alien-violet text-base md:text-lg break-words"
                     >ଲ༼Ꙩ Ꙩ ଲ༽ * 외계 모아 우주인 * .･:*◢▅◣Ξ◥▅◤Ξ ҉ ◢▅◣Ξ ҉ ◥▅◤☾*

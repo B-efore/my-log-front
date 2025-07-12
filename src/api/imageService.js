@@ -22,11 +22,11 @@ export const uploadImageToS3 = async (url, file) => {
 };
 
 export const uploadProfile = async (file) => {
-    return axios.post("/images/profile", null, {
+    return axios.post("/users/me/profile", null, {
         params: { fileName : file.name }
     });
 }
 
-export const deleteProfile = async (userId) => {
-    return axios.delete(`/images/profile/${userId}`);
+export const deleteProfile = async () => {
+    return axios.delete("/users/me/profile");
 }

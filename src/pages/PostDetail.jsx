@@ -133,7 +133,7 @@ const PostDetail = () => {
           <div className="flex flex-wrap items-center justify-start gap-2 my-2">
             {post.tags.map((tag) => (
               <Tag
-                key={tag.id}
+                key={tag.tagId}
                 label={tag.name} />
             ))}
           </div>

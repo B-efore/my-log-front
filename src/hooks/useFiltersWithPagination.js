@@ -4,7 +4,6 @@ import { usePagination } from "./usePagination";
 
 export const useFiltersWithPagination = (fetchPostsByFilter, initialPage = 1, initialSize = 10) => {
 
-    const render = useRef(false);
     const [selectedCategoryId, setSelectedCategoryId] = useState(0);
     const [selectedTagIds, setSelectedTagIds] = useState([]);
 
@@ -44,10 +43,6 @@ export const useFiltersWithPagination = (fetchPostsByFilter, initialPage = 1, in
     };
 
     useEffect(() => {
-        if (!render.current) {
-            render.current = true;
-            return;
-        }
 
         fetchFilteredPosts(pagination.currentPage);
 

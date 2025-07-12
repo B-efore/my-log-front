@@ -25,7 +25,6 @@ const BlogHome = ({ user, pinnedPosts, activities }) => {
     const fetchFollowData = useCallback(async () => {
         try {
             const res = await getFollowCounts(user.userId);
-            console.log("값: ", res.data);
             setFollowerCount(res.data.followerCount);
             setFollowingCount(res.data.followingCount);
         } catch (error) {
@@ -51,7 +50,6 @@ const BlogHome = ({ user, pinnedPosts, activities }) => {
     const checkFollowStatus = useCallback(async () => {
         try {
             const res = await checkFollowing(userId, user.userId);
-            console.log(res);
             setFollowStatue(res.data);
         } catch (err) {
             console.log(err);

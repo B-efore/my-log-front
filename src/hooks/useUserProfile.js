@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getUser, getUserActivity } from "../api/userService";
+import { getUserMain, getUserActivity } from "../api/userService";
 import { useNavigate } from "react-router-dom";
 import { showErrorToast } from "../util/toast";
 
@@ -31,7 +31,7 @@ export function useUserProfile(userId) {
                 setLoading(true);
 
                 const [userRes, activityRes] = await Promise.all([
-                    getUser(userId),
+                    getUserMain(userId),
                     getUserActivity(userId,
                         startDate.toISOString().split("T")[0],
                         endDate.toISOString().split("T")[0])

@@ -1,7 +1,7 @@
 import { createContext, useState, useEffect, useContext, useCallback } from "react";
 import { jwtDecode } from "jwt-decode";
 import { isTokenExpired } from "../util/jwt";
-import { getMyInfo } from "../api/userService";
+import { getMyProfile } from "../api/userService";
 import { getProfileImage } from "../util/get-images";
 
 const STORAGE_KEYS = {
@@ -93,7 +93,7 @@ export const AuthProvider = ({ children }) => {
         }
       }
 
-      const res = await getMyInfo();
+      const res = await getMyProfile();
       updateUserInfo(res.data);
       saveToStorage(STORAGE_KEYS.USER_INFO, res.data);
       return res.data;
