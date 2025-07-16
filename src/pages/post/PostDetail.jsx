@@ -144,7 +144,7 @@ const PostDetail = () => {
         <div className="flex items-center gap-8 py-20">
           <img
             className="profile"
-            src={getProfileImage(post.user.profileImageUrl)}
+            src={getProfileImage(post.user.imageKey)}
             alt={`${post.user.username}의 프로필 이미지`}
             onClick={() => navigate(`/${post.user.userId}`)}
           />

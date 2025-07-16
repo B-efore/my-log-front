@@ -19,7 +19,7 @@ const CommentItem = ({
   return (
     <div className="flex gap-4 mb-8">
       <img
-        src={getProfileImage(comment.user.profileImageUrl)}
+        src={getProfileImage(comment.user.imageKey)}
         className="profile w-[50px] h-[50px]"
       />
       <div className="flex-1 text-left">

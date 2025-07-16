@@ -7,6 +7,7 @@ import notFoundImg from './../assets/not_found.png'
 import strongAlien from './../assets/strong-alien.png'
 import coinAlien from './../assets/coin_alien.png'
 import ghost from './../assets/ghost.png'
+import notification from './../assets/notification.png'
 
 export function getLogoImage() {
     return logo;
@@ -48,4 +49,8 @@ export function getCoinAlien() {
 
 export function getGhost() {
     return ghost;
+}
+
+export function getNotificationIcon() {
+    return notification;
 }

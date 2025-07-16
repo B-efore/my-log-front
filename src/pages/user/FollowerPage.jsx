@@ -30,7 +30,7 @@ const FollowerPage = () => {
     return (
         <div>
             <Header />
-            <div className="flex flex-col h-full items-center gap-4 mt-12 mx-8">
+            <div className="flex flex-col h-full items-center gap-4 mt-12">
                 {users.length > 0 ?
                     <span className="follow-title">{users.length} 잡혔다! 왹알!</span> :
                     <></>

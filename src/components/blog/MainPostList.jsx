@@ -33,7 +33,7 @@ const MainPostList = ({ posts }) => {
 
           <div className="flex items-center gap-2 mt-auto pt-3 sm:pt-4">
             <img
-              src={getProfileImage(post.user?.profileImageUrl)}
+              src={getProfileImage(post.user?.imageKey)}
               alt="작성자"
               className="profile w-5 h-5 sm:w-6 sm:h-6 rounded-full round-box-border flex-shrink-0"
             />

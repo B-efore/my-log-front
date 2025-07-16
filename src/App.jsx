@@ -25,8 +25,54 @@ import Ghost from './pages/main/Ghost';
 import Shop from './pages/main/Shop';
 import AdminPage from './pages/admin/AdminPage';
 import ItemUpload from './pages/admin/ItemUpload';
+import { useEffect, useRef } from 'react';
+import { useAuth } from './context/AuthContext';
+import { showSuccessToast } from './util/toast';
 
 function App() {
+
+  const { userId, isLoggedIn } = useAuth();
+  const eventSourceRef = useRef(null);
+
+  useEffect(() => {
+
+    if (userId && isLoggedIn) {
+
+      const accessToken = localStorage.getItem('token');
+      document.cookie = `accessToken=${accessToken}; Secure; path=/api/sse`;
+
+      const eventSource = new EventSource(`http://localhost:8080/api/sse/subscribe`, {
+        withCredentials: true,
+      })
+
+      eventSource.onopen = () => {
+        console.log("연결");
+      };
+
+      eventSource.onmessage = (event) => {
+        console.log(event.data);
+      };
+
+      eventSource.addEventListener('notification', (event) => {
+        console.log(event.data);
+        showSuccessToast(event.data);
+      });
+
+      eventSource.onerror = (e) => {
+        console.error(e);
+      };
+
+      eventSourceRef.current = eventSource;
+    }
+
+    return () => {
+      if (eventSourceRef.current) {
+        eventSourceRef.current = close();
+        eventSourceRef.current = null;
+      }
+    }
+
+  }, [userId, isLoggedIn]);
 
   return (
     <>
@@ -42,7 +88,7 @@ function App() {
         <Route path="/oauth2/callback" element={<OAuth2Callback />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        
+
         <Route path="/accountId/find" element={<FindAccountId />} />
         <Route path="/accountId/find/result" element={<FindAccountIdResult />} />
         <Route path="/password/find" element={<FindPassword />} />
@@ -56,7 +102,7 @@ function App() {
         <Route path="/search" element={<Search />} />
 
         <Route path="/:userId" element={<BlogPage />} />
-        <Route path="/:userId/followings" element={<FollowingPage />}/>
+        <Route path="/:userId/followings" element={<FollowingPage />} />
         <Route path="/:userId/followers" element={<FollowerPage />} />
 
         <Route path="/write" element={<PostWrite />} />
