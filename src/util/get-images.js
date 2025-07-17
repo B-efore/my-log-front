@@ -8,6 +8,7 @@ import strongAlien from './../assets/strong-alien.png'
 import coinAlien from './../assets/coin_alien.png'
 import ghost from './../assets/ghost.png'
 import notification from './../assets/notification.png'
+import likeAlien from './../assets/like_alien.png'
 
 export function getLogoImage() {
     return logo;
@@ -53,4 +54,8 @@ export function getGhost() {
 
 export function getNotificationIcon() {
     return notification;
+}
+
+export function getLikeAlien() {
+    return likeAlien;
 }

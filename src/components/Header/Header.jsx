@@ -80,9 +80,6 @@ const Header = ({
     }
 
     const handleNotificationClick = () => {
-        if (!isNotificationOpen) {
-            setNotificationCount(0);
-        }
         setIsNotificationOpen(true);
     }
 
@@ -99,10 +96,13 @@ const Header = ({
                 totalPages: res.data.totalPages,
                 totalPosts: res.data.totalElements
             });
-            await updateNotificationRead();
+
+            if (notificationCount > 0) {
+                await updateNotificationRead();
+                setNotificationCount(0);
+            }
 
             setLoadingPages(prev => new Set(prev).add(page));
-            console.log(res.data);
         } catch (err) {
             console.log(err);
         }

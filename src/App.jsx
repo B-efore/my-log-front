@@ -31,6 +31,8 @@ import { showSuccessToast } from './util/toast';
 
 function App() {
 
+  const SSE_URL = import.meta.env.VITE_SSE_URL;
+
   const { userId, isLoggedIn } = useAuth();
   const eventSourceRef = useRef(null);
 
@@ -41,7 +43,7 @@ function App() {
       const accessToken = localStorage.getItem('token');
       document.cookie = `accessToken=${accessToken}; Secure; path=/api/sse`;
 
-      const eventSource = new EventSource(`http://localhost:8080/api/sse/subscribe`, {
+      const eventSource = new EventSource(`${SSE_URL}`, {
         withCredentials: true,
       })
 
@@ -50,11 +52,11 @@ function App() {
       };
 
       eventSource.onmessage = (event) => {
-        console.log(event.data);
+        console.log(event);
+        // showSuccessToast(event.data);
       };
 
       eventSource.addEventListener('notification', (event) => {
-        console.log(event.data);
         showSuccessToast(event.data);
       });
 

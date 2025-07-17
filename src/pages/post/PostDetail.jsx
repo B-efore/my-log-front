@@ -11,8 +11,9 @@ import ConfirmModal from "../../components/common/ConfirmModal";
 import CommentList from "../../components/comment/CommentList";
 
 import { showErrorToast, showSuccessToast } from "../../util/toast";
-import { getProfileImage } from "../../util/get-images";
+import { getLikeAlien, getProfileImage } from "../../util/get-images";
 import MarkdownView from "../../components/post/MarkdownView";
+import { createLike, deleteLike, getLikeCount, getLikeStatus } from "../../api/likeService";
 
 const PostDetail = () => {
 
@@ -29,9 +30,59 @@ const PostDetail = () => {
   const [showPostConfirm, setShowPostConfirm] = useState(false);
   const [showCommentConfirm, setShowCommentConfirm] = useState({ open: false, targetId: null });
 
+  const [likeLoading, setLikeLoading] = useState(false);
+  const [isLiked, setIsLiked] = useState(false);
+  const [likeCount, setLikeCount] = useState(0);
+
   const isAuthor = post?.user?.userId === loggedInUserId;
 
-  const goEdit = () => 
+  useEffect(() => {
+    if (!post) {
+      getPost(postId)
+        .then((res) => {
+          setPost(res.data);
+          setComments(res.data.comments)
+          setLoading(false);
+        })
+        .catch((err) => {
+          showErrorToast("게시글을 불러오는데 실패했습니다.");
+          navigate("/");
+        });
+    }
+  }, [postId]);
+
+  useEffect(() => {
+
+    const fetchLikeStatus = async () => {
+      try {
+        const res = await getLikeStatus(postId);
+        setIsLiked(res.data);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    if (isLoggedIn) {
+      fetchLikeStatus();
+    }
+
+  }, [isLoggedIn, postId]);
+
+  useEffect(() => {
+    const fetchLikeCount = async () => {
+      try {
+        const res = await getLikeCount(postId);
+        setLikeCount(res.data);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    fetchLikeCount();
+
+  }, [postId]);
+
+  const goEdit = () =>
     navigate(`/write/${postId}`, {
       state: {
         post: post,
@@ -91,20 +142,35 @@ const PostDetail = () => {
     }
   };
 
-  useEffect(() => {
-    if (!post) {
-      getPost(postId)
-        .then((res) => {
-          setPost(res.data);
-          setComments(res.data.comments)
-          setLoading(false);
-        })
-        .catch((err) => {
-          showErrorToast("게시글을 불러오는데 실패했습니다.");
-          navigate("/");
-        });
+  const handleLikeBtn = async () => {
+    if (!isLoggedIn || likeLoading) return;
+
+    setLikeLoading(true);
+    try {
+      await createLike(postId);
+      setIsLiked(true);
+      setLikeCount(prev => prev + 1);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLikeLoading(false);
     }
-  }, [postId]);
+  }
+
+  const handleUnlikeBtn = async () => {
+    if (!isLoggedIn || likeLoading) return;
+
+    setLikeLoading(true);
+    try {
+      await deleteLike(postId);
+      setIsLiked(false);
+      setLikeCount(prev => prev - 1);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLikeLoading(false);
+    }
+  }
 
   if (loading || !post) {
     return <div>로딩중...</div>
@@ -141,7 +207,32 @@ const PostDetail = () => {
 
         <MarkdownView content={post.content} />
 
-        <div className="flex items-center gap-8 py-20">
+        {!isLiked ? (
+          <div
+            className="flex flex-row items-center border-2 border-yellow-500 w-fit py-1 px-5 my-10 ml-auto gap-2 rounded-3xl select-none transition-colors hover:bg-yellow-50 cursor-pointer"
+            onClick={handleLikeBtn}
+          >
+            <img
+              className="w-8 h-8 md:w-9 md:h-9 lg:w-10 lg:h-10"
+              src={getLikeAlien()}
+            />
+            <p className="text-2xl md:text-3xl text-yellow-600">{likeCount}</p>
+          </div>
+        ) : (
+          <div
+            className="flex flex-row items-center border-2 border-yellow-500 w-fit py-1 px-5 my-10 ml-auto gap-2 rounded-3xl select-none bg-yellow-200 transition-colors hover:bg-yellow-300 cursor-pointer"
+            onClick={handleUnlikeBtn}
+          >
+            <img
+              className="w-8 h-8 md:w-9 md:h-9 lg:w-10 lg:h-10"
+              src={getLikeAlien()}
+            />
+            <p className="text-2xl md:text-3xl text-yellow-600">{likeCount}</p>
+          </div>
+        )}
+
+
+        <div className="flex items-center gap-8 py-10 border-t-1 border-gray-300 ">
           <img
             className="profile"
             src={getProfileImage(post.user.imageKey)}
