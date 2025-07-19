@@ -187,10 +187,15 @@ const PostDetail = () => {
 
         <div className="flex flex-row items-center justify-between">
           <span className="text-sm text-gray-500">{formatDate(post.createdAt)}</span>
-          {isAuthor && (
+          {isAuthor ? (
             <div className="flex gap-2">
+              <p className="text-sm text-gray-500">당신을 응시하다... 총 {post.views}의 눈</p>
               <button className="btn-small-text" onClick={goEdit}>수정</button>
               <button className="btn-small-text" onClick={handleDeletePost}>삭제</button>
+            </div>
+          ) : (
+            <div className="flex">
+              <p className="text-sm text-gray-500">당신을 응시하다... 총 {post.views}의 눈</p>
             </div>
           )}
         </div>
@@ -220,7 +225,7 @@ const PostDetail = () => {
           </div>
         ) : (
           <div
-            className="flex flex-row items-center border-2 border-yellow-500 w-fit py-1 px-5 my-10 ml-auto gap-2 rounded-3xl select-none bg-yellow-200 transition-colors hover:bg-yellow-300 cursor-pointer"
+            className="flex flex-row items-center border-2 border-yellow-500 w-fit py-1 px-5 mt-10 mb-3 ml-auto gap-2 rounded-3xl select-none bg-yellow-200 transition-colors hover:bg-yellow-300 cursor-pointer"
             onClick={handleUnlikeBtn}
           >
             <img
