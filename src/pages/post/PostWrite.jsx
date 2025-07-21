@@ -32,8 +32,8 @@ const PostWrite = () => {
 
     const { valid, message } = validatePost();
 
-    if(!valid) {
-      ToastMessage(message, { type : "error"});
+    if (!valid) {
+      ToastMessage(message, { type: "error" });
       return;
     }
 
@@ -61,7 +61,7 @@ const PostWrite = () => {
     } catch (error) {
       console.error(requestBody);
       console.error(error.response?.data);
-      ToastMessage("게시글 등록 중 오류가 발생했습니다.", { type : "error"});
+      ToastMessage("게시글 등록 중 오류가 발생했습니다.", { type: "error" });
     }
   };
 
@@ -69,46 +69,45 @@ const PostWrite = () => {
   return (
     <div className="flex flex-col h-screen">
 
-        <Header
-            rightChild={
-            <>
-                <button className="btn-second px-10 py-2" onClick={handleSave}>저장</button>
-                <div className="publish-button-wrapper" >
-                  <button className="btn-primary px-10 py-2" onClick={() => 
-                    {
-                      handleChange("contentPreview", post.content.slice(0, 100));
-                      setShowModal(true);
-                    }}>발행</button>
-                
-                  {showModal && (
-                    <PostPublishModal
-                      onClose={() => setShowModal(false)}
-                      onSubmit={handlePublish}
-                      handleChange={handleChange}
-                      post={post}
-                      categories={userCategories}
-                      setCategories={setUserCategories}
-                    />
-                  )}
-                </div>
-            </>
-            }
+      <Header
+        rightChild={
+          <>
+            <button className="btn-second px-10 py-2" onClick={handleSave}>저장</button>
+            <div className="publish-button-wrapper" >
+              <button className="btn-primary px-10 py-2" onClick={() => {
+                handleChange("contentPreview", post.content.slice(0, 100));
+                setShowModal(true);
+              }}>발행</button>
+
+              {showModal && (
+                <PostPublishModal
+                  onClose={() => setShowModal(false)}
+                  onSubmit={handlePublish}
+                  handleChange={handleChange}
+                  post={post}
+                  categories={userCategories}
+                  setCategories={setUserCategories}
+                />
+              )}
+            </div>
+          </>
+        }
+      />
+
+      <div className="flex flex-1 mt-14 min-h-0">
+        <PostEditor
+          title={post.title}
+          content={post.content}
+          contentPreview={post.contentPreview}
+          tags={post.tags}
+          onChange={handleChange}
+          addTag={addTag}
+          removeTag={removeTag}
         />
 
-        <div className="flex flex-1 mt-14 min-h-0">
-            <PostEditor
-                title={post.title}
-                content={post.content}
-                contentPreview={post.contentPreview}
-                tags={post.tags}
-                onChange={handleChange}
-                addTag={addTag}
-                removeTag={removeTag}
-            />
-
-            <MarkdownPreview title={post.title} content={post.content} />
-        </div>
+        <MarkdownPreview title={post.title} content={post.content} />
       </div>
+    </div>
   );
 };
 
