@@ -24,7 +24,11 @@ instance.interceptors.request.use(
   }
 );
 
-let logoutHandler = () => {};
+export async function reissueToken() {
+  return await instance.post('/auth/reissue');
+}
+
+let logoutHandler = () => { };
 
 export const setLogoutHandler = (handler) => {
   logoutHandler = handler;
@@ -32,9 +36,25 @@ export const setLogoutHandler = (handler) => {
 
 instance.interceptors.response.use(
   (response) => response,
-  (error) => {
-    if (error.response?.status === 401) {
-      logoutHandler();
+  async (error) => {
+    const originalRequest = error.config;
+
+    if (error.response?.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+
+      try {
+        const res = await reissueToken();
+        if (res.status === 200) {
+          const newAccessToken = res.data.accessToken;
+          localStorage.setItem('token', newAccessToken);
+          originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+          
+          return instance(originalRequest);
+        }
+      } catch (err) {
+        logoutHandler();
+        return Promise.reject(err);
+      }
     }
 
     return Promise.reject(error);
