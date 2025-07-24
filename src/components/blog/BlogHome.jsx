@@ -1,23 +1,26 @@
-import { useNavigate } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import { getProfileImage } from "../../util/get-images";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import CalendarHeatmap from 'react-calendar-heatmap';
 import 'react-calendar-heatmap/dist/styles.css';
 import React, { useCallback, useEffect, useState } from "react";
-import { follow, unfollow, checkFollowing, getFollowers, getFollowings, getFollowCounts } from "../../api/followService";
+import { follow, unfollow, checkFollowing, getFollowCounts } from "../../api/followService";
 import { showErrorToast, showSuccessToast } from "../../util/toast";
 import { HttpStatusCode } from "axios";
 import { useAuth } from "../../context/AuthContext";
 import PinnedPostList from "./PinnedPostList";
+import MarkdownView from "../post/MarkdownView";
 
 
-const BlogHome = ({ user, pinnedPosts, activities }) => {
+const BlogHome = ({ user, readme, pinnedPosts, activities }) => {
     const { userId, isLoggedIn } = useAuth();
     const [followStatue, setFollowStatue] = useState(null);
     const [followerCount, setFollowerCount] = useState(0);
     const [followingCount, setFollowingCount] = useState(0);
+    const isOwner = userId === user.userId;
 
+    const location = useLocation();
     const navigate = useNavigate();
     const [start, setStart] = useState(null);
     const [end, setEnd] = useState(null);
@@ -110,8 +113,15 @@ const BlogHome = ({ user, pinnedPosts, activities }) => {
         }
     };
 
+    const handleReadmeEdit = async () => {
+        if (!isOwner) return;
+        navigate(`/${userId}/readme`, {
+            state: {readme, from: location.pathname}
+        });
+    }
+
     return (
-        <div className="flex flex-col md:flex-row md:w-[90vw] gap-8 md:gap-12 lg:gap-16 px-4 pt-12 box-border">
+        <div className="flex flex-col w-[90vw] md:flex-row gap-8 md:gap-12 lg:gap-16 px-4 pt-12 box-border">
             <div className="flex flex-col items-center md:items-start flex-1">
                 <img
                     src={getProfileImage(user.imageKey)}
@@ -131,38 +141,51 @@ const BlogHome = ({ user, pinnedPosts, activities }) => {
                 </div>
             </div>
             <div className="flex flex-col text-left flex-1 md:flex-4 pb-8">
-                <b>외계인 파일</b>
+                <div className="flex justify-between">
+                    <b>외계인 파일</b>
+                    {isOwner && (
+                        <button
+                            className="text-sm text-gray-500 cursor-pointer"
+                            onClick={handleReadmeEdit}
+                        >
+                                편집
+                        </button>
+                    )}
+                </div>
                 <div className="round-box-border p-4 h-fit mb-6 text-sm md:text-base">
-                    <ReactMarkdown remarkPlugins={remarkGfm}>소개md파일</ReactMarkdown>
+                    {readme
+                        ? (<MarkdownView content={readme?.content}/>)
+                        : (<span>{user.userId}번 외계인 {user.username}얌</span>)
+                    }
                 </div>
                 <b>외계 수집</b>
                 <div className="mb-4 border-box">
                     <ol className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full h-full p-0 m-0">
-                        <PinnedPostList posts={pinnedPosts} size={4}/>
+                        <PinnedPostList posts={pinnedPosts} size={4} />
                     </ol>
                 </div>
                 <b>행성 정복도</b>
                 <div className="round-box-border p-2 md:p-4 w-full box-border overflow-x-auto">
                     <div className="min-w-fit">
-                    <CalendarHeatmap
-                        startDate={start}
-                        endDate={end}
-                        values={activities}
-                        gutterSize={2}
-                        // classForValue={(value) => {
-                        //     if (!value || value.count === 0) return 'color-empty';
-                        //     if (value.count === 1) return 'color-scale-1';
-                        //     if (value.count === 2) return 'color-scale-2';
-                        //     return 'color-scale-3';
-                        // }}
-                        transformDayElement={(el, value) => {
-                            return React.cloneElement(el, {
-                                rx: 1,
-                                width: 9,
-                                height: 9,
-                            })
-                        }}
-                    />
+                        <CalendarHeatmap
+                            startDate={start}
+                            endDate={end}
+                            values={activities}
+                            gutterSize={2}
+                            // classForValue={(value) => {
+                            //     if (!value || value.count === 0) return 'color-empty';
+                            //     if (value.count === 1) return 'color-scale-1';
+                            //     if (value.count === 2) return 'color-scale-2';
+                            //     return 'color-scale-3';
+                            // }}
+                            transformDayElement={(el, value) => {
+                                return React.cloneElement(el, {
+                                    rx: 1,
+                                    width: 9,
+                                    height: 9,
+                                })
+                            }}
+                        />
                     </div>
                 </div>
             </div>

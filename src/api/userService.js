@@ -14,14 +14,6 @@ export const getUserMain = async (userId) => {
     return await axios.get(`/users/${userId}`);
 }
 
-export const getUserActivity = async (userId, startDate, endDate) => {
-    return await axios.get(`/users/${userId}/activity`, {
-        params: {
-            startDate, endDate
-        },
-    });
-}
-
 // 유저 검색
 export const searchWithUsername = async (username, page = 0, size = 10) => {
     return await axios.get("/users/search", {

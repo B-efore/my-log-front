@@ -214,7 +214,7 @@ const PostDetail = () => {
 
         {!isLiked ? (
           <div
-            className="flex flex-row items-center border-2 border-yellow-500 w-fit py-1 px-5 my-10 ml-auto gap-2 rounded-3xl select-none transition-colors hover:bg-yellow-50 cursor-pointer"
+            className="flex flex-row items-center border-2 border-yellow-500 w-fit py-1 px-5 mt-10 mb-3 ml-auto gap-2 rounded-3xl select-none transition-colors hover:bg-yellow-50 cursor-pointer"
             onClick={handleLikeBtn}
           >
             <img

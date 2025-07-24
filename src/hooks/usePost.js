@@ -9,6 +9,7 @@ const usePost = () => {
     categoryId: null,
     pinned: false,
     visibility: "공개",
+    type: null,
   });
 
   const handleChange = (key, value) => {

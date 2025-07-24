@@ -50,6 +50,7 @@ const PostEdit = () => {
           categoryId: res.data.category === null ? 0 : res.data.category.categoryId,
           visibility: res.data.visibility,
           pinned: res.data.pinned,
+          type: res.data.type,
         });
       }
 
@@ -65,6 +66,7 @@ const PostEdit = () => {
         categoryId: postFromState.category === null ? 0 : postFromState.category.categoryId,
         visibility: postFromState.visibility,
         pinned: postFromState.pinned,
+        type: postFromState.type,
       });
     }
 
@@ -85,13 +87,14 @@ const PostEdit = () => {
       categoryId: post.categoryId === 0 ? null : post.categoryId,
       tagRequests: post.tags.map((tag) => ({ name: tag })),
       pinned: post.pinned || false,
+      type: post.type
     };
 
     try {
 
       let response;
 
-      if (post.isNotice) {
+      if (post.type === '공지') {
         response = await updateNotice(postId, requestBody);
       } else {
         response = await updatePost(postId, requestBody);

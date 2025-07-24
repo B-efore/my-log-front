@@ -28,6 +28,7 @@ import ItemUpload from './pages/admin/ItemUpload';
 import { useEffect, useRef } from 'react';
 import { useAuth } from './context/AuthContext';
 import { showSuccessToast } from './util/toast';
+import Readme from './components/blog/Readme';
 
 function App() {
 
@@ -104,6 +105,7 @@ function App() {
         <Route path="/search" element={<Search />} />
 
         <Route path="/:userId" element={<BlogPage />} />
+        <Route path="/:userId/readme" element={<Readme />} />
         <Route path="/:userId/followings" element={<FollowingPage />} />
         <Route path="/:userId/followers" element={<FollowerPage />} />
 

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { createPost } from "../../api/postService";
 import { getCategories } from "../../api/categoryService";
 import Header from "../../components/header/Header";
 import PostEditor from "../../components/post/PostEditor";
@@ -46,6 +45,7 @@ const NoticeWrite = () => {
       categoryId: post.categoryId === 0 ? null : post.categoryId,
       tagRequests: post.tags.map((tag) => ({ name: tag })),
       pinned: post.pinned || false,
+      type: '공지',
     };
 
     try {

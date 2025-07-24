@@ -45,6 +45,7 @@ const PostWrite = () => {
       categoryId: post.categoryId === 0 ? null : post.categoryId,
       tagRequests: post.tags.map((tag) => ({ name: tag })),
       pinned: post.pinned || false,
+      type: '일반 글',
     };
 
     try {
