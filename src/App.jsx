@@ -29,6 +29,7 @@ import { useEffect, useRef } from 'react';
 import { useAuth } from './context/AuthContext';
 import { showSuccessToast } from './util/toast';
 import Readme from './components/blog/Readme';
+import Fortune from './pages/main/Fortune';
 
 function App() {
 
@@ -99,6 +100,7 @@ function App() {
 
         <Route path="/ghost" element={<Ghost />} />
         <Route path="/ghost/shop" element={<Shop />} />
+        <Route path="/fortune" element={<Fortune />} />
 
         <Route path="/settings" element={<Settings />} />
 

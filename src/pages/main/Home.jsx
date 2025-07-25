@@ -75,7 +75,12 @@ const Home = () => {
                 <div className="select-none flex flex-col flex-1 w-full h-fit px-4 sm:px-8 md:px-12 lg:px-20 py-4 md:py-8 box-border">
                     <button className="w-fit h-fit text-xs text-left text-gray-300" onClick={handleHello}>제가 보이시나요...?</button>
                     <div className="flex flex-row justify-between items-center gap-2 sm:gap-4 mb-4">
-                        <h3 className="w-fit font-alien-violet text-sm sm:text-base md:text-lg break-words">* ✯⌁(⚫︎◕  ‧̫ ◕⚫︎)⚡︎✰----◓ 운세 요정! (준비중이얌) *</h3>
+                        <h3
+                            className="w-fit font-alien-violet text-sm sm:text-base md:text-lg break-words"
+                            onClick={() => navigate("/fortune")}
+                        >
+                            * ✯⌁(⚫︎◕  ‧̫ ◕⚫︎)⚡︎✰----◓ 운세 요정! (준비중이얌) *
+                        </h3>
                         <img className="icon-btn flex-shrink-0" src={getCoinAlien()} onClick={handleCoinClick} />
                     </div>
                     <MainPostList posts={mainPosts} />
