@@ -7,26 +7,30 @@ import { showAlienToast, showErrorToast, showSuccessToast } from "../../util/toa
 import { useNavigate } from "react-router-dom";
 import { getCoinAlien } from "../../util/get-images";
 import { useAuth } from "../../context/AuthContext";
+import Pagination from "../../components/pagination/Pagination";
+import { usePagination } from "../../hooks/usePagination";
 
 const Home = () => {
 
-    const {isLoggedIn} = useAuth();
+    const { isLoggedIn } = useAuth();
     const navigate = useNavigate();
     const [mainPosts, setMainPosts] = useState([]);
     const [isBlocking, setIsBlocking] = useState(false);
+    const { pagination, updatePagination, handlePageChange, generatePageNumbers } = usePagination();
 
     useEffect(() => {
-        const fetchMainPosts = async () => {
+        const fetchMainPosts = async (page = pagination.currentPage, size = 12) => {
             try {
-                const res = await getPosts();
+                const res = await getPosts(page, size);
                 setMainPosts(res.data.objects);
+                updatePagination(res.data);
             } catch (err) {
                 console.log(err);
             }
         };
 
         fetchMainPosts();
-    }, []);
+    }, [pagination.currentPage]);
 
     const handleHello = async () => {
         try {
@@ -44,7 +48,7 @@ const Home = () => {
     const handleCoinClick = () => {
         if (isBlocking) return;
 
-        if(!isLoggedIn) {
+        if (!isLoggedIn) {
             showErrorToast("살아있는 생명체만 접근 가능한 것 같다.");
             return;
         }
@@ -52,7 +56,7 @@ const Home = () => {
         setIsBlocking(true);
         showAlienToast("...쨍그랑!");
         setTimeout(() => {
-        showAlienToast("'누구...?'");
+            showAlienToast("'누구...?'");
         }, 1000);
         setTimeout(() => {
             setIsBlocking(false);
@@ -79,11 +83,16 @@ const Home = () => {
                             className="w-fit font-alien-violet text-sm sm:text-base md:text-lg break-words"
                             onClick={() => navigate("/fortune")}
                         >
-                            * ✯⌁(⚫︎◕  ‧̫ ◕⚫︎)⚡︎✰----◓ 운세 요정! (준비중이얌) *
+                            * ✯⌁(⚫︎◕  ‧̫ ◕⚫︎)⚡︎✰----◓ 오늘의 운세 요정! *
                         </h3>
                         <img className="icon-btn flex-shrink-0" src={getCoinAlien()} onClick={handleCoinClick} />
                     </div>
                     <MainPostList posts={mainPosts} />
+                    <Pagination
+                        pagination={pagination}
+                        onPageChange={handlePageChange}
+                        generatePageNumbers={generatePageNumbers}
+                    />
                 </div>
             </div>
         </div>

@@ -4,15 +4,14 @@ import { useParams, useSearchParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { showErrorToast } from "../../util/toast";
 import { useUserProfile } from "../../hooks/useUserProfile";
-import { usePostList } from "../../hooks/usePostList";
 import { useCategories } from "../../hooks/useCategories";
 import { useTags } from "../../hooks/useTags";
 import BlogHome from "../../components/blog/BlogHome";
 import BlogSidebar from "../../components/blog/BlogSidebar";
 import BlogPostList from "../../components/blog/BlogPostList";
 import Pagination from "../../components/pagination/Pagination";
-import "./BlogPage.css"
 import { useFiltersWithPagination } from "../../hooks/useFiltersWithPagination";
+import { getPostsByCategoryAndTags } from "../../api/postService";
 
 const TAB_CONFIG = [
     { key: 'home', label: '고향' },
@@ -27,11 +26,13 @@ const BlogPage = () => {
     const navigate = useNavigate();
 
     const { user, readme, pinnedPosts, activityDate, loading: userLoading } = useUserProfile(userId);
-    const { fetchPostsWithFilter } = usePostList(userId);
+
     const { categories, lodaing: categoriesLoading, fetchCategoriesWithCount } = useCategories(userId);
     const { tags, loading: tagsLoading, fetchTagsWithCount } = useTags(userId);
 
-    const { selectedCategoryId, selectedTagIds, handleCategoryClick, handleTagClick, pagination, handlePageChange, generatePageNumbers, } = useFiltersWithPagination(fetchPostsWithFilter);
+    const [posts, setPosts] = useState([]);
+    const { selectedCategoryId, selectedTagIds, handleCategoryClick, handleTagClick,
+        pagination, updatePagination, handlePageChange, generatePageNumbers, } = useFiltersWithPagination();
 
     const [dataLoaded, setDataLoaded] = useState({
         user: false,
@@ -62,9 +63,26 @@ const BlogPage = () => {
         }
     }, [activeTab, dataLoaded]);
 
+    const fetchPosts = async (page = pagination.currentPage, size = pagination.size) => {
+        try {
+            const res = await getPostsByCategoryAndTags(
+                userId, selectedCategoryId, selectedTagIds, page, size
+            );
+            setPosts(res.data.objects);
+            updatePagination(res.data);
+            console.log(res.data);
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
     useEffect(() => {
         loadPostsTabData();
     }, [loadPostsTabData, activeTab]);
+
+    useEffect(() => {
+        fetchPosts();
+    }, [pagination.currentPage, selectedCategoryId, selectedTagIds]);
 
     const renderHomeContent = () => {
         if (userLoading || !user) {
@@ -99,7 +117,7 @@ const BlogPage = () => {
                     >ଲ༼Ꙩ Ꙩ ଲ༽ * 외계 모아 우주인 * .･:*◢▅◣Ξ◥▅◤Ξ ҉ ◢▅◣Ξ ҉ ◥▅◤☾*
                     </h3>
                     <BlogPostList
-                        posts={pagination.posts}
+                        posts={posts}
                         onPostClick={(postId) => navigate(`/posts/${postId}`)}
                     />
                     <Pagination

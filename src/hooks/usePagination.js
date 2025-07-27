@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export function usePagination(initialPage = 1, initialSize = 10) {
+export function usePagination(initialPage = 0, initialSize = 10) {
 
     const [pagination, setPagination] = useState({
         currentPage: initialPage,
@@ -10,12 +10,17 @@ export function usePagination(initialPage = 1, initialSize = 10) {
     });
 
     const updatePagination = (newPagination) => {
-        setPagination(newPagination);
+        setPagination({
+            currentPage: newPagination.page,
+            totalPages: newPagination.totalPages,
+            totalPosts: newPagination.totalElements,
+            size: newPagination.size
+        });
     }
 
     const handlePageChange = (pageNumber) => {
 
-        if (pageNumber < 1 || pageNumber > pagination.totalPages || pageNumber === pagination.currentPage) {
+        if (pageNumber < 0 || pageNumber > pagination.totalPages || pageNumber === pagination.currentPage) {
             return;
         }
 

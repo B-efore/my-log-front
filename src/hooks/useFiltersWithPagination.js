@@ -1,8 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { usePagination } from "./usePagination";
 
 
-export const useFiltersWithPagination = (fetchPostsByFilter, initialPage = 1, initialSize = 10) => {
+export const useFiltersWithPagination = (initialPage = 0, initialSize = 10) => {
 
     const [selectedCategoryId, setSelectedCategoryId] = useState(0);
     const [selectedTagIds, setSelectedTagIds] = useState([]);
@@ -26,36 +26,14 @@ export const useFiltersWithPagination = (fetchPostsByFilter, initialPage = 1, in
         );
     };
 
-    const fetchFilteredPosts = async (page = pagination.currentPage) => {
-        try {
-            const res = await fetchPostsByFilter(selectedCategoryId, selectedTagIds, page-1, pagination.size);
-
-            updatePagination(prev => ({
-                ...prev,
-                posts: res.posts,
-                size: res.size,
-                totalPages: res.totalPages,
-                totalPosts: res.totalPosts,
-            }));
-        } catch (error) {
-            console.error(error);
-        }
-    };
-
-    useEffect(() => {
-
-        fetchFilteredPosts(pagination.currentPage);
-
-    }, [selectedCategoryId, selectedTagIds, pagination.currentPage]);
-
     return {
         selectedCategoryId,
         selectedTagIds,
         handleCategoryClick,
         handleTagClick,
         pagination,
+        updatePagination,
         handlePageChange,
         generatePageNumbers,
-        fetchFilteredPosts
     };
 };

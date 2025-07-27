@@ -6,18 +6,18 @@ const Pagination = ({
     return (
         <div className="mx-auto my-12">
 
-            {pagination.currentPage > 1 && (
+            {pagination.currentPage > 0 && (
                 <span
-                    className="page-nav"
-                    onClick={() => onPageChange(1)}
+                    className="mx-[5px] cursor-pointer hover:text-violet-500"
+                    onClick={() => onPageChange(0)}
                 >
                     {'<<'}
                 </span>
             )}
 
-            {pagination.currentPage > 1 && (
+            {pagination.currentPage > 0 && (
                 <span
-                    className="page-nav"
+                    className="mx-[5px] cursor-pointer hover:text-violet-500"
                     onClick={() => onPageChange(pagination.currentPage - 1)}
                 >
                     {'<'}
@@ -27,25 +27,25 @@ const Pagination = ({
             {generatePageNumbers().map(pageNum => (
                 <span
                     key={pageNum}
-                    className={`page-number px-2 ${pagination.currentPage === pageNum ? 'active' : ''}`}
-                    onClick={() => onPageChange(pageNum)}
+                    className={`mx-[5px] cursor-pointer hover:text-violet-500 ${pagination.currentPage + 1 === pageNum ? 'text-violet-500 font-black' : ''}`}
+                    onClick={() => onPageChange(pageNum - 1)}
                 >
                     {pageNum}
                 </span>
             ))}
 
-            {pagination.currentPage < pagination.totalPages && (
+            {pagination.currentPage + 1 < pagination.totalPages && (
                 <span
-                    className="page-nav"
+                    className="mx-[5px] cursor-pointer hover:text-violet-500"
                     onClick={() => onPageChange(pagination.currentPage + 1)}
                 >
                     {'>'}
                 </span>
             )}
 
-            {pagination.currentPage < pagination.totalPages && (
+            {pagination.currentPage + 1 < pagination.totalPages && (
                 <span
-                    className="page-nav"
+                    className="mx-[5px] cursor-pointer hover:text-violet-500"
                     onClick={() => onPageChange(pagination.totalPages)}
                 >
                     {'>>'}

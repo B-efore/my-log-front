@@ -1,8 +1,7 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 export const useFilters = (fetchPostsByFilter, updatePagination) => {
 
-    const render = useRef(false);
     const [selectedCategoryId, setSelectedCategoryId] = useState(0);
     const [selectedTagIds, setSelectedTagIds] = useState([]);
 
@@ -25,7 +24,7 @@ export const useFilters = (fetchPostsByFilter, updatePagination) => {
         const applyFilters = async () => {
             try {
                 const res = await fetchPostsByFilter(selectedCategoryId, selectedTagIds);
-                updatePagination(res);
+                updatePagination(res.data);
             } catch (error) {
                 console.log(error);
             }
