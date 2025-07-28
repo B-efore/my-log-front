@@ -1,142 +1,153 @@
 import Header from "../../components/header/Header";
 import { useCallback, useEffect, useState } from "react";
-import { useParams, useSearchParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import { showErrorToast } from "../../util/toast";
+import { useParams } from "react-router-dom";
 import { useUserProfile } from "../../hooks/useUserProfile";
 import { useCategories } from "../../hooks/useCategories";
 import { useTags } from "../../hooks/useTags";
-import BlogHome from "../../components/blog/BlogHome";
-import BlogSidebar from "../../components/blog/BlogSidebar";
-import BlogPostList from "../../components/blog/BlogPostList";
-import Pagination from "../../components/pagination/Pagination";
 import { useFiltersWithPagination } from "../../hooks/useFiltersWithPagination";
 import { getPostsByCategoryAndTags } from "../../api/postService";
+import { getUserLikes } from "../../api/likeService";
+import { usePagination } from "../../hooks/usePagination";
+import BlogLikesTab from "../../components/tabs/BlogLikesTab";
+import BlogPostsTab from "../../components/tabs/BlogPostsTab";
+import BlogHomeTab from "../../components/tabs/BlogHomeTab";
+import { useTabManagement } from "../../hooks/useTabManagement";
 
 const TAB_CONFIG = [
     { key: 'home', label: '고향' },
-    { key: 'posts', label: '적은것' }
+    { key: 'posts', label: '적은것' },
+    { key: 'likes', label: '푸딩' },
+    { key: 'guest book', label: '흔들다' }
 ];
 
 const BlogPage = () => {
 
     const { userId } = useParams();
-    const [searchParams] = useSearchParams();
-    const activeTab = searchParams.get('tab') || 'home';
-    const navigate = useNavigate();
+    const { activeTab } = useTabManagement('home');
 
     const { user, readme, pinnedPosts, activityDate, loading: userLoading } = useUserProfile(userId);
 
     const { categories, lodaing: categoriesLoading, fetchCategoriesWithCount } = useCategories(userId);
     const { tags, loading: tagsLoading, fetchTagsWithCount } = useTags(userId);
-
     const [posts, setPosts] = useState([]);
     const { selectedCategoryId, selectedTagIds, handleCategoryClick, handleTagClick,
         pagination, updatePagination, handlePageChange, generatePageNumbers, } = useFiltersWithPagination();
+
+    const [likes, setUserLikes] = useState([]);
+    const { pagination: likesPagination,
+        updatePagination: updateLikesPagination,
+        handlePageChange: handleLikesPageChange,
+        generatePageNumbers: generateLikesPageNumbers } = usePagination();
 
     const [dataLoaded, setDataLoaded] = useState({
         user: false,
         posts: false,
         categories: false,
-        tags: false
+        tags: false,
+        likes: false
     });
 
     const updateDataLoaded = useCallback((updates) => {
         setDataLoaded(prev => ({ ...prev, ...updates }));
     }, []);
 
-    const loadPostsTabData = useCallback(async () => {
-        if (activeTab === 'posts' && !dataLoaded.posts) {
+    useEffect(() => {
+        const fetchPosts = async (page = pagination.currentPage, size = pagination.size) => {
             try {
-                await Promise.all([
-                    !dataLoaded.categories && fetchCategoriesWithCount(),
-                    !dataLoaded.tags && fetchTagsWithCount(),
-                ]);
-                updateDataLoaded({
-                    posts: true,
-                    categories: true,
-                    tags: true
-                })
+                const res = await getPostsByCategoryAndTags(
+                    userId, selectedCategoryId, selectedTagIds, page, size
+                );
+                setPosts(res.data.objects);
+                updatePagination(res.data);
+                updateDataLoaded({post: true});
             } catch (err) {
-                showErrorToast("데이터를 불러오는데 실패했습니다.");
+                console.error(err);
             }
         }
-    }, [activeTab, dataLoaded]);
 
-    const fetchPosts = async (page = pagination.currentPage, size = pagination.size) => {
+        if (activeTab === 'posts') {
+            fetchPosts();
+        }
+    }, [userId, activeTab, pagination.currentPage, selectedCategoryId, selectedTagIds]);
+
+    useEffect(() => {
+        const loadTabData = async () => {
+
+            try {
+                if (activeTab === 'posts') {
+                    await loadPostsTabData();
+                } else if (activeTab === 'likes') {
+                    await loadLikesTabData();
+                }
+            } catch (error) {
+                console.error(`Error loading ${activeTab} tab:`, error);
+            }
+        };
+
+        loadTabData();
+    }, [activeTab, userId]);
+
+    const loadPostsTabData = async () => {
+        if (!dataLoaded.categories) {
+            await fetchCategoriesWithCount();
+            updateDataLoaded({ categories: true });
+        }
+
+        if (!dataLoaded.tags) {
+            await fetchTagsWithCount();
+            updateDataLoaded({ tags: true });
+        }
+    }
+
+    const loadLikesTabData = async (page = likesPagination.currentPage, size = likesPagination.size) => {
         try {
-            const res = await getPostsByCategoryAndTags(
-                userId, selectedCategoryId, selectedTagIds, page, size
-            );
-            setPosts(res.data.objects);
-            updatePagination(res.data);
-            console.log(res.data);
+            const res = await getUserLikes(userId, page, size);
+            setUserLikes(res.data.objects);
+            updateLikesPagination(res.data);
+            updateDataLoaded({likes: true});
         } catch (err) {
             console.error(err);
         }
     }
 
-    useEffect(() => {
-        loadPostsTabData();
-    }, [loadPostsTabData, activeTab]);
-
-    useEffect(() => {
-        fetchPosts();
-    }, [pagination.currentPage, selectedCategoryId, selectedTagIds]);
-
-    const renderHomeContent = () => {
-        if (userLoading || !user) {
-            return <div></div>
-        }
-
-        return <BlogHome user={user} readme={readme} pinnedPosts={pinnedPosts} activities={activityDate} />
-    };
-
-    const renderPostsContent = () => {
-        const showSidebar = !categoriesLoading && !tagsLoading;
-
-        return (
-            <div className="flex flex-col md:flex-row w-full max-w-6xl gap-2 md:gap-2 lg:gap-3 pt-12 px-4 box-border mx-auto">
-                {showSidebar && (
-                <div className="w-full sm:w-auto flex-[1] min-w-[150px]">
-
-                    <BlogSidebar
+    const renderContent = () => {
+        switch (activeTab) {
+            case 'home':
+                return (
+                    <BlogHomeTab
+                        user={user}
+                        readme={readme}
+                        pinnedPosts={pinnedPosts}
+                        activities={activityDate}
+                        loading={userLoading}
+                    />
+                );
+            case 'posts':
+                return (
+                    <BlogPostsTab
+                        posts={posts || []}
                         categories={categories}
                         tags={tags}
+                        categoriesLoading={categoriesLoading}
+                        tagsLoading={tagsLoading}
                         selectedCategoryId={selectedCategoryId}
                         selectedTagIds={selectedTagIds}
                         onCategoryClick={handleCategoryClick}
                         onTagClick={handleTagClick}
-                    />
-                    </div>
-                )}
-
-                <div className="flex flex-col text-left flex-1 w-full sm:flex-[4] min-w-[280px] sm:min-w-[600px] md:min-w-[600px] lg:min-w-[750px]">
-                    <h3
-                        className="font-alien-violet text-base md:text-lg lg:text-xl break-words"
-                    >ଲ༼Ꙩ Ꙩ ଲ༽ * 외계 모아 우주인 * .･:*◢▅◣Ξ◥▅◤Ξ ҉ ◢▅◣Ξ ҉ ◥▅◤☾*
-                    </h3>
-                    <BlogPostList
-                        posts={posts}
-                        onPostClick={(postId) => navigate(`/posts/${postId}`)}
-                    />
-                    <Pagination
                         pagination={pagination}
                         onPageChange={handlePageChange}
                         generatePageNumbers={generatePageNumbers}
                     />
-                    <h3 className="font-alien-violet text-base md:text-lg lg:text-xl break-words mb-12">.･:*◢▅◣Ξ◥▅◤Ξ ҉ ◢▅◣Ξ ҉ ◥▅◤☾* * 우주 모아 외계인 * ଲ༼Ꙩ Ꙩ ଲ༽</h3>
-                </div>
-            </div>
-        );
-    };
-
-    const renderContent = () => {
-        switch (activeTab) {
-            case 'home':
-                return renderHomeContent();
-            case 'posts':
-                return renderPostsContent();
+                );
+            case 'likes':
+                return (
+                    <BlogLikesTab
+                        likes={likes || []}
+                        pagination={likesPagination}
+                        onPageChange={handleLikesPageChange}
+                        generatePageNumbers={generateLikesPageNumbers}
+                    />
+                );
             default:
                 return <div>우주 미아가 되다.</div>
         }

@@ -1,7 +1,5 @@
 import { useLocation, useNavigate } from "react-router-dom"
 import { getProfileImage } from "../../util/get-images";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
 import CalendarHeatmap from 'react-calendar-heatmap';
 import 'react-calendar-heatmap/dist/styles.css';
 import React, { useCallback, useEffect, useState } from "react";
