@@ -1,5 +1,5 @@
 import Header from "../../components/header/Header";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useUserProfile } from "../../hooks/useUserProfile";
 import { useCategories } from "../../hooks/useCategories";
@@ -39,6 +39,9 @@ const BlogPage = () => {
         handlePageChange: handleLikesPageChange,
         generatePageNumbers: generateLikesPageNumbers } = usePagination();
 
+    const [keyword, setKeyword] = useState('');
+    const prevKeyword = useRef(keyword);
+
     const [dataLoaded, setDataLoaded] = useState({
         user: false,
         posts: false,
@@ -55,20 +58,31 @@ const BlogPage = () => {
         const fetchPosts = async (page = pagination.currentPage, size = pagination.size) => {
             try {
                 const res = await getPostsByCategoryAndTags(
-                    userId, selectedCategoryId, selectedTagIds, page, size
+                    userId,
+                    selectedCategoryId, selectedTagIds, keyword,
+                    page, size
                 );
+                console.log(res.data);
                 setPosts(res.data.objects);
                 updatePagination(res.data);
-                updateDataLoaded({post: true});
+                updateDataLoaded({ post: true });
             } catch (err) {
                 console.error(err);
             }
         }
 
-        if (activeTab === 'posts') {
+        console.log(prevKeyword.current + "< prev, " + keyword + "< keyword");
+
+        if (activeTab != 'posts') return;
+
+        if (keyword != prevKeyword.current) {
+            prevKeyword.current = keyword;
+            fetchPosts(0, 10);
+        } else {
             fetchPosts();
         }
-    }, [userId, activeTab, pagination.currentPage, selectedCategoryId, selectedTagIds]);
+
+    }, [userId, activeTab, pagination.currentPage, selectedCategoryId, selectedTagIds, keyword]);
 
     useEffect(() => {
         const loadTabData = async () => {
@@ -104,7 +118,7 @@ const BlogPage = () => {
             const res = await getUserLikes(userId, page, size);
             setUserLikes(res.data.objects);
             updateLikesPagination(res.data);
-            updateDataLoaded({likes: true});
+            updateDataLoaded({ likes: true });
         } catch (err) {
             console.error(err);
         }
@@ -137,6 +151,8 @@ const BlogPage = () => {
                         pagination={pagination}
                         onPageChange={handlePageChange}
                         generatePageNumbers={generatePageNumbers}
+                        keyword={keyword}
+                        setKeyword={setKeyword}
                     />
                 );
             case 'likes':

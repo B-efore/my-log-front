@@ -3,9 +3,9 @@ import { getDefaultImage, getProfileImage, getStrongAlien } from "../../util/get
 const BlogPostList = ({ posts, onPostClick }) => {
     if (!posts || posts.length === 0) {
         return (
-            <div className="flex flex-col items-center">
-                <p className="mt-4 font-alien text-green-700 text-center">행성 점령도 0% 분발하라.</p>
-                <img className="w-1/2" src={getStrongAlien()} />
+            <div className="flex flex-col items-center mt-24">
+                <p className="font-alien text-green-700 text-center">행성 점령도 0% 분발하라.</p>
+                <img className="w-2/5" src={getStrongAlien()} />
             </div>
         );
     }

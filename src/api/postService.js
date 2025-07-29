@@ -39,10 +39,10 @@ export const getUserPosts = async (
 }
 
 export const getPostsByCategoryAndTags = async (
-    userId, categoryId, tags, page = 0, size = 10) => {
+    userId, categoryId, tags, keyword, page = 0, size = 10) => {
 
     return axios.get(`/users/${userId}/categories/${categoryId}/posts`, {
-        params: { tags, page, size },
+        params: { tags, keyword, page, size },
         paramsSerializer: params =>
             new URLSearchParams(
                 Object.entries(params).flatMap(([key, value]) =>
