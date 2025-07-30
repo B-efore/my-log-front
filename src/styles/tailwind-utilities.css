@@ -58,6 +58,18 @@
       color: #f87171; /* back to red-400 */
     }
   }
+
+  @keyframes shimmer {
+  0% {
+    text-shadow: 0 0 3px #6c2bd9, 0 0 6px #6c2bd9;
+  }
+  50% {
+    text-shadow: 0 0 5px #aaffee, 0 0 10px #aaffee;
+  }
+  100% {
+    text-shadow: 0 0 3px #6c2bd9, 0 0 6px #6c2bd9;
+  }
+}
 }
 
 
@@ -79,6 +91,17 @@
 }
 
 @layer components {
+
+  .alien-tooltip {
+  @apply text-xs p-2 rounded-md z-50 shadow-lg;
+  font-family: "Star", "Courier New", monospace;
+  background: rgba(38, 8, 68, 0.9);
+  color: #aaffee;
+  border: 1px solid #6c2bd9;
+  backdrop-filter: blur(3px);
+  animation: shimmer 3s infinite linear;
+  box-shadow: 0 0 3px #6c2bd9, 0 0 5px #8a2be2;
+}
 
   .profile {
     @apply w-[150px] aspect-square rounded-full cursor-pointer

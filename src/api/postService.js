@@ -28,16 +28,6 @@ export const getPosts = async(page = 0, size = 10) => {
     });
 }
 
-export const getUserPosts = async (
-    userId,
-    page = 0,
-    size = 10) => {
-
-    return await axios.get(`/users/${userId}/posts`, {
-        params: { size, page },
-    });
-}
-
 export const getPostsByCategoryAndTags = async (
     userId, categoryId, tags, keyword, page = 0, size = 10) => {
 

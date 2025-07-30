@@ -1,4 +1,4 @@
-import { getDefaultImage, getProfileImage, getStrongAlien } from "../../util/get-images";
+import { getProfileImage, getStrongAlien } from "../../util/get-images";
 
 const BlogPostList = ({ posts, onPostClick }) => {
     if (!posts || posts.length === 0) {

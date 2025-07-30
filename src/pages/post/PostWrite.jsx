@@ -19,10 +19,12 @@ const PostWrite = () => {
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
+    if (!userId) return;
+    
     getCategories(userId).then(setUserCategories).catch(() => {
       setUserCategories([{ categoryId: 0, name: "전체" }]);
     });
-  }, []);
+  }, [userId]);
 
   const handleSave = () => {
     console.log("임시 저장", { title, content, tags });

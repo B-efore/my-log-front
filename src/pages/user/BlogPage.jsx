@@ -12,12 +12,14 @@ import BlogLikesTab from "../../components/tabs/BlogLikesTab";
 import BlogPostsTab from "../../components/tabs/BlogPostsTab";
 import BlogHomeTab from "../../components/tabs/BlogHomeTab";
 import { useTabManagement } from "../../hooks/useTabManagement";
+import BlogVisitorsTab from "../../components/tabs/BlogVisitorsTab";
+import { getGuestBooks } from "../../api/guestbookService";
 
 const TAB_CONFIG = [
     { key: 'home', label: '고향' },
     { key: 'posts', label: '적은것' },
     { key: 'likes', label: '푸딩' },
-    { key: 'guest book', label: '흔들다' }
+    { key: 'visitors', label: '인사' }
 ];
 
 const BlogPage = () => {
@@ -38,6 +40,12 @@ const BlogPage = () => {
         updatePagination: updateLikesPagination,
         handlePageChange: handleLikesPageChange,
         generatePageNumbers: generateLikesPageNumbers } = usePagination();
+
+    const [messages, setMessages] = useState([]);
+    const { pagination: visitorsPagination,
+        updatePagination: updateVisitorsPagination,
+        handlePageChange: handleVisitorsPageChange,
+        generatePageNumbers: generateVisitorsPageNumbers } = usePagination();
 
     const [keyword, setKeyword] = useState('');
     const prevKeyword = useRef(keyword);
@@ -92,6 +100,8 @@ const BlogPage = () => {
                     await loadPostsTabData();
                 } else if (activeTab === 'likes') {
                     await loadLikesTabData();
+                } else if (activeTab === 'visitors') {
+                    await loadVisitorsTabData();
                 }
             } catch (error) {
                 console.error(`Error loading ${activeTab} tab:`, error);
@@ -99,7 +109,7 @@ const BlogPage = () => {
         };
 
         loadTabData();
-    }, [activeTab, userId]);
+    }, [activeTab, pagination.currentPage, likesPagination.currentPage, visitorsPagination.currentPage, userId]);
 
     const loadPostsTabData = async () => {
         if (!dataLoaded.categories) {
@@ -119,6 +129,16 @@ const BlogPage = () => {
             setUserLikes(res.data.objects);
             updateLikesPagination(res.data);
             updateDataLoaded({ likes: true });
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+    const loadVisitorsTabData = async (page = visitorsPagination.currentPage, size = visitorsPagination.size) => {
+        try {
+            const res = await getGuestBooks(userId, page, size);
+            setMessages(res.data.objects);
+            updateVisitorsPagination(res.data);
         } catch (err) {
             console.error(err);
         }
@@ -164,6 +184,16 @@ const BlogPage = () => {
                         generatePageNumbers={generateLikesPageNumbers}
                     />
                 );
+            case 'visitors':
+                return (
+                    <BlogVisitorsTab
+                        messages={messages || []}
+                        setMessages={setMessages}
+                        pagination={visitorsPagination}
+                        onPageChange={handleVisitorsPageChange}
+                        generatePageNumbers={generateVisitorsPageNumbers}
+                    />
+                )
             default:
                 return <div>우주 미아가 되다.</div>
         }

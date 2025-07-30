@@ -26,7 +26,6 @@ const PostPublishModal = ({ onClose, onSubmit, handleChange, post, categories, s
       if (response.status == 201) {
         const newCategory = response.data;
         setCategories((prev) => [...prev, newCategory]);
-        // handleChange("categoryId", newCategory.categoryId);
         setNewCategoryName("");
         setShowCategoryInput(false);
       }
