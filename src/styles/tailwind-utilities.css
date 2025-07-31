@@ -139,6 +139,10 @@
     @apply border-2 border-gray-200 rounded-md
   }
 
+  .single-line-ellipsis {
+    @apply overflow-hidden whitespace-nowrap text-ellipsis;
+  }
+
   .page-nav {
     @apply mx-[5px] cursor-pointer hover:text-violet-500
   }

@@ -37,18 +37,17 @@ const PostDetail = () => {
   const isAuthor = post?.user?.userId === loggedInUserId;
 
   useEffect(() => {
-    if (!post) {
-      getPost(postId)
-        .then((res) => {
-          setPost(res.data);
-          setComments(res.data.comments)
-          setLoading(false);
-        })
-        .catch((err) => {
-          showErrorToast("게시글을 불러오는데 실패했습니다.");
-          navigate("/");
-        });
-    }
+    getPost(postId)
+      .then((res) => {
+        setPost(res.data);
+        setComments(res.data.comments)
+        setLoading(false);
+        console.log(res.data);
+      })
+      .catch((err) => {
+        showErrorToast("게시글을 불러오는데 실패했습니다.");
+        navigate("/");
+      });
   }, [postId]);
 
   useEffect(() => {
@@ -236,10 +235,32 @@ const PostDetail = () => {
           </div>
         )}
 
+        <div className="flex justify-between my-4 gap-4 select-none">
+          {post.previousPost && (
+            <button
+              className="mr-auto w-1/2 sm:w-1/3 px-4 py-2 btn-second round-box-border border-green-600 single-line-ellipsis text-center flex items-center justify-start gap-2"
+              onClick={() => navigate(`/posts/${post.previousPost?.postId}`)}
+            >
+              <span className="text-xs">이전</span>
+              <span className="truncate">{post.previousPost?.title}</span>
+            </button>
+          )}
+          {post.nextPost && (
+    <button
+      className="ml-auto w-1/2 sm:w-1/3 px-4 py-2 btn-second round-box-border border-green-600 single-line-ellipsis text-center flex items-center justify-end gap-2"
+      onClick={() => navigate(`/posts/${post.nextPost?.postId}`)}
+    >
+      <span className="truncate">{post.nextPost?.title}</span>
+      <span className="text-xs">다음</span>
+    </button>
+            )
+          }
+        </div>
+
 
         <div className="flex items-center gap-8 py-10 border-t-1 border-gray-300 ">
           <img
-            className="profile"
+            className="profile select-none"
             src={getProfileImage(post.user.imageKey)}
             alt={`${post.user.username}의 프로필 이미지`}
             onClick={() => navigate(`/${post.user.userId}`)}
