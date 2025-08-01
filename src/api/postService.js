@@ -28,6 +28,16 @@ export const getPosts = async(page = 0, size = 10) => {
     });
 }
 
+export const getPostNavigation = async (postId) => {
+    return await axios.get(`/posts/${postId}/navigation`);
+}
+
+export const getCategorizedPosts = async (categoryId, userId, page = 0, size = 5) => {
+    return await axios.get(`/categories/${categoryId}/posts`, {
+        params: {userId, size, page},
+    });
+}
+
 export const getPostsByCategoryAndTags = async (
     userId, categoryId, tags, keyword, page = 0, size = 10) => {
 

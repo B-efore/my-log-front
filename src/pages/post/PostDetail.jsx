@@ -14,6 +14,7 @@ import { showErrorToast, showSuccessToast } from "../../util/toast";
 import { getLikeAlien, getProfileImage } from "../../util/get-images";
 import MarkdownView from "../../components/post/MarkdownView";
 import { createLike, deleteLike, getLikeCount, getLikeStatus } from "../../api/likeService";
+import CategoryPostList from "./CategoryPostList";
 
 const PostDetail = () => {
 
@@ -179,6 +180,12 @@ const PostDetail = () => {
     <div className="flex flex-col w-full items-center box-border px-8">
       <Header />
       <div className="mt-20 flex flex-col w-full max-w-[720px] text-left">
+
+        <CategoryPostList
+          categoryName={post.category?.name || "전체"}
+          postId={postId}
+        />
+
         <h1 className="font-default-bold text-4xl mb-3">
           {post.title}
         </h1>
