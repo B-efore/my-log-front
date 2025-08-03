@@ -9,6 +9,14 @@ import coinAlien from './../assets/coin_alien.png'
 import ghost from './../assets/ghost.png'
 import notification from './../assets/notification.png'
 import likeAlien from './../assets/like_alien.png'
+import bold from './../assets/tools/bold.png';
+import code from './../assets/tools/code.png';
+import h1 from './../assets/tools/h1.png';
+import h2 from './../assets/tools/h2.png';
+import h3 from './../assets/tools/h3.png';
+import italic from './../assets/tools/italic.png';
+import quote from './../assets/tools/quote.png';
+import image from './../assets/tools/imgbtn.png';
 
 export const MAX_POST_IMAGE_SIZE = 1 * 1024 * 1024;
 export const VALID_EXTENSIONS = ["jpg", "jpeg", "png", "gif"];
@@ -25,6 +33,27 @@ export function validatePostImage(file) {
     }
 
     return { valid: true };
+}
+
+export function getToolbarIcon(type) {
+    switch (type) {
+        case "bold":
+            return bold;
+        case "italic":
+            return italic;
+        case "h1":
+            return h1;
+        case "h2":
+            return h2;
+        case "h3":
+            return h3;
+        case "quote":
+            return quote;
+        case "code":
+            return code;
+        case "image":
+            return image;
+    }
 }
 
 export function getLogoImage() {
