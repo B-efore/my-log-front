@@ -10,7 +10,7 @@ const BlogSidebar = ({
 }) => {
 
     return (
-        <div className="text-left flex-1">
+        <div className="text-left flex-1 select-none">
             {categories.length > 0 && (
                 <strong className="text-base font-default-bold text-violet-500 no-underline">카테고리</strong>
             )}

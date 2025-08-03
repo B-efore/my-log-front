@@ -137,6 +137,7 @@ const PostEdit = () => {
                   handleChange={handleChange}
                   post={post}
                   categories={userCategories}
+                  setCategories={setUserCategories}
                 />
               )}
             </div>

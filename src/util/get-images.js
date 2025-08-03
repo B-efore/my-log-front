@@ -10,6 +10,23 @@ import ghost from './../assets/ghost.png'
 import notification from './../assets/notification.png'
 import likeAlien from './../assets/like_alien.png'
 
+export const MAX_POST_IMAGE_SIZE = 1 * 1024 * 1024;
+export const VALID_EXTENSIONS = ["jpg", "jpeg", "png", "gif"];
+
+export function validatePostImage(file) {
+    const extension = file.name.split(".").pop().toLowerCase();
+
+    if (!VALID_EXTENSIONS.includes(extension)) {
+        return { valid: false, error: "지원하지 않는 이미지 형식입니다." };
+    }
+
+    if (file.size > MAX_POST_IMAGE_SIZE) {
+        return { valid: false, error: "이미지 크기는 1MB를 초과할 수 없습니다." };
+    }
+
+    return { valid: true };
+}
+
 export function getLogoImage() {
     return logo;
 }
@@ -23,9 +40,9 @@ export function getNotFound() {
 }
 
 export const getProfileImage = (key) => {
-      return key && key.trim()
-    ? `https://mylog-image-bucket.s3.ap-northeast-2.amazonaws.com/${key}` 
-    : defaultProfile;
+    return key && key.trim()
+        ? `https://mylog-image-bucket.s3.ap-northeast-2.amazonaws.com/${key}`
+        : defaultProfile;
 }
 
 export function getSearchBtnImage() {

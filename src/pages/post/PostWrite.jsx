@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { createPost } from "../../api/postService";
 import { getCategories } from "../../api/categoryService";
@@ -20,7 +20,7 @@ const PostWrite = () => {
 
   useEffect(() => {
     if (!userId) return;
-    
+
     getCategories(userId).then(setUserCategories).catch(() => {
       setUserCategories([{ categoryId: 0, name: "전체" }]);
     });
@@ -67,7 +67,6 @@ const PostWrite = () => {
       ToastMessage("게시글 등록 중 오류가 발생했습니다.", { type: "error" });
     }
   };
-
 
   return (
     <div className="flex flex-col h-screen">

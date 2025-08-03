@@ -1,5 +1,13 @@
 import axios from "./axios"
 
+export const getPresignedUrl = async (fileName) => {
+    return await axios.post('/s3/presigned-url', fileName);
+}
+
+export const getPresignedUrls = async (request) => {
+    return await axios.post('/s3/presigned-urls', request);
+}
+
 export const uploadImage = async (file) => {
     const formData = new FormData();
     formData.append("file", file);
