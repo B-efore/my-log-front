@@ -39,7 +39,7 @@ export const getCategorizedPosts = async (categoryId, userId, page = 0, size = 5
 }
 
 export const getPostsByCategoryAndTags = async (
-    userId, categoryId, tags, keyword, page = 0, size = 10) => {
+    userId, categoryId=0, tags, keyword, page = 0, size = 10) => {
 
     return axios.get(`/users/${userId}/categories/${categoryId}/posts`, {
         params: { tags, keyword, page, size },

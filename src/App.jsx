@@ -30,6 +30,7 @@ import { useAuth } from './context/AuthContext';
 import { showSuccessToast } from './util/toast';
 import Readme from './components/blog/Readme';
 import Fortune from './pages/main/Fortune';
+import Statistic from './pages/user/Statistic';
 
 function App() {
 
@@ -102,6 +103,7 @@ function App() {
         <Route path="/ghost/shop" element={<Shop />} />
         <Route path="/fortune" element={<Fortune />} />
 
+        <Route path="/statistic" element={<Statistic />} />
         <Route path="/settings" element={<Settings />} />
 
         <Route path="/search" element={<Search />} />

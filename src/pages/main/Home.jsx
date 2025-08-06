@@ -9,14 +9,31 @@ import { getCoinAlien } from "../../util/get-images";
 import { useAuth } from "../../context/AuthContext";
 import Pagination from "../../components/pagination/Pagination";
 import { usePagination } from "../../hooks/usePagination";
+import TopUsers from "../../components/TopUsers";
+import { getRanker } from "../../api/userService";
 
 const Home = () => {
 
     const { isLoggedIn } = useAuth();
     const navigate = useNavigate();
+    const [rankers, setRankers] = useState([]);
     const [mainPosts, setMainPosts] = useState([]);
     const [isBlocking, setIsBlocking] = useState(false);
     const { pagination, updatePagination, handlePageChange, generatePageNumbers } = usePagination();
+
+    useEffect(() => {
+        const fetchRankers = async () => {
+            try {
+                const res = await getRanker();
+                setRankers(res.data);
+                console.log(res);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+
+        fetchRankers();
+    }, []);
 
     useEffect(() => {
         const fetchMainPosts = async (page = pagination.currentPage, size = 12) => {
@@ -68,9 +85,14 @@ const Home = () => {
         <div>
             <Header />
             <div className="flex flex-col items-center justify-center gap-4 min-h-full pt-14">
+
+                <div className="flex mt-6 w-full y-full">
+                    <TopUsers users={rankers} />
+                </div>
+
                 <div className="justify-center flex flex-row h-fit mt-12 round-box-border w-50vw px-4 py-2 select-none animate-rainbow">
                     <button
-                        className="flex w-fit font-alien animate-bounce cursor-pointer text-sm md:text-lg"
+                        className="flex w-fit font-alien animate-bounce cursor-pointer text-xs sm:text-sm md:text-lg"
                         onClick={() => navigate("/notices")}
                     >
                         !확인! ▶▷ UFO ◁◀ !확인...?!

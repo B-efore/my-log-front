@@ -70,7 +70,7 @@ const BlogPage = () => {
                     selectedCategoryId, selectedTagIds, keyword,
                     page, size
                 );
-                console.log(res.data);
+                console.log(res);
                 setPosts(res.data.objects);
                 updatePagination(res.data);
                 updateDataLoaded({ post: true });

@@ -1,5 +1,17 @@
 import axios from "./axios";
 
+export const getDailyStats = async (date) => {
+    return await axios.get("/users/stats", {
+        params: {
+            date
+        }
+    });
+};
+
+export const getRanker = async () => {
+    return await axios.get("/users/rankers/weekly");
+}
+
 // 유저 프로필
 export const getMyProfile = async () => {
     return await axios.get("/users/me");
