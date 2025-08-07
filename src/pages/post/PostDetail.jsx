@@ -182,14 +182,14 @@ const PostDetail = () => {
       <div className="mt-20 flex flex-col w-full max-w-[720px] text-left">
 
         <CategoryPostList
-          categoryName={post.category?.name || "전체"}
+          categoryName={post.category?.name || "미분류"}
           postId={postId}
         />
 
-        <h1 className="font-default-bold text-4xl mb-3">
+        <h1 className="font-orbit font-black text-4xl mb-4">
           {post.title}
         </h1>
-        <hr className="border-0.5 border-gray-300 mb-3" />
+        <hr className="border-0.5 border-gray-300 mb-4" />
 
         <div className="flex flex-row items-center justify-between">
           <span className="text-sm text-gray-500">{formatDate(post.createdAt)}</span>
@@ -253,14 +253,14 @@ const PostDetail = () => {
             </button>
           )}
           {post.nextPost && (
-    <button
-      className="ml-auto w-1/2 sm:w-1/3 px-4 py-2 btn-second round-box-border border-green-600 single-line-ellipsis text-center flex items-center justify-end gap-2"
-      onClick={() => navigate(`/posts/${post.nextPost?.postId}`)}
-    >
-      <span className="truncate">{post.nextPost?.title}</span>
-      <span className="text-xs">다음</span>
-    </button>
-            )
+            <button
+              className="ml-auto w-1/2 sm:w-1/3 px-4 py-2 btn-second round-box-border border-green-600 single-line-ellipsis text-center flex items-center justify-end gap-2"
+              onClick={() => navigate(`/posts/${post.nextPost?.postId}`)}
+            >
+              <span className="truncate">{post.nextPost?.title}</span>
+              <span className="text-xs">다음</span>
+            </button>
+          )
           }
         </div>
 

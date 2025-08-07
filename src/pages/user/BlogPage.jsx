@@ -209,7 +209,7 @@ const BlogPage = () => {
             <div className="header-spacer with-tabs"></div>
 
             <div className="flex w-full h-full flex-col box-border">
-                <div className="flex min-w-[360px] max-w-[1024px] mx-4 justify-center self-center box-border">
+                <div className="flex w-full fixed-w responsible-w mx-4 justify-center self-center box-border">
                     {renderContent()}
                 </div>
             </div>

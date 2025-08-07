@@ -11,6 +11,7 @@ import Pagination from "../../components/pagination/Pagination";
 import { usePagination } from "../../hooks/usePagination";
 import TopUsers from "../../components/TopUsers";
 import { getRanker } from "../../api/userService";
+import BannerSlider from "../../components/BannerSlider";
 
 const Home = () => {
 
@@ -36,7 +37,7 @@ const Home = () => {
     }, []);
 
     useEffect(() => {
-        const fetchMainPosts = async (page = pagination.currentPage, size = 12) => {
+        const fetchMainPosts = async (page = pagination.currentPage, size = 8) => {
             try {
                 const res = await getPosts(page, size);
                 setMainPosts(res.data.objects);
@@ -82,27 +83,29 @@ const Home = () => {
     };
 
     return (
-        <div>
+        <div className="w-full">
             <Header />
-            <div className="flex flex-col items-center justify-center gap-4 min-h-full pt-14">
-
-                <div className="flex mt-6 w-full y-full">
+            <div className="flex flex-col fixed-w items-center justify-center gap-4 min-h-full pt-14 bg-cover bg-center bg-no-repeat">
+                
+                <BannerSlider />
+                
+                <div className="px-2 flex mt-6 w-full y-full">
                     <TopUsers users={rankers} />
                 </div>
 
-                <div className="justify-center flex flex-row h-fit mt-12 round-box-border w-50vw px-4 py-2 select-none animate-rainbow">
+                <div className="px-2 flex flex-row h-fit mt-12 w-full py-2 select-none animate-rainbow">
                     <button
-                        className="flex w-fit font-alien animate-bounce cursor-pointer text-xs sm:text-sm md:text-lg"
+                        className="flex w-full justify-center py-2 font-orbit font-black animate-bounce border-2 rounded-sm bg-white cursor-pointer text-xs sm:text-sm md:text-lg"
                         onClick={() => navigate("/notices")}
                     >
                         !확인! ▶▷ UFO ◁◀ !확인...?!
                     </button>
                 </div>
-                <div className="select-none flex flex-col flex-1 w-full h-fit px-4 sm:px-8 md:px-12 lg:px-20 py-4 md:py-8 box-border">
+                <div className="px-2 select-none flex flex-col flex-1 w-full h-fit py-4 md:py-8 box-border">
                     <button className="w-fit h-fit text-xs text-left text-gray-300" onClick={handleHello}>제가 보이시나요...?</button>
                     <div className="flex flex-row justify-between items-center gap-2 sm:gap-4 mb-4">
                         <h3
-                            className="w-fit font-alien-violet text-sm sm:text-base md:text-lg break-words"
+                            className="w-fit font-orbit font-black text-violet-700 text-sm sm:text-base md:text-lg break-words"
                             onClick={() => navigate("/fortune")}
                         >
                             * ✯⌁(⚫︎◕  ‧̫ ◕⚫︎)⚡︎✰----◓ 오늘의 운세 요정! *

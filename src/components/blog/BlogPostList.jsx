@@ -49,7 +49,7 @@ const BlogPostItem = ({ post, onPostClick }) => {
             <div className="text-sm text-black">
                 {post.createdAt ? formatDate(post.createdAt) : ''}
             </div>
-            <h2 className="w-fit mt-2 font-extrabold text-2xl" >
+            <h2 className="w-fit mt-2 font-black font-orbit text-2xl" >
                 {post.title}
             </h2>
             {post.contentPreview && (
@@ -68,7 +68,7 @@ const BlogPostItem = ({ post, onPostClick }) => {
                         <div className="flex flex-wrap gap-2 justify-end ml-4 max-w-[60%]">
                             {post.tags.map((tag) => (
                                 <span key={tag.tagId}
-                                    className="text-xs px-2 py-0.5 bg-violet-600 text-white font-bold rounded-lg whitespace-nowrap"
+                                    className="text-xs sm:text-sm px-2 py-0.5 bg-violet-600 text-white font-weigh-500 font-black font-orbit rounded-lg whitespace-nowrap"
                                 >
                                     {tag.name}
                                 </span>

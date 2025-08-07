@@ -90,11 +90,11 @@ const Shop = () => {
     return (
         <div>
             <Header />
-            <div className="flex flex-col items-center justify-center gap-4 min-h-screen pt-14 w-full h-full bg-violet-900 text-white">
+            <div className="fixed-w fixed-p flex flex-col items-center justify-center gap-4 min-h-screen h-full pt-14 bg-violet-900 text-white">
 
-                <div className="flex justify-center mt-12 round-box-border w-[50vw] px-4 py-2 select-none">
+                <div className="flex flex-row h-fit mt-12 max w-full py-2 select-none">
                     <button
-                        className="flex font-alien cursor-pointer"
+                        className="cursor-pointer flex w-full justify-center py-2 font-alien round-box-border text-xs sm:text-sm md:text-lg"
                         onClick={handleBye}
                     >
                         ...돌아갈까?

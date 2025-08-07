@@ -6,7 +6,7 @@ const HeaderDropdown = ({ userId, onClose, onNavigate, onLogout }) => {
     useOutsideClick(ref, onClose);
 
     return (
-        <div className="absolute top-[150%] right-[0] bg-white border-2 border-gray-200 shadow rounded-xl min-w-[120px] z-[1000] overflow-hidden" ref={ref}>
+        <div className="absolute top-[180%] right-[0] bg-gray-50 text-black min-w-[120px] z-[1000] overflow-hidden border border-gray-50" ref={ref}>
             <div className="dropdown-item" onClick={() => onNavigate(`/${userId}`)}>내 고향</div>
             <div className="dropdown-item" onClick={() => onNavigate("/statistic")}>보고서</div>
             <div className="dropdown-item" onClick={() => onNavigate("/settings")}>프로필</div>

@@ -18,9 +18,9 @@ const NotificationDropdown = ({ onClose, pagination, notifications, loadNotifica
     };
 
     return (
-        <div className="absolute right-0 top-[150%] w-80 bg-white round-box-border z-50" ref={ref}>
+        <div className="absolute right-0 top-[150%] w-80 bg-gray-50 text-black z-50 border border-gray-50" ref={ref}>
             <div>
-                <p className="font-alien border-b border-gray-300">알림</p>
+                <p className="py-2 px-4 font-black border-b border-gray-300">알림</p>
             </div>
             <div className="max-h-96 overflow-y-auto">
                 {notifications.length === 0 ? (
@@ -33,15 +33,15 @@ const NotificationDropdown = ({ onClose, pagination, notifications, loadNotifica
                             <div
                                 key={notification.notificationId}
                                 onClick={() => navigate(notification.url)}
-                                className="p-3 cursor-pointer border-b border-gray-300 transition-color hover:bg-gray-50"
+                                className="p-3 cursor-pointer border-b border-gray-300 transition-color hover:bg-black hover:text-white"
                             >
                                 <div className="flex justify-end">
-                                    <span className="text-xs text-gray-700">
+                                    <span className="text-xs">
                                         {formatDate(notification.createdAt)}
                                     </span>
                                 </div>
                                 <div>
-                                    <p className="text-sm text-left font-alien">
+                                    <p className="mt-2 text-sm text-left">
                                         {notification.content}
                                     </p>
                                 </div>
@@ -49,7 +49,7 @@ const NotificationDropdown = ({ onClose, pagination, notifications, loadNotifica
                         ))}
 
                         {pagination.currentPage + 1 < pagination.totalPages && (
-                            <div className="font-alien text-center border-t-[1] border-gray-300 bg-green-700 text-white">
+                            <div className="text-center border-t-[1] border-gray-300 bg-green-700 text-white">
                                 <button
                                     onClick={() => loadNotifications(pagination.currentPage + 1)}
                                 >

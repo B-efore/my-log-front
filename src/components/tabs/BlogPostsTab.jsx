@@ -31,7 +31,7 @@ const BlogPostsTab = ({
     }
 
     return (
-        <div className="flex flex-col md:flex-row w-full max-w-6xl gap-2 md:gap-3 lg:gap-4 pt-12 px-4 box-border mx-auto">
+        <div className="flex flex-col md:flex-row w-full gap-2 md:gap-3 lg:gap-4 pt-12 box-border mx-auto">
             {showSidebar && (
                 <div className="w-full sm:w-auto flex-[1] min-w-[150px]">
 
@@ -46,12 +46,12 @@ const BlogPostsTab = ({
                 </div>
             )}
 
-            <div className="flex flex-col text-left flex-1 w-full sm:flex-[4] w-[280px] sm:w-[600px] md:w-[600px] lg:w-[750px]">
+            <div className="flex flex-col text-left flex-1 sm:flex-[4] w-full min-w-[280px] sm:min-w-[600px] md:min-w-[600px] lg:min-w-[750px]">
                 <h3
                     onClick={handleGhostClick}
-                    className={`cursor-pointer transition-all duration-300 ease-in-out font-alien-violet text-base md:text-lg lg:text-xl break-words select-none
-                        ${showSearch ? "text-green-500 " : " "}`}
-                >Click?! - ଲ ༼Ꙩ Ꙩ ଲ༽ * 외계 모아 우주인 * .･:*◢▅◣Ξ◥▅◤Ξ ҉ ◢▅◣Ξ ҉ ◥▅◤☾*
+                    className={`text-center cursor-pointer transition-all duration-300 ease-in-out font-orbit font-black text-violet-700 text-xs md:text-base lg:text-lg break-words select-none
+                        ${showSearch ? "!text-green-500 " : " "}`}
+                >Click?! - ଲ ༼Ꙩ Ꙩ ଲ༽ * 외계 모아 우주인 * .･:* Ξ ҉ Ξ ҉ ☾*
                 </h3>
 
                 {showSearch && (
@@ -73,11 +73,6 @@ const BlogPostsTab = ({
                     onPageChange={onPageChange}
                     generatePageNumbers={generatePageNumbers}
                 />
-                <h3 className="font-alien-violet text-base md:text-lg lg:text-xl break-words mb-12"
-                    onClick={() => showAlienToast("쨍그랑!")}
-                >
-                    ･:*◢▅◣Ξ◥▅◤Ξ ҉ ◢▅◣Ξ ҉ ◥▅◤☾* * 우주 모아 외계인 * ଲ༼Ꙩ Ꙩ ଲ༽ HELLO
-                </h3>
             </div>
         </div>
     );

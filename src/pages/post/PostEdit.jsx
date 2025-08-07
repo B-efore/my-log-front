@@ -1,40 +1,43 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { getPost, updatePost } from "../../api/postService";
-import { getCategories } from "../../api/categoryService";
-import Header from "../../components/header/Header";
 import PostEditor from "../../components/post/PostEditor";
 import MarkdownPreview from "../../components/post/MarkdownPreview"
 import usePost from "../../hooks/usePost";
-import PostPublishModal from "../../components/post/PostPublishModal";
 import ToastMessage from "../../components/common/ToastMessage";
 import { useAuth } from "../../context/AuthContext";
 import { updateNotice } from "../../api/adminService";
+import EditorHeader from "../../components/header/FullHeader";
+import { showSuccessToast } from "../../util/toast";
+import FullHeader from "../../components/header/FullHeader";
+import PostPublishModal from "../../components/post/PostPublishModal";
+import { getCategories } from "../../api/categoryService";
 
 const PostEdit = () => {
 
+  const navigate = useNavigate();
   const location = useLocation();
   const postFromState = location.state?.post;
 
-  const { userId } = useAuth();
+  const { userId, isLoggedIn } = useAuth();
   const { postId } = useParams();
-  const navigate = useNavigate();
-
   const { post, setPost, handleChange, addTag, removeTag, validatePost } = usePost();
+
   const [userCategories, setUserCategories] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  const [loading, setLoading] = useState(!post);
 
   useEffect(() => {
-    if (userId) {
-      getCategories(userId)
-        .then((categories) => {
-          setUserCategories(categories)
-        })
-        .catch((err) => {
-          console.err(err);
-        });
+    if (!isLoggedIn) {
+      navigate('/');
     }
+  }, [isLoggedIn, navigate]);
+
+  useEffect(() => {
+    if (!userId) return;
+
+    getCategories(userId).then(setUserCategories).catch(() => {
+      setUserCategories([{ categoryId: 0, name: "전체" }]);
+    });
   }, [userId]);
 
   useEffect(() => {
@@ -72,7 +75,11 @@ const PostEdit = () => {
 
   }, [postFromState]);
 
-  const handleSave = async () => {
+  const handleSave = () => {
+    showSuccessToast("준비 중!");
+  };
+
+  const handlePublish = async () => {
     const { valid, message } = validatePost();
     if (!valid) {
       alert(message);
@@ -115,25 +122,23 @@ const PostEdit = () => {
     }
   };
 
-  if (loading) return <div>불러오는 중...</div>;
-
   return (
     <div className="flex flex-col h-screen">
 
-      <Header
+      <FullHeader
         rightChild={
           <>
-            <button className="btn-second px-10 py-2" >저장</button>
+            <button className="btn-second px-10 py-2" onClick={handleSave}>저장</button>
             <div className="publish-button-wrapper" >
               <button className="btn-primary px-10 py-2" onClick={() => {
-                handleChange("contentPreview", post.contentPreview);
+                handleChange("contentPreview", post.content.slice(0, 100));
                 setShowModal(true);
               }}>발행</button>
 
               {showModal && (
                 <PostPublishModal
                   onClose={() => setShowModal(false)}
-                  onSubmit={handleSave}
+                  onSubmit={handlePublish}
                   handleChange={handleChange}
                   post={post}
                   categories={userCategories}

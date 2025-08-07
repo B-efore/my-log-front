@@ -94,11 +94,9 @@ const Login = () => {
         <div className="flex-1 h-px bg-gray-200" />
       </div>
 
-      <div className="flex justify-between gap-8">
+      <div className="flex justify-between gap-16">
         <img src={google_logo} alt="Google 로그인" className="icon-btn w-16" onClick={() => handleSocialLogin("google")}></img>
         <img src={kakao_logo} alt="Kakao 로그인" className="icon-btn w-16" onClick={() => handleSocialLogin("kakao")}></img>
-        <img src={naver_logo} alt="Naver 로그인" className="icon-btn w-16"></img>
-        <img src={github_logo} alt="Github 로그인" className="icon-btn w-16"></img>
       </div>
 
     </div>

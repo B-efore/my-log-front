@@ -109,11 +109,11 @@ const Header = ({
     }
 
     return (
-        <header className="select-none flex flex-col w-full fixed top-0 left-0 right-0 z-[999] shadow bg-default-ligh">
-            <div className="flex h-14 px-7 items-center justify-between bg-white">
+        <header className="font-orbit select-none w-full fixed top-0 left-0 right-0 z-[999]">
+            <div className="fixed-w flex h-14 px-7 items-center justify-between bg-white">
                 <div className="flex items-center gap-3 md:gap-4 cursor-pointer" onClick={goHome}>
                     <img className="icon-btn w-7 h-7 md:w-8 md:h-8" src={getLogoImage()} />
-                    <strong className="font-default-bold text-sm break-words">{username}</strong>
+                    <h3 className="font-black text-base break-words">{username || "mylog"}</h3>
                 </div>
 
                 <div className="flex items-center gap-2 md:gap-4">
@@ -138,7 +138,7 @@ const Header = ({
                                         onClick={handleNotificationClick}
                                     >
                                         {notificationCount > 0 && (
-                                            <p className="absolute -top-1 -right-0 bg-white w-5 h-5 border-1 border-gray-200 rounded-full font-alien text-sm animate-rainbow cursor-pointer transition-opacity hover:opacity-80">{notificationCount}</p>
+                                            <p className="absolute -top-1 -right-0 bg-white w-5 h-5 border-1 border-gray-200 rounded-full text-sm animate-rainbow cursor-pointer transition-opacity hover:opacity-80">{notificationCount}</p>
                                         )}
                                         <img
                                             className='w-8 h-8 md:w-9 md:h-9 cursor-pointer transition-opacity hover:opacity-80'
@@ -159,7 +159,7 @@ const Header = ({
                                         <img
                                             src={userImage || getDefaultImage()}
                                             alt="profile"
-                                            className="w-7 h-7 md:w-8 md:h-8 aspect-square rounded-full border-2 border-gray-300 cursor-pointer"
+                                            className="w-7 h-7 md:w-8 md:h-8 aspect-square rounded-full cursor-pointer"
                                             onClick={toggleDropdown}
                                         />
                                         {isDropdownOpen && (
@@ -177,10 +177,10 @@ const Header = ({
                                 </>
                             ) : (
                                 <button
-                                    className="btn-primary text-sm px-3 md:px-5 py-1.5"
+                                    className="rounded-sm cursor-pointer bg-green-600 text-white hover:bg-green-700 text-sm px-3 md:px-5 py-1.5"
                                     onClick={goLogin}
                                 >
-                                    시작하다
+                                    발사준비
                                 </button>
                             )}
                         </>
@@ -190,7 +190,7 @@ const Header = ({
 
             {showTabs && tabs.length > 0 && (
                 <div className="w-full bg-white">
-                    <nav className="w-full">
+                    <nav className="fixed-w">
                         <ul className="flex px-4 md:px-7 m-0 whitespace-nowrap">
                             {tabs.map((tab) => (
                                 <li

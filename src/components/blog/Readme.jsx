@@ -4,6 +4,7 @@ import MarkdownView from "../post/MarkdownView";
 import { useState } from "react";
 import { showErrorToast, showSuccessToast } from "../../util/toast";
 import { editReadme } from "../../api/readmeService";
+import FullHeader from "../header/FullHeader";
 
 const Readme = () => {
 
@@ -38,7 +39,7 @@ const Readme = () => {
 
     return (
         <div className="flex flex-col h-screen">
-            <Header
+            <FullHeader
                 rightChild={
                     <>
                         <div className="publish-button-wrapper" >

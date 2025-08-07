@@ -12,14 +12,14 @@ const BlogSidebar = ({
     return (
         <div className="text-left flex-1 select-none">
             {categories.length > 0 && (
-                <strong className="text-base font-default-bold text-violet-500 no-underline">카테고리</strong>
+                <strong className="text-base font-orbit font-black text-violet-500 no-underline">카테고리</strong>
             )}
             <ul className="list-none p-0 mb-12">
                 {categories.map((category) => (
                     <li
                         key={category.categoryId}
                         className={`mt-1 cursor-pointer text-sm ${selectedCategoryId === category.categoryId
-                            ? "font-default-bold text-violet-500"
+                            ? "font-black text-violet-500"
                             : "text-inherit"
                             }`}
                         onClick={() => onCategoryClick(category.categoryId)}
@@ -32,14 +32,14 @@ const BlogSidebar = ({
                 ))}
             </ul>
             {tags.length > 0 && (
-                <strong className="text-base font-default-bold text-violet-500 no-underline">태그</strong>
+                <strong className="text-base text-violet-500 no-underline font-orbit font-black">태그</strong>
             )}
             <ul className="list-none p-0 mb-12">
                 {tags.map((tag) => (
                     <li
                         key={tag.tagId}
                         className={`mt-1 cursor-pointer text-sm ${selectedTagIds.includes(tag.tagId)
-                            ? "font-default-bold text-violet-500"
+                            ? "font-black text-violet-500"
                             : "text-inherit"
                             }`}
                         onClick={() => onTagClick(tag.tagId)}

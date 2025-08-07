@@ -1,6 +1,11 @@
 @import "tailwindcss";
 
 @font-face {
+  font-family: "orbit";
+  src: url("/Orbit-Regular.woff2");
+}
+
+@font-face {
   font-family: "DefaultFontRegular";
   src: url("/AppleSDGothicNeo-Regular.ttf") format("truetype");
 }
@@ -37,39 +42,54 @@
 
   @keyframes rainbow-color-change {
     0% {
-      color: #f87171; /* red-400 */
+      color: #f87171;
+      /* red-400 */
     }
+
     16% {
-      color: #facc15; /* yellow-400 */
+      color: #facc15;
+      /* yellow-400 */
     }
+
     33% {
-      color: #34d399; /* green-400 */
+      color: #34d399;
+      /* green-400 */
     }
+
     50% {
-      color: #60a5fa; /* blue-400 */
+      color: #60a5fa;
+      /* blue-400 */
     }
+
     66% {
-      color: #a78bfa; /* purple-400 */
+      color: #a78bfa;
+      /* purple-400 */
     }
+
     83% {
-      color: #fb7185; /* pink-400 */
+      color: #fb7185;
+      /* pink-400 */
     }
+
     100% {
-      color: #f87171; /* back to red-400 */
+      color: #f87171;
+      /* back to red-400 */
     }
   }
 
   @keyframes shimmer {
-  0% {
-    text-shadow: 0 0 3px #6c2bd9, 0 0 6px #6c2bd9;
+    0% {
+      text-shadow: 0 0 3px #6c2bd9, 0 0 6px #6c2bd9;
+    }
+
+    50% {
+      text-shadow: 0 0 5px #aaffee, 0 0 10px #aaffee;
+    }
+
+    100% {
+      text-shadow: 0 0 3px #6c2bd9, 0 0 6px #6c2bd9;
+    }
   }
-  50% {
-    text-shadow: 0 0 5px #aaffee, 0 0 10px #aaffee;
-  }
-  100% {
-    text-shadow: 0 0 3px #6c2bd9, 0 0 6px #6c2bd9;
-  }
-}
 }
 
 
@@ -92,16 +112,28 @@
 
 @layer components {
 
+  .fixed-w {
+    @apply max-w-[1024px] mx-auto my-0
+  }
+
+  .fixed-p {
+    @apply px-4 sm:px-8 md:px-12 lg:px-20
+  }
+
+  .responsible-w {
+    @apply w-full px-4 md:px-8 min-w-[360px] sm:min-w-[600px] md:min-w-[740px] lg:min-w-[1000px];
+  }
+
   .alien-tooltip {
-  @apply text-xs p-2 rounded-md z-50 shadow-lg;
-  font-family: "Star", "Courier New", monospace;
-  background: rgba(38, 8, 68, 0.9);
-  color: #aaffee;
-  border: 1px solid #6c2bd9;
-  backdrop-filter: blur(3px);
-  animation: shimmer 3s infinite linear;
-  box-shadow: 0 0 3px #6c2bd9, 0 0 5px #8a2be2;
-}
+    @apply text-xs p-2 rounded-md z-50 shadow-lg;
+    font-family: "Star", "Courier New", monospace;
+    background: rgba(38, 8, 68, 0.9);
+    color: #aaffee;
+    border: 1px solid #6c2bd9;
+    backdrop-filter: blur(3px);
+    animation: shimmer 3s infinite linear;
+    box-shadow: 0 0 3px #6c2bd9, 0 0 5px #8a2be2;
+  }
 
   .profile {
     @apply w-[150px] aspect-square rounded-full cursor-pointer
@@ -116,7 +148,7 @@
   }
 
   .dropdown-item {
-    @apply px-4 py-2 text-sm cursor-pointer whitespace-nowrap text-left hover:bg-gray-100;
+    @apply px-4 py-2 text-sm cursor-pointer whitespace-nowrap text-left hover:bg-black hover:text-white;
   }
 
   .btn-small-text {
@@ -124,11 +156,11 @@
   }
 
   .btn-primary {
-    @apply font-bold text-white bg-green-600 rounded-lg transition-colors hover:bg-green-700;
+    @apply font-black text-white bg-green-600 rounded-lg transition-colors hover:bg-green-700;
   }
 
   .btn-second {
-    @apply font-bold text-green-700 bg-white rounded-lg transition-colors hover:bg-green-50;
+    @apply font-black text-green-700 bg-white rounded-lg transition-colors hover:bg-green-50;
   }
 
   .divider {
@@ -149,6 +181,10 @@
 
   .font-default-bold {
     font-family: DefaultFontBold;
+  }
+
+  .font-orbit {
+    font-family: orbit;
   }
 
   .font-alien {

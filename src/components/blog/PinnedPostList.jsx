@@ -17,7 +17,7 @@ const PinnedPostList = ({ posts, size }) => {
         >
           <div className="flex flex-col box-content cursor-pointer">
             <span
-              className="text-base md:text-xl font-default-bold mb-1 md:mb-2 text-black line-clamp-1"
+              className="font-orbit font-black text-base md:text-xl mb-1 md:mb-2 text-black line-clamp-1"
               onClick={() => navigate(`/posts/${post.postId}`)}
             >
               {post.title}

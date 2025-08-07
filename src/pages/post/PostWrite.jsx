@@ -1,22 +1,30 @@
-import React, { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
-import { createPost } from "../../api/postService";
-import { getCategories } from "../../api/categoryService";
-import Header from "../../components/header/Header";
 import PostEditor from "../../components/post/PostEditor";
 import MarkdownPreview from "../../components/post/MarkdownPreview";
-import PostPublishModal from "../../components/post/PostPublishModal";
 import usePost from "../../hooks/usePost";
-import ToastMessage from "../../components/common/ToastMessage";
 import { useAuth } from "../../context/AuthContext";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import ToastMessage from "../../components/common/ToastMessage";
+import { showErrorToast, showSuccessToast } from "../../util/toast";
+import { createPost } from "../../api/postService";
+import FullHeader from "../../components/header/FullHeader";
+import PostPublishModal from "../../components/post/PostPublishModal";
+import { getCategories } from "../../api/categoryService";
 
 const PostWrite = () => {
 
-  const { userId } = useAuth();
   const navigate = useNavigate();
+  const { userId, isLoggedIn } = useAuth();
   const { post, handleChange, addTag, removeTag, validatePost } = usePost();
+
   const [userCategories, setUserCategories] = useState([]);
   const [showModal, setShowModal] = useState(false);
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      navigate('/');
+    }
+  }, [isLoggedIn, navigate]);
 
   useEffect(() => {
     if (!userId) return;
@@ -27,7 +35,7 @@ const PostWrite = () => {
   }, [userId]);
 
   const handleSave = () => {
-    console.log("임시 저장", { title, content, tags });
+    showSuccessToast("준비 중!");
   };
 
   const handlePublish = async () => {
@@ -52,8 +60,7 @@ const PostWrite = () => {
 
     try {
       const response = await createPost(requestBody);
-      ToastMessage("게시글이 성공적으로 등록되었습니다.");
-      setShowModal(false);
+      showSuccessToast("게시글이 성공적으로 등록되었습니다.");
 
       const postId = response.data.postId;
       navigate(`/posts/${postId}`, {
@@ -64,14 +71,14 @@ const PostWrite = () => {
     } catch (error) {
       console.error(requestBody);
       console.error(error.response?.data);
-      ToastMessage("게시글 등록 중 오류가 발생했습니다.", { type: "error" });
+      showErrorToast("게시글 등록 중 오류가 발생했습니다.");
     }
   };
 
   return (
     <div className="flex flex-col h-screen">
 
-      <Header
+      <FullHeader
         rightChild={
           <>
             <button className="btn-second px-10 py-2" onClick={handleSave}>저장</button>

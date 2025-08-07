@@ -33,10 +33,10 @@ const Ghost = () => {
     return (
         <div>
             <Header />
-            <div className="flex flex-col items-center justify-center gap-4 min-h-full pt-14">
-                <div className="justify-center flex flex-row h-fit mt-12 round-box-border w-50vw px-4 py-2 select-none">
+            <div className="fixed-w flex flex-col items-center justify-center gap-4 min-h-full pt-14 px-4 sm:px-8 md:px-12 lg:px-20">
+                <div className="flex flex-row h-fit mt-12 w-full py-2 select-none">
                     <button
-                        className="flex w-fit font-alien cursor-pointer text-sm md:text-lg"
+                        className="flex w-full justify-center py-2 font-alien round-box-border text-xs sm:text-sm md:text-lg"
                     >
                         "유령...?"
                     </button>
