@@ -41,7 +41,7 @@ const TopUsers = ({ users }) => {
           ) : (
             <div
               key={`empty-${idx}`}
-              className="bg-black text-white p-4 flex flex-col items-center justify-center text-center border-1"
+              className="bg-gray-100 text-gray-500 p-4 flex flex-col items-center justify-center text-center round-box-border"
             >
               <p className="text-base">다음은 너? ヽ(•̀ω•́ )ゝ</p>
             </div>

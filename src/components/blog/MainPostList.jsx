@@ -36,7 +36,7 @@ const MainPostList = ({ posts }) => {
             <img
               src={getProfileImage(post.user?.imageKey)}
               alt="작성자"
-              className="profile w-5 h-5 sm:w-6 sm:h-6 rounded-full border-1 border-gray-500 flex-shrink-0"
+              className="profile w-5 h-5 sm:w-6 sm:h-6 rounded-full profile flex-shrink-0"
             />
             <span className="text-sm sm:text-base text-black-500 truncate">{post.user?.username || '외계인? 이거 그런 거 아닌데요'}</span>
             <span className="text-sm black ml-auto flex-shrink-0">
