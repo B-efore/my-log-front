@@ -18,7 +18,7 @@ const NotificationDropdown = ({ onClose, pagination, notifications, loadNotifica
     };
 
     return (
-        <div className="absolute right-0 top-[150%] w-80 bg-gray-50 text-black z-50 border border-gray-50" ref={ref}>
+        <div className="absolute right-0 top-[150%] w-80 bg-white text-black z-50 border-2 border-gray-200" ref={ref}>
             <div>
                 <p className="py-2 px-4 font-black border-b border-gray-300">알림</p>
             </div>
@@ -33,7 +33,7 @@ const NotificationDropdown = ({ onClose, pagination, notifications, loadNotifica
                             <div
                                 key={notification.notificationId}
                                 onClick={() => navigate(notification.url)}
-                                className="p-3 cursor-pointer border-b border-gray-300 transition-color hover:bg-black hover:text-white"
+                                className="p-3 cursor-pointer border-b border-gray-300 last:border-0 transition-color hover:bg-black hover:text-white"
                             >
                                 <div className="flex justify-end">
                                     <span className="text-xs">
@@ -49,7 +49,7 @@ const NotificationDropdown = ({ onClose, pagination, notifications, loadNotifica
                         ))}
 
                         {pagination.currentPage + 1 < pagination.totalPages && (
-                            <div className="text-center border-t-[1] border-gray-300 bg-green-700 text-white">
+                            <div className="text-center border-t-[1] border-gray-300 bg-black text-white">
                                 <button
                                     onClick={() => loadNotifications(pagination.currentPage + 1)}
                                 >

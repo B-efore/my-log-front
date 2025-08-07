@@ -119,7 +119,7 @@ const BlogHome = ({ user, readme, pinnedPosts, activities }) => {
     }
 
     return (
-        <div className="flex flex-col md:flex-row w-full gap-8 md:gap-12 lg:gap-16 pt-12 box-border">
+        <div className="flex flex-col mb-8 md:flex-row w-full gap-8 md:gap-12 lg:gap-16 pt-12 box-border">
             <div className="flex flex-col items-center md:items-start flex-1">
                 <img
                     src={getProfileImage(user.imageKey)}

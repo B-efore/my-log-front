@@ -30,9 +30,9 @@ const FollowerPage = () => {
     return (
         <div>
             <Header />
-            <div className="fixed-w flex flex-col h-full items-center gap-4 mt-12">
+            <div className="fixed-w fixed-p flex flex-col h-full items-center gap-4 mt-12">
                 {users.length > 0 ?
-                    <span className="follow-title">{users.length} 잡혔다! 왹알!</span> :
+                    <span className="my-8 mx-auto font-orbit text-2xl">{users.length} 잡혔다! 왹알!</span> :
                     <></>
                 }
                 <SearchList

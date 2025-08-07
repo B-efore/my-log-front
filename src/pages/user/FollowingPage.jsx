@@ -30,9 +30,9 @@ const FollowingPage = () => {
     return (
         <div>
             <Header />
-            <div className="flex flex-col h-full items-center gap-4 mt-12 mx-8">
+            <div className="fixed-w fixed-p flex flex-col h-full items-center gap-4 mt-12 mx-8">
                 {users.length > 0 ?
-                    <span className="follow-title">{users.length} 잡았다! 왹토리!</span> :
+                    <span className="my-8 mx-auto font-orbit text-2xl">{users.length} 잡았다! 왹토리!</span> :
                     <></>
                 }                <SearchList
                     users={users || []}

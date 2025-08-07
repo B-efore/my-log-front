@@ -30,7 +30,7 @@ const SearchResult = ({ user, onUserClick }) => {
     };
 
     return (
-        <div className="bg-white flex w-full border-b-2 border-gray-200 px-2 items-center text-left gap-3 sm:gap-4 md:gap-6 py-3 md:py-4 cursor-pointer result-user-box last:border-none text-black hover:bg-green-600 hover:text-white transition-colors" onClick={handleClick}>
+        <div className="bg-white flex w-full border-b-2 border-gray-200 px-2 items-center text-left gap-3 sm:gap-4 md:gap-6 py-3 md:py-4 cursor-pointer result-user-box last:border-none text-black hover:bg-gray-100 transition-colors" onClick={handleClick}>
             <img
                 className="round-box-border rounded-full profile w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 flex-shrink-0"
                 src={getProfileImage(user.imageKey)}

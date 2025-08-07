@@ -41,7 +41,7 @@ const Search = () => {
             <div className="flex flex-col fixed-w fixed-p responsible-w w-full items-center pt-24">
                 <div className="flex w-full justify-center mb-6 md:mb-8 px-4 py-2 gap-4">
                     <input
-                        className="w-full py-2 border-b-2 border-black focus:border-black bg-transparent text-lg md:text-2xl outline-none placeholder-gray-500 transition-all"
+                        className="w-full py-2 border-b-2 border-gray-300 focus:border-black bg-transparent text-lg md:text-2xl outline-none placeholder-gray-500 transition-all"
                         placeholder={SEARCH_PLACEHOLDER}
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
