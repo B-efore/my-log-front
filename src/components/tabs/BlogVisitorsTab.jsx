@@ -99,9 +99,9 @@ const BlogVisitorsTab = ({
             <div className="flex flex-col text-left flex-1 w-full sm:flex-[4] w-[280px] sm:w-[600px] md:w-[600px] lg:w-[750px]">
                 <h3
                     onClick={handleGhostClick}
-                    className={`cursor-pointer transition-all duration-300 ease-in-out text-center font-orbit font-black text-violet-700 text-xs md:text-sm lg:text-base break-words select-none
+                    className={`cursor-pointer transition-all duration-300 ease-in-out text-center font-orbit font-black text-violet-700 text-xs sm:text-xl break-words select-none
                         ${showMessageInput ? "!text-green-500 " : " "}`}
-                >𐔌՞･·･՞𐦯 - ─=≡Σ((((ó ì_í)=ó * 별 모아 날아가 * ʕ•̫͡•ʕ*̫͡*ʕ•͓͡•ʔ-̫͡-ʕ•̫͡•ʔ*̫͡*ʔ
+                >𐔌՞･·･՞𐦯 - ─=≡Σ((((ó ì_í)=ó * 별 모아 날아가 *
                 </h3>
 
                 {showMessageInput && (

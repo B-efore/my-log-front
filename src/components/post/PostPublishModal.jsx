@@ -45,7 +45,7 @@ const PostPublishModal = ({ onClose, onSubmit, handleChange, post, categories, s
   }, [categories]);
 
   return (
-    <div ref={modalRef} className="absolute top-[120%] right-[0] z-[10] w-fit min-w-[400px] p-8 mr-6 shadow-sm round-box-border bg-white box-border">
+    <div ref={modalRef} className="absolute top-[120%] right-[0] z-[10] w-fit min-w-[300px] sm:min-w-[400px] p-4 mr-3 sm:p-8 sm:mr-6 shadow-sm round-box-border bg-white box-border">
 
       <div className="flex flex-col text-left">
         <label className="text-base mb-2" htmlFor="content-preview"> 요약글

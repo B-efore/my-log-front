@@ -43,7 +43,7 @@ const Readme = () => {
                 rightChild={
                     <>
                         <div className="publish-button-wrapper" >
-                            <button className="btn-primary px-10 py-2" onClick={handleSave}>저장</button>
+                            <button className="btn-primary px-4 py-1 sm:px-8 sm:py-2" onClick={handleSave}>저장</button>
                         </div>
                     </>
                 }

@@ -25,8 +25,8 @@ const BlogLikesTab = ({
                 </div>
 
                 <div className="flex flex-col text-left flex-1 w-full sm:flex-[4] w-[280px] sm:w-[600px] md:w-[600px] lg:w-[750px]">
-                    <h3 className="text-center font-orbit font-black text-violet-700 text-xs md:text-sm lg:text-base break-words select-none">
-                        *✧∘*☆ ς( ᐡ-ﻌ•ᐡ ) ♡ (^•ﻌ•^ღ) * 푸딩 모아 강아지 * ԅ(ㅇㅅㅇԅ) *✧∘*☆
+                    <h3 className="text-center font-orbit font-black text-violet-700 text-xs sm:text-xl break-words select-none">
+                        *☆ ς( ᐡ-ﻌ•ᐡ ) ♡ (^•ﻌ•^ღ) * 푸딩 모아 강아지 ✧∘☆
                     </h3>
 
                     <BlogPostList

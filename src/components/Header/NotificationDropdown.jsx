@@ -18,7 +18,7 @@ const NotificationDropdown = ({ onClose, pagination, notifications, loadNotifica
     };
 
     return (
-        <div className="absolute right-0 top-[150%] w-80 bg-white text-black z-50 border-2 border-gray-200" ref={ref}>
+        <div className="absolute right-0 top-[150%] w-60 sm:w-80 bg-white text-black z-50 border-2 border-gray-200" ref={ref}>
             <div>
                 <p className="py-2 px-4 font-black border-b border-gray-300">알림</p>
             </div>

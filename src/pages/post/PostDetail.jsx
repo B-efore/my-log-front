@@ -177,7 +177,7 @@ const PostDetail = () => {
   }
 
   return (
-    <div className="flex flex-col w-full items-center box-border px-8">
+    <div className="flex flex-col w-full items-center box-border px-4 sm:px-8">
       <Header />
       <div className="mt-20 flex flex-col w-full max-w-[720px] text-left">
 
@@ -195,13 +195,13 @@ const PostDetail = () => {
           <span className="text-sm text-gray-500">{formatDate(post.createdAt)}</span>
           {isAuthor ? (
             <div className="flex gap-2">
-              <p className="text-sm text-gray-500">당신을 응시하다... 총 {post.views}의 눈</p>
+              <p className="text-sm text-gray-500">응시하다... 총 {post.views}의 눈</p>
               <button className="btn-small-text" onClick={goEdit}>수정</button>
               <button className="btn-small-text" onClick={handleDeletePost}>삭제</button>
             </div>
           ) : (
             <div className="flex">
-              <p className="text-sm text-gray-500">당신을 응시하다... 총 {post.views}의 눈</p>
+              <p className="text-sm text-gray-500">응시하다... 총 {post.views}의 눈</p>
             </div>
           )}
         </div>

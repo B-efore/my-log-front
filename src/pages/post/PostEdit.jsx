@@ -128,9 +128,9 @@ const PostEdit = () => {
       <FullHeader
         rightChild={
           <>
-            <button className="btn-second px-10 py-2" onClick={handleSave}>저장</button>
+            <button className="btn-second px-4 py-1 sm:px-8 sm:py-2" onClick={handleSave}>저장</button>
             <div className="publish-button-wrapper" >
-              <button className="btn-primary px-10 py-2" onClick={() => {
+              <button className="btn-primary px-4 py-1 sm:px-8 sm:py-2" onClick={() => {
                 handleChange("contentPreview", post.content.slice(0, 100));
                 setShowModal(true);
               }}>발행</button>

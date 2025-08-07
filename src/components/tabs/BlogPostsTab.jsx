@@ -49,9 +49,9 @@ const BlogPostsTab = ({
             <div className="flex flex-col text-left flex-1 sm:flex-[4] w-full min-w-[280px] sm:min-w-[600px] md:min-w-[600px] lg:min-w-[750px]">
                 <h3
                     onClick={handleGhostClick}
-                    className={`text-center cursor-pointer transition-all duration-300 ease-in-out font-orbit font-black text-violet-700 text-xs md:text-base lg:text-lg break-words select-none
+                    className={`text-center cursor-pointer transition-all duration-300 ease-in-out font-orbit font-black text-violet-700 text-xs sm:text-xl break-words select-none
                         ${showSearch ? "!text-green-500 " : " "}`}
-                >Click?! - ଲ ༼Ꙩ Ꙩ ଲ༽ * 외계 모아 우주인 * .･:* Ξ ҉ Ξ ҉ ☾*
+                >Click?! - ଲ ༼Ꙩ Ꙩ ଲ༽ * 외계 모아 우주인 * .･:* ☾*
                 </h3>
 
                 {showSearch && (
