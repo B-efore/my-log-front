@@ -46,7 +46,7 @@ const Pagination = ({
             {pagination.currentPage + 1 < pagination.totalPages && (
                 <span
                     className="mx-[5px] cursor-pointer hover:text-violet-500"
-                    onClick={() => onPageChange(pagination.totalPages)}
+                    onClick={() => onPageChange(pagination.totalPages - 1)}
                 >
                     {'>>'}
                 </span>

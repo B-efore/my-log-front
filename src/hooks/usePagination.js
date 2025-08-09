@@ -30,7 +30,7 @@ export function  usePagination(initialPage = 0, initialSize = 10) {
                 currentPage: pageNumber
             }));
 
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            window.scrollTo({ top:0, behavior: 'smooth' });
         } catch (error) {
             console.error('페이지 로딩 실패:', error);
             setPagination(prev => ({
@@ -48,7 +48,7 @@ export function  usePagination(initialPage = 0, initialSize = 10) {
             return Array.from({ length: totalPages }, (_, i) => i + 1);
         }
 
-        let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+        let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2 -1 ));
         let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
 
         if (endPage === totalPages) {

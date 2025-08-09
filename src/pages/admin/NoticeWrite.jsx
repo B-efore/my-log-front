@@ -9,6 +9,7 @@ import usePost from "../../hooks/usePost";
 import ToastMessage from "../../components/common/ToastMessage";
 import { useAuth } from "../../context/AuthContext";
 import { createNotice } from "../../api/adminService";
+import FullHeader from "../../components/header/FullHeader";
 
 const NoticeWrite = () => {
 
@@ -72,31 +73,30 @@ const NoticeWrite = () => {
   return (
     <div className="flex flex-col h-screen">
 
-        <Header
-            rightChild={
-            <>
-                <button className="btn-second px-10 py-2" onClick={handleSave}>저장</button>
-                <div className="publish-button-wrapper" >
-                  <button className="btn-primary px-10 py-2" onClick={() => 
-                    {
-                      handleChange("contentPreview", post.content.slice(0, 100));
-                      setShowModal(true);
-                    }}>발행</button>
-                
-                  {showModal && (
-                    <PostPublishModal
-                      onClose={() => setShowModal(false)}
-                      onSubmit={handlePublish}
-                      handleChange={handleChange}
-                      post={post}
-                      categories={userCategories}
-                      setCategories={setUserCategories}
-                    />
-                  )}
-                </div>
-            </>
-            }
-        />
+        <FullHeader
+        rightChild={
+          <>
+            <button className="btn-second px-4 py-1 sm:px-8 sm:py-2" onClick={handleSave}>저장</button>
+            <div className="publish-button-wrapper" >
+              <button className="btn-primary px-4 py-1 sm:px-8 sm:py-2" onClick={() => {
+                handleChange("contentPreview", post.content.slice(0, 100));
+                setShowModal(true);
+              }}>발행</button>
+
+              {showModal && (
+                <PostPublishModal
+                  onClose={() => setShowModal(false)}
+                  onSubmit={handlePublish}
+                  handleChange={handleChange}
+                  post={post}
+                  categories={userCategories}
+                  setCategories={setUserCategories}
+                />
+              )}
+            </div>
+          </>
+        }
+      />
 
         <div className="flex flex-1 mt-14 min-h-0">
             <PostEditor

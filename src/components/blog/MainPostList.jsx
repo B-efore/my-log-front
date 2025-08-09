@@ -38,8 +38,8 @@ const MainPostList = ({ posts }) => {
               alt="작성자"
               className="profile w-5 h-5 sm:w-6 sm:h-6 round-box-border rounded-full flex-shrink-0"
             />
-            <span className="text-sm sm:text-base text-black-500 truncate">{post.user?.username || '외계인? 이거 그런 거 아닌데요'}</span>
-            <span className="text-sm black ml-auto flex-shrink-0">
+            <span className="text-sm sm:text-base text-black truncate">{post.user?.username || '외계인? 이거 그런 거 아닌데요'}</span>
+            <span className="text-sm text-black ml-auto flex-shrink-0">
               {formatDate(post.createdAt)}
             </span>
           </div>
