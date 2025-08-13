@@ -63,6 +63,14 @@ const Home = () => {
         }
     };
 
+    const handleFortune = () => {
+        if (!isLoggedIn) {
+            showErrorToast("살아있는 생명체만 접근 가능한 것 같다.");
+            return;
+        }
+        navigate("/fortune");
+    }
+
     const handleCoinClick = () => {
         if (isBlocking) return;
 
@@ -106,7 +114,7 @@ const Home = () => {
                     <div className="flex flex-row justify-between items-center gap-2 sm:gap-4 mb-4">
                         <h3
                             className="w-fit font-orbit font-black text-violet-700 text-sm sm:text-base md:text-lg break-words"
-                            onClick={() => navigate("/fortune")}
+                            onClick={handleFortune}
                         >
                             * ✯⌁(⚫︎◕  ‧̫ ◕⚫︎)⚡︎✰----◓ 오늘의 운세 요정! *
                         </h3>
