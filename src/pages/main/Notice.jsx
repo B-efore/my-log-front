@@ -14,9 +14,9 @@ const Notice = () => {
     const { pagination, updatePagination, handlePageChange, generatePageNumbers } = usePagination();
 
     useEffect(() => {
-        const fetchNotices = async () => {
+        const fetchNotices = async (page = pagination.currentPage, size = 8) => {
             try {
-                const res = await getAllNotices(0, 10);
+                const res = await getAllNotices(page, 10);
                 setNotices(res.data.objects);
                 updatePagination(res.data);
             } catch (err) {
@@ -26,7 +26,7 @@ const Notice = () => {
         };
 
         fetchNotices();
-    }, []);
+    }, [pagination.currentPage]);
 
     const handleHello = () => {
         showSuccessToast("삐-빠이");
@@ -52,15 +52,12 @@ const Notice = () => {
                     <MainPostList posts={notices} />
                 </div>
 
-                {/* <div className="text-white"> */}
-                    <Pagination
-                        pagination={pagination}
-                        generatePageNumbers={generatePageNumbers}
-                        onPageChange={handlePageChange}
-                        hoverColor="yellow-500"
-                    />
-                </div>
-            {/* </div> */}
+                <Pagination
+                    pagination={pagination}
+                    generatePageNumbers={generatePageNumbers}
+                    onPageChange={handlePageChange}
+                />
+            </div>
 
         </div>
     );
