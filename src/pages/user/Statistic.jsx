@@ -61,13 +61,13 @@ const Statistic = () => {
         <div className="flex w-full h-full">
             <Header />
             <div className="mt-14 w-full h-full flex flex-col items-center px-4 py-6 sm:px-6 sm:py-8 select-none">
-                <div className="mb-4 sm:mb-6 w-full max-w-xs">
+                <div className="mb-4 sm:mb-6 w-fit">
                     <input
                         type="date"
                         value={formattedDate}
                         max={formatDate(new Date())}
                         onChange={(e) => setSelectedDate(new Date(e.target.value))}
-                        className="px-3 py-2 border border-gray-300 rounded-lg text-sm text-center"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm text-center"
                     />
                 </div>
                 <div className="flex items-center mb-4 sm:mb-6">

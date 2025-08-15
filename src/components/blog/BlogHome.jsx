@@ -1,7 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom"
 import { getProfileImage } from "../../util/get-images";
 import CalendarHeatmap from 'react-calendar-heatmap';
-import 'react-calendar-heatmap/dist/styles.css';
 import React, { useCallback, useEffect, useState } from "react";
 import { follow, unfollow, checkFollowing, getFollowCounts } from "../../api/followService";
 import { showErrorToast, showSuccessToast } from "../../util/toast";
@@ -9,6 +8,7 @@ import { HttpStatusCode } from "axios";
 import { useAuth } from "../../context/AuthContext";
 import PinnedPostList from "./PinnedPostList";
 import MarkdownView from "../post/MarkdownView";
+import'./BlogPage.css';
 
 
 const BlogHome = ({ user, readme, pinnedPosts, activities }) => {
@@ -170,12 +170,12 @@ const BlogHome = ({ user, readme, pinnedPosts, activities }) => {
                             endDate={end}
                             values={activities}
                             gutterSize={2}
-                            // classForValue={(value) => {
-                            //     if (!value || value.count === 0) return 'color-empty';
-                            //     if (value.count === 1) return 'color-scale-1';
-                            //     if (value.count === 2) return 'color-scale-2';
-                            //     return 'color-scale-3';
-                            // }}
+                            classForValue={(value) => {
+                                if (!value || value.count === 0) return 'color-empty';
+                                if (value.count === 1) return 'color-scale-1';
+                                if (value.count === 2) return 'color-scale-2';
+                                return 'color-scale-3';
+                            }}
                             transformDayElement={(el, value) => {
                                 return React.cloneElement(el, {
                                     rx: 1,

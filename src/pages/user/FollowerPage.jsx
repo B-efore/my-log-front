@@ -3,7 +3,6 @@ import Header from "../../components/header/Header";
 import SearchList from "../../components/search/SearchList";
 import { getFollowers } from "../../api/followService";
 import { useNavigate, useParams } from "react-router-dom";
-import './Follow.css';
 
 const FollowerPage = () => {
 
@@ -30,9 +29,9 @@ const FollowerPage = () => {
     return (
         <div>
             <Header />
-            <div className="fixed-w fixed-p flex flex-col h-full items-center gap-4 mt-12">
+            <div className="fixed-w fixed-p follow-body">
                 {users.length > 0 ?
-                    <span className="my-8 mx-auto font-orbit text-2xl">{users.length} 잡혔다! 왹알!</span> :
+                    <span className="font-orbit common-title">{users.length} 잡혔다! 왹알!</span> :
                     <></>
                 }
                 <SearchList

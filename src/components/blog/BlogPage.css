@@ -5,19 +5,19 @@
 }
 
 .color-scale-1 {
-    fill: #cce4f0;
-    stroke: #c2d9e4;
+    fill: #96db9f;
+    stroke: #8cdb97;
     stroke-width: 1px;
 }
 
 .color-scale-2 {
-    fill: #9dcfe8;
-    stroke: #95c7e0;
+    fill: #2a9e64;
+    stroke: #24965d;
     stroke-width: 1px;
 }
 
 .color-scale-3 {
-    fill: #1e91ca;
-    stroke: #1989c2;
+    fill: #137042;
+    stroke: #137042;
     stroke-width: 1px;
 }

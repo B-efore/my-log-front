@@ -4,7 +4,7 @@ const SearchList = ({ users, onUserClick, message }) => {
     if (!users || users.length === 0) {
         return (
             <div className="mt-12 md:mt-20 flex flex-col items-center text-center">
-                <p className="font-orbit text-xl sm:text-2xl md:text-3xl text-green-700 mb-4">{message}</p>
+                <p className="font-orbit common-title">{message}</p>
                 <img className="w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 object-contain" src={getNotFound()} />
             </div>
         );

@@ -37,18 +37,18 @@ const Notice = () => {
     return (
         <div>
             <Header />
-            <div className="fixed-w fixed-p flex flex-col items-center justify-center gap-4 min-h-screen h-full pt-14 bg-green-700 text-white">
+            <div className="fixed-w fixed-p full-body bg-green-700 text-white">
 
-                <div className="flex flex-row h-fit mt-12 w-full py-2 select-none">
+                <div className="npc-box">
                     <button
-                        className="cursor-pointer flex w-full justify-center py-2 font-alien round-box-border text-xs sm:text-sm md:text-lg"
+                        className="font-alien round-box-border npc-box-text"
                         onClick={handleHello}
                     >
                         ...돌아갈까?
                     </button>
                 </div>
-                <div className="select-none flex flex-col flex-1 w-full h-fit py-4 md:py-8 box-border">
-                    <h3 className="w-fit font-alien mb-2 md:mb-4 text-base sm:text-lg break-words">* ?(°Д°≡°Д°)? 여긴 개발자의 방? *</h3>
+                <div className="card-body">
+                    <h3 className="font-alien npc-text">* ?(°Д°≡°Д°)? 여긴 개발자의 방? *</h3>
                     <MainPostList posts={notices} />
                 </div>
 

@@ -31,10 +31,9 @@ const BlogPostsTab = ({
     }
 
     return (
-        <div className="flex flex-col md:flex-row w-full gap-2 md:gap-3 lg:gap-4 pt-12 box-border mx-auto">
+        <div className="blog-tab-body">
             {showSidebar && (
-                <div className="w-full sm:w-auto flex-[1] min-w-[150px]">
-
+                <div className="blog-tab-sidebar">
                     <BlogSidebar
                         categories={categories}
                         tags={tags}
@@ -46,10 +45,10 @@ const BlogPostsTab = ({
                 </div>
             )}
 
-            <div className="flex flex-col text-left flex-1 sm:flex-[4] w-full min-w-[280px] sm:min-w-[600px] md:min-w-[600px] lg:min-w-[750px]">
+            <div className="blog-tab-content">
                 <h3
                     onClick={handleGhostClick}
-                    className={`text-center cursor-pointer transition-all duration-300 ease-in-out font-orbit font-black text-violet-700 text-xs sm:text-xl break-words select-none
+                    className={`cursor-pointer transition-all duration-300 ease-in-out font-orbit blog-tab-content-header
                         ${showSearch ? "!text-green-500 " : " "}`}
                 >Click?! - ଲ ༼Ꙩ Ꙩ ଲ༽ * 외계 모아 우주인 * .･:* ☾*
                 </h3>

@@ -29,7 +29,7 @@ const UserInfoForm = ({
             <button
                 className="btn-primary text-sm px-5 py-1.5 disabled:bg-gray-300"
                 type="submit"
-                disabled={!formData.username | !formData.bio}
+                disabled={!formData.username}
             >확인
             </button>
             <button className="btn-second text-sm px-5 py-1.5" type="button" onClick={onCancel}>취소</button>

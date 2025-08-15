@@ -90,19 +90,19 @@ const Shop = () => {
     return (
         <div>
             <Header />
-            <div className="fixed-w fixed-p flex flex-col items-center justify-center gap-4 min-h-screen h-full pt-14 bg-violet-900 text-white">
+            <div className="fixed-w fixed-p full-body bg-violet-900 text-white">
 
-                <div className="flex flex-row h-fit mt-12 max w-full py-2 select-none">
+                <div className="npc-box">
                     <button
-                        className="cursor-pointer flex w-full justify-center py-2 font-alien round-box-border text-xs sm:text-sm md:text-lg"
+                        className="font-alien round-box-border npc-box-text"
                         onClick={handleBye}
                     >
                         ...돌아갈까?
                     </button>
                 </div>
-                <div className="select-none flex flex-col flex-1 w-full h-fit px-20 py-8 box-border">
-                    <h3 className="w-fit font-alien mb-2">* |´∀｀●) 포인트...눅눅하면...더...좋아... *</h3>
-                    <h3 className="w-fit font-alien mb-8">* 내 포인트: {myPoint} *</h3>
+                <div className="card-body">
+                    <h3 className="font-alien mb-0 npc-text">* |´∀｀●) 포인트...눅눅하면...더...좋아... *</h3>
+                    <h3 className="font-alien npc-text">* 내 포인트: {myPoint} *</h3>
                     <ItemList items={items} onClick={handleBuyBtn} />
                 </div>
 

@@ -8,7 +8,7 @@ const TopUsers = ({ users }) => {
   return (
     <div className="w-full mx-auto select-none font-orbit">
       <h2
-        className="text-xl text-green-800 mb-4 text-left font-black text-sm sm:text-base md:text-lg"
+        className="text-green-800 mb-4 text-left font-black text-sm sm:text-base md:text-lg"
       >
         * 이주의 멋진 외계인 ᕙ༼◕ ᴥ ◕༽ᕗ
       </h2>

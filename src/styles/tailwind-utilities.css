@@ -135,6 +135,77 @@
     box-shadow: 0 0 3px #6c2bd9, 0 0 5px #8a2be2;
   }
 
+  /* Blog Tab */
+  .blog-tab-body {
+    @apply flex flex-col md:flex-row w-full max-w-6xl gap-2 md:gap-3 lg:gap-4 pt-12 box-border mx-auto;
+  }
+
+  .blog-tab-sidebar {
+    @apply w-full sm:w-auto flex-[1] min-w-[150px];
+  }
+
+  .blog-tab-content-header {
+    @apply text-center font-black text-violet-700 text-xs sm:text-xl break-words select-none;
+  }
+
+  .blog-tab-content {
+    @apply flex flex-col text-left flex-1 sm:flex-[4] w-full min-w-[280px] sm:min-w-[600px] md:min-w-[600px] lg:min-w-[750px];
+  }
+
+  /* Follow, Search */
+  .common-title {
+    @apply my-8 mx-auto text-xl sm:text-2xl font-black text-green-700;
+  }
+
+  .follow-body {
+    @apply flex flex-col h-full items-center gap-4 mt-12;
+  }
+
+  /* main */
+  .npc-text {
+    @apply w-fit mb-2 md:mb-4 text-base sm:text-lg break-words;
+  }
+
+  .npc-box {
+    @apply flex flex-row h-fit mt-12 w-full py-2 select-none;
+  }
+
+  .npc-box-text {
+    @apply cursor-pointer flex w-full justify-center py-2 text-xs sm:text-sm md:text-lg;
+  }
+
+  .full-body {
+    @apply flex flex-col items-center justify-center gap-4 min-h-screen h-full pt-14;
+  }
+
+  .grid-body {
+    @apply grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6 w-full auto-rows-[1fr];
+  }
+
+  .card-body {
+    @apply px-2 select-none flex flex-col flex-1 w-full h-fit py-4 md:py-8 box-border;
+  }
+
+  .card-box {
+    @apply flex flex-col h-full min-h-[180px] sm:min-h-[200px] rounded-sm p-4 sm:p-5 text-left cursor-pointer hover:shadow-sm transition-shadow bg-white;
+  }
+
+  .card-title {
+    @apply text-lg sm:text-xl font-black mb-2 text-black line-clamp-2 sm:line-clamp-1;
+  }
+
+  .card-content {
+    @apply text-sm text-gray-800 mb-4 line-clamp-2 sm:line-clamp-3;
+  }
+
+  .card-under-left-text {
+    @apply text-sm sm:text-base text-black truncate;
+  }
+
+  .card-under-right-text {
+    @apply text-sm text-black ml-auto flex-shrink-0;
+  }
+
   .profile {
     @apply w-[150px] aspect-square rounded-full cursor-pointer
   }
