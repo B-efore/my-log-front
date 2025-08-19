@@ -12,6 +12,12 @@ export const getPost = async (postId) => {
     return axios.get(`/posts/${postId}`);
 }
 
+export const getRelatedPosts = async (postId, page, size = 5) => {
+    return await axios.get(`/posts/${postId}/relations`, {
+        params: {size, page},
+    });
+}
+
 export const deletePost = async (postId) => {
     return axios.delete(`/posts/${postId}`);
 }
@@ -25,16 +31,6 @@ export const getAllNotices = async(page = 0, size = 10) => {
 export const getPosts = async(page = 0, size = 10) => {
     return await axios.get("/posts", {
         params: {size, page},
-    });
-}
-
-export const getPostNavigation = async (postId) => {
-    return await axios.get(`/posts/${postId}/navigation`);
-}
-
-export const getCategorizedPosts = async (categoryId, userId, page = 0, size = 5) => {
-    return await axios.get(`/categories/${categoryId}/posts`, {
-        params: {userId, size, page},
     });
 }
 

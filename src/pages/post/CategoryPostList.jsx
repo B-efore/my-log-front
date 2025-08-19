@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getCategorizedPosts, getPostNavigation } from '../../api/postService';
+import { getRelatedPosts } from '../../api/postService';
 import { usePagination } from './../../hooks/usePagination';
 import { useNavigate } from 'react-router-dom';
 
@@ -7,37 +7,19 @@ const CategoryPostList = ({ categoryName, postId }) => {
 
     const navigate = useNavigate();
     const [isOpen, setIsOpen] = useState(true);
-    const [postNavigation, setPostNavigation] = useState(null);
     const [posts, setPosts] = useState([]);
     const { pagination, updatePagination, handlePageChange, generatePageNumbers } = usePagination();
 
     useEffect(() => {
-        const loadPostNavigation = async () => {
-            try {
-                const res = await getPostNavigation(postId);
-                setPostNavigation(res.data);
-                updatePagination({
-                    page: res.data.currentPage,
-                    size: 5,
-                    totalPages: (res.data.totalPosts / 5) + 1,
-                    totalElements: res.data.totalPosts
-                });
-                console.log(res.data);
-            } catch (err) {
-                console.error(err);
-            }
-        }
-
-        loadPostNavigation();
-    }, [postId]);
-
-    useEffect(() => {
         const loadPosts = async (page=pagination.currentPage, size=5) => {
             try {
-                const categoryId = postNavigation.categoryId;
-                const userId = postNavigation.userId;
-                const res = await getCategorizedPosts(
-                    categoryId, userId, page, size
+
+                if (posts.length === 0) {
+                    page = null;
+                }
+
+                const res = await getRelatedPosts(
+                    postId, page, size
                 );
                 setPosts(res.data.objects);
                 updatePagination(res.data);
@@ -46,11 +28,8 @@ const CategoryPostList = ({ categoryName, postId }) => {
             }
         }
 
-        if (!postNavigation?.categoryId || !postNavigation?.userId) {
-            return;
-        }
         loadPosts();
-    }, [postNavigation, pagination.currentPage]);
+    }, [postId, pagination.currentPage]);
 
 
     const formatDate = (dateString) => {
@@ -91,7 +70,7 @@ const CategoryPostList = ({ categoryName, postId }) => {
                     <div className="py-4 divide-y-2 divide-gray-300">
                         {posts.map(post => (
                             <div key={post.postId} className="py-2 cursor-pointer">
-                                <div className={post.postId === postNavigation.postId ? "flex justify-between items-center font-black text-green-600" : "flex justify-between items-center"}
+                                <div className={post.postId === Number(postId) ? "flex justify-between items-center font-black text-green-600" : "flex justify-between items-center"}
                                     onClick={() => navigate(`/posts/${post.postId}`)}
                                 >
                                     <h3 className="hover:underline ">{post.title}</h3>
@@ -116,7 +95,7 @@ const CategoryPostList = ({ categoryName, postId }) => {
                                 {pagination.currentPage > 0 && (
                                     <span
                                         className="mx-[5px] cursor-pointer hover:text-green-700"
-                                        onClick={() => onPageChange(pagination.currentPage - 1)}
+                                        onClick={() => handlePageChange(pagination.currentPage - 1)}
                                     >
                                         {'<'}
                                     </span>
@@ -144,7 +123,7 @@ const CategoryPostList = ({ categoryName, postId }) => {
                                 {pagination.currentPage + 1 < pagination.totalPages && (
                                     <span
                                         className="mx-[5px] cursor-pointer hover:text-green-700"
-                                        onClick={() => handlePageChange(pagination.totalPages)}
+                                        onClick={() => handlePageChange(pagination.totalPages - 1)}
                                     >
                                         {'>>'}
                                     </span>
