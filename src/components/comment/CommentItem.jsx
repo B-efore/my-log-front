@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import CommentInput from "./CommentInput";
 import { getProfileImage } from "../../util/get-images";
 import { formatDateTime } from "../../util/formatDate";
+import { useNavigate } from "react-router-dom";
 
 const CommentItem = ({
   postId,
@@ -18,6 +19,8 @@ const CommentItem = ({
   onDelete,
 }) => {
 
+  const navigate = useNavigate();
+
   const isOwner = comment.user.userId === loggedInUserId;
   const isEditing = editingCommentId === comment.commentId;
   const isReplying = replingCommentId === comment.commentId;
@@ -30,11 +33,12 @@ const CommentItem = ({
         <div className="flex items-center gap-2">
           <img
             src={getProfileImage(comment.user.imageKey)}
+            onClick={() => navigate(`/${comment.user.userId}`)}
             className="profile w-[50px] h-[50px]"
           />
           <div className="flex flex-1 w-full justify-between items-start">
             <div className="flex flex-col text-gray-500">
-              <h3 className="font-bold text-black">{comment.user.username}</h3>
+              <h3 className="font-bold text-black cursor-pointer" onClick={() => navigate(`/${comment.user.userId}`)}>{comment.user.username}</h3>
               <span className="text-sm">{formatDateTime(comment.createdAt)}</span>
             </div>
             {isOwner && !comment.deletedAt && (
