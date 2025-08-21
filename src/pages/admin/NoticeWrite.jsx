@@ -1,21 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getCategories } from "../../api/categoryService";
-import Header from "../../components/header/Header";
 import PostEditor from "../../components/post/PostEditor";
 import MarkdownPreview from "../../components/post/MarkdownPreview";
 import PostPublishModal from "../../components/post/PostPublishModal";
-import usePost from "../../hooks/usePost";
 import ToastMessage from "../../components/common/ToastMessage";
 import { useAuth } from "../../context/AuthContext";
 import { createNotice } from "../../api/adminService";
 import FullHeader from "../../components/header/FullHeader";
+import usePostForm from "../../hooks/post/usePostForm";
 
 const NoticeWrite = () => {
 
   const { userId } = useAuth();
   const navigate = useNavigate();
-  const { post, handleChange, addTag, removeTag, validatePost } = usePost();
+  const { post, handleChange, addTag, removeTag, validatePost } = usePostForm();
   const [userCategories, setUserCategories] = useState([]);
   const [showModal, setShowModal] = useState(false);
 

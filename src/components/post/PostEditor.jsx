@@ -100,7 +100,6 @@ const PostEditor = ({
       };
       const res = await getPresignedUrls(request);
       const datas = res.data.presignedUrls;
-      console.log(datas);
 
       for (let i = 0; i < datas.length; i++) {
         const file = validFiles[i];

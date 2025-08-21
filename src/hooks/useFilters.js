@@ -26,7 +26,7 @@ export const useFilters = (fetchPostsByFilter, updatePagination) => {
                 const res = await fetchPostsByFilter(selectedCategoryId, selectedTagIds);
                 updatePagination(res.data);
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         };
 

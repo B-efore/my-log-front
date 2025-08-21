@@ -48,8 +48,8 @@ const EmailAndCodeInput = ({ form, handlers, state }) => {
                             try {
                                 await onVerify({ email, code })
                                 onSuccess();
-                            } catch (error) {
-                                console.log(error);
+                            } catch (err) {
+                                console.error(err);
                             }
                         }}
                     >

@@ -70,7 +70,7 @@ const ItemUpload = () => {
             // await deleteProfile(userId);
             showSuccessToast(MESSAGES.IMAGE_DELETE_SUCCESS);
         } catch (err) {
-            console.log(err);
+            console.error(err);
             showErrorToast(MESSAGES.IMAGE_DELETE_FAILED);
         }
     }
@@ -90,7 +90,7 @@ const ItemUpload = () => {
             const preview = presignedUrl.split("?")[0];
             showSuccessToast(MESSAGES.IMAGE_UPLOAD_SUCCESS);
         } catch (err) {
-            console.log(err);
+            console.error(err);
             showErrorToast(MESSAGES.IMAGE_UPLOAD_FAILED);
         }
     }
@@ -99,10 +99,7 @@ const ItemUpload = () => {
         e.preventDefault()
 
         try {
-            console.log(formData);
-
             const res = await createItem(formData);
-            console.log(res);
             if (res.status != HttpStatusCode.Created) {
                 throw err;
             }

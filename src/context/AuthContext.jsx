@@ -49,7 +49,7 @@ export const AuthProvider = ({ children }) => {
         localStorage.setItem(key, JSON.stringify(data));
       }
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   }, []);
 
@@ -64,7 +64,7 @@ export const AuthProvider = ({ children }) => {
 
       return JSON.parse(item);
     } catch (err) {
-      console.log(err);
+      console.error(err);
       return null;
     }
   }, []);
@@ -73,7 +73,7 @@ export const AuthProvider = ({ children }) => {
     try {
       localStorage.removeItem(key);
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   }, []);
 
@@ -123,7 +123,7 @@ export const AuthProvider = ({ children }) => {
 
       await loadUserProfile(true);
     } catch (err) {
-      console.log(err);
+      console.error(err);
       setLogout();
     } finally {
       setIsLoading(false);
@@ -148,7 +148,7 @@ export const AuthProvider = ({ children }) => {
       setIsLoggedIn(true);
       await loadUserProfile(false);
     } catch (err) {
-      console.log(err);
+      console.error(err);
       setLogout();
       throw err;
     }
@@ -160,7 +160,6 @@ export const AuthProvider = ({ children }) => {
     setUserState(INITIAL_USER_STATE);
     setIsLoggedIn(false);
     setIsLoading(false);
-    console.log("로그아웃 완료");
   }, [deleteFromStorage]);
 
   const setUserImage = useCallback((imageUrl) => {

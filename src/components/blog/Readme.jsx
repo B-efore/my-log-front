@@ -27,7 +27,6 @@ const Readme = () => {
 
         try {
             const res = await editReadme({ content });
-            console.log(res);
             showSuccessToast("저장완료~");
             navigate(previous || '/');
         } catch (err) {

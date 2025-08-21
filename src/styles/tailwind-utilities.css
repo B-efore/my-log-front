@@ -222,6 +222,18 @@
     @apply px-4 py-2 text-sm cursor-pointer whitespace-nowrap text-left hover:bg-black hover:text-white;
   }
 
+  .btn-like-img {
+    @apply w-7 h-7;
+  }
+
+  .btn-post-text {
+    @apply font-bold text-lg;
+  }
+
+  .btn-post {
+    @apply flex border-2 w-fit rounded-md py-1 px-5 gap-2 select-none cursor-pointer;
+  }
+
   .btn-small-text {
     @apply text-sm text-gray-500 cursor-pointer hover:underline
   }

@@ -32,7 +32,7 @@ export function useUserProfile(userId) {
                 setPinnedPosts(res.data.pinnedPosts);
                 setActivityDate(res.data.activities);
             } catch (err) {
-                console.log(err);
+                console.error(err);
                 showErrorToast("유저 정보를 불러오는데 실패했습니다.");
                 navigate(-1);
             } finally {

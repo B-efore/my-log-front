@@ -1,8 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { createComment, updateComment } from "../../api/commentService";
 import ToastMessage from "../common/ToastMessage";
+import { useAuth } from "../../context/AuthContext";
 
-const CommentInput = ({ postId, onCommentSubmit, mode = "create", initialValue = "", commentId, onCancel }) => {
+const CommentInput = ({ 
+    postId, 
+    onCommentSubmit, 
+    mode = "create", 
+    initialValue = "", 
+    commentId,
+    parentId = null,
+    onCancel }) => {
+
+    const {isLoggedIn} = useAuth();
     const [content, setContent] = useState("");
     const [loading, setLoading] = useState(false);
 
@@ -19,7 +29,7 @@ const CommentInput = ({ postId, onCommentSubmit, mode = "create", initialValue =
             if (mode == "create") {
 
                 const requestBody = {
-                    parentId: null,
+                    parentId: parentId,
                     content: content,
                     visibility: "공개",
                 };
@@ -30,6 +40,7 @@ const CommentInput = ({ postId, onCommentSubmit, mode = "create", initialValue =
             } else {
 
                 const requestBody = {
+                    parentId: parentId,
                     content: content,
                     visibility: "공개",
                 };
@@ -47,12 +58,12 @@ const CommentInput = ({ postId, onCommentSubmit, mode = "create", initialValue =
     return (
         <div className="flex flex-col w-full max-w-[720px]">
             <textarea
-                className="round-box-border w-full px-5 py-4 outline-none box-border resize-none"
+                className="round-box-border w-full px-5 py-4 outline-none box-border resize-none bg-white"
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
-                placeholder="댓글을 입력하세요"
+                placeholder={isLoggedIn ? `댓글을 입력하세요` : `로그인 후 이용 가능합니다.`}
                 rows={3}
-                disabled={loading}
+                disabled={loading || !isLoggedIn}
             />
             <div 
                 className="flex justify-end gap-2 mt-2"
@@ -64,7 +75,7 @@ const CommentInput = ({ postId, onCommentSubmit, mode = "create", initialValue =
                 <button
                     className="btn-primary px-5 py-2 disabled:bg-gray-300"
                     onClick={handleSubmit}
-                    disabled={loading || !content.trim()}
+                    disabled={loading || !isLoggedIn || !content.trim()}
                 >
                     {mode === "edit" ? "저장" : "등록"}
                 </button>

@@ -20,7 +20,7 @@ const Notice = () => {
                 setNotices(res.data.objects);
                 updatePagination(res.data);
             } catch (err) {
-                console.log(err);
+                console.error(err);
                 showErrorToast("오류 발생! 개발자 호출 필요!");
             }
         };

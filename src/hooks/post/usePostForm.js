@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const usePost = () => {
+const usePostForm = () => {
   const [post, setPost] = useState({
     title: "",
     content: "",
@@ -68,4 +68,4 @@ const usePost = () => {
   };
 };
 
-export default usePost;
+export default usePostForm;

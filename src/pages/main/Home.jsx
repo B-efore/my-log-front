@@ -27,9 +27,8 @@ const Home = () => {
             try {
                 const res = await getRanker();
                 setRankers(res.data);
-                console.log(res);
             } catch (err) {
-                console.log(err);
+                console.error(err);
             }
         };
 
@@ -43,7 +42,7 @@ const Home = () => {
                 setMainPosts(res.data.objects);
                 updatePagination(res.data);
             } catch (err) {
-                console.log(err);
+                console.error(err);
             }
         };
 

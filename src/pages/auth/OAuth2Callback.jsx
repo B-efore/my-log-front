@@ -18,7 +18,7 @@ const OAuth2Callback = () => {
           navigate("/");
         } catch (error) {
           showErrorToast("로그인에 실패했습니다. 다시 시도해주세요.");
-          console.log(error);
+          console.error(error);
           navigate("/login");
         }
       };

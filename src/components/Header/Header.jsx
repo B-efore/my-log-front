@@ -75,7 +75,7 @@ const Header = ({
             const res = await countUnreadNotification();
             setNotificationCount(res.data.unreadCount);
         } catch (err) {
-            console.log(err);
+            console.error(err);
         }
     }
 
@@ -104,7 +104,7 @@ const Header = ({
 
             setLoadingPages(prev => new Set(prev).add(page));
         } catch (err) {
-            console.log(err);
+            console.error(err);
         }
     }
 

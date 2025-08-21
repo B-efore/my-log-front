@@ -1,178 +1,63 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useAuth } from "../../context/AuthContext";
-import { useLocation, useParams, useNavigate } from "react-router-dom";
-import { deletePost, getPost } from "../../api/postService";
-import { deleteComment } from "../../api/commentService";
+import { useLocation, useNavigate } from "react-router-dom";
+import { formatDate } from "../../util/formatDate";
+import { getLikeAlien, getProfileImage } from "../../util/get-images";
+import { useLike } from "../../hooks/useLike";
+import { useComments } from "../../hooks/useComments";
+import { usePostDetail } from "../../hooks/post/usePostDetail";
+import MarkdownView from "../../components/post/MarkdownView";
+import CategoryPostList from "./CategoryPostList";
+import Pagination from "../../components/pagination/Pagination";
+import ConfirmModal from "../../components/common/ConfirmModal";
+import CommentList from "../../components/comment/CommentList";
 import Header from "../../components/header/Header";
 import CommentInput from "../../components/comment/CommentInput";
 import Tag from "../../components/tag/Tag";
-import { formatDate } from "../../util/formatDate";
-import ConfirmModal from "../../components/common/ConfirmModal";
-import CommentList from "../../components/comment/CommentList";
-
-import { showErrorToast, showSuccessToast } from "../../util/toast";
-import { getLikeAlien, getProfileImage } from "../../util/get-images";
-import MarkdownView from "../../components/post/MarkdownView";
-import { createLike, deleteLike, getLikeCount, getLikeStatus } from "../../api/likeService";
-import CategoryPostList from "./CategoryPostList";
 
 const PostDetail = () => {
 
   const navigate = useNavigate();
   const location = useLocation();
-  const { postId } = useParams();
   const { userId: loggedInUserId, isLoggedIn } = useAuth();
 
-  const [post, setPost] = useState(location.state?.post || null);
-  const [comments, setComments] = useState([]);
-  const [loading, setLoading] = useState(!post);
-  const [editingCommentId, setEditingCommentId] = useState(null);
+  const {
+    post,
+    loading: postLoading,
+    goEdit,
+    handleDelete: handleDeletePost,
+    showDeleteConfirm: showPostConfirm,
+    setShowDeleteConfirm: setShowPostConfirm,
+    handleConfirmDelete: handleConfirmDeletePost,
+  } = usePostDetail(location.state?.post);
 
-  const [showPostConfirm, setShowPostConfirm] = useState(false);
-  const [showCommentConfirm, setShowCommentConfirm] = useState({ open: false, targetId: null });
+  const {
+    isLiked,
+    likeCount,
+    handleLike,
+    handleUnlike } = useLike(post?.postId, isLoggedIn);
 
-  const [likeLoading, setLikeLoading] = useState(false);
-  const [isLiked, setIsLiked] = useState(false);
-  const [likeCount, setLikeCount] = useState(0);
+  const {
+    comments,
+    loading: commentsLoading,
+    pagination,
+    handlePageChange,
+    generatePageNumbers,
+    editingCommentId,
+    setEditingCommentId,
+    replingCommentId,
+    setReplingCommentId,
+    handleCreate: handleCreateComment,
+    handleUpdate: handleUpdateComment,
+    handleDelete: handleDeleteComment,
+    showDeleteConfirm: showCommentConfirm,
+    setShowDeleteConfirm: setShowCommentConfirm,
+    handleConfirmDelete: handleConfirmDeleteComment,
+  } = useComments(post?.postId);
 
   const isAuthor = post?.user?.userId === loggedInUserId;
 
-  useEffect(() => {
-    getPost(postId)
-      .then((res) => {
-        setPost(res.data);
-        setComments(res.data.comments)
-        setLoading(false);
-        console.log(res.data);
-      })
-      .catch((err) => {
-        showErrorToast("게시글을 불러오는데 실패했습니다.");
-        navigate("/");
-      });
-  }, [postId]);
-
-  useEffect(() => {
-
-    const fetchLikeStatus = async () => {
-      try {
-        const res = await getLikeStatus(postId);
-        setIsLiked(res.data);
-      } catch (err) {
-        console.error(err);
-      }
-    }
-
-    if (isLoggedIn) {
-      fetchLikeStatus();
-    }
-
-  }, [isLoggedIn, postId]);
-
-  useEffect(() => {
-    const fetchLikeCount = async () => {
-      try {
-        const res = await getLikeCount(postId);
-        setLikeCount(res.data);
-      } catch (err) {
-        console.error(err);
-      }
-    }
-
-    fetchLikeCount();
-
-  }, [postId]);
-
-  const goEdit = () =>
-    navigate(`/write/${postId}`, {
-      state: {
-        post: post,
-      }
-    }
-    );
-
-  const handleDeletePost = async () => {
-    setShowPostConfirm(true);
-  };
-
-  const handleConfirmDeletePost = async () => {
-
-    setShowPostConfirm(false);
-    await new Promise(resolve => setTimeout(resolve, 0));
-
-    try {
-      await deletePost(postId);
-      showSuccessToast("게시글이 삭제되었습니다.");
-      navigate("/");
-    } catch (err) {
-      showErrorToast("게사글 삭제 과정에서 오류가 발생했습니다.");
-    }
-  };
-
-  const handleDeleteComment = (commentId) => {
-    setShowCommentConfirm({ open: true, targetId: commentId });
-  };
-
-  const handleCreateComment = (newComment) => {
-    setComments((prev) => [newComment, ...prev]);
-  };
-
-  const handleUpdateComment = (updatedComment) => {
-    setComments((prev) =>
-      prev.map((c) => (c.commentId === updatedComment.commentId ? updatedComment : c))
-    );
-    setEditingCommentId(null);
-  };
-
-  const handleConfirmDeleteComment = async () => {
-
-    const { targetId } = showCommentConfirm;
-    setShowCommentConfirm({ open: false, targetId: null });
-    await new Promise(resolve => setTimeout(resolve, 0));
-
-    try {
-      await deleteComment(postId, targetId);
-      setComments((prev) =>
-        prev.map((c) =>
-          c.commentId === targetId ? { ...c, content: "삭제된 댓글입니다." } : c
-        )
-      );
-      showSuccessToast("댓글이 삭제되었습니다.");
-    } catch {
-      showErrorToast("댓글 삭제 과정에서 오류가 발생했습니다.");
-    }
-  };
-
-  const handleLikeBtn = async () => {
-    if (!isLoggedIn || likeLoading) return;
-
-    setLikeLoading(true);
-    try {
-      await createLike(postId);
-      setIsLiked(true);
-      setLikeCount(prev => prev + 1);
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setLikeLoading(false);
-    }
-  }
-
-  const handleUnlikeBtn = async () => {
-    if (!isLoggedIn || likeLoading) return;
-
-    setLikeLoading(true);
-    try {
-      await deleteLike(postId);
-      setIsLiked(false);
-      setLikeCount(prev => prev - 1);
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setLikeLoading(false);
-    }
-  }
-
-  if (loading || !post) {
+  if (postLoading || !post) {
     return <div>로딩중...</div>
   }
 
@@ -183,7 +68,7 @@ const PostDetail = () => {
 
         <CategoryPostList
           categoryName={post.category?.name || "미분류"}
-          postId={postId}
+          postId={post?.postId}
         />
 
         <h1 className="font-orbit font-black text-4xl mb-4">
@@ -217,30 +102,6 @@ const PostDetail = () => {
         )}
 
         <MarkdownView content={post.content} />
-
-        {!isLiked ? (
-          <div
-            className="flex flex-row items-center border-2 border-yellow-500 w-fit py-1 px-5 mt-10 mb-3 ml-auto gap-2 rounded-3xl select-none transition-colors hover:bg-yellow-50 cursor-pointer"
-            onClick={handleLikeBtn}
-          >
-            <img
-              className="w-8 h-8 md:w-9 md:h-9 lg:w-10 lg:h-10"
-              src={getLikeAlien()}
-            />
-            <p className="text-2xl md:text-3xl text-yellow-600">{likeCount}</p>
-          </div>
-        ) : (
-          <div
-            className="flex flex-row items-center border-2 border-yellow-500 w-fit py-1 px-5 mt-10 mb-3 ml-auto gap-2 rounded-3xl select-none bg-yellow-200 transition-colors hover:bg-yellow-300 cursor-pointer"
-            onClick={handleUnlikeBtn}
-          >
-            <img
-              className="w-8 h-8 md:w-9 md:h-9 lg:w-10 lg:h-10"
-              src={getLikeAlien()}
-            />
-            <p className="text-2xl md:text-3xl text-yellow-600">{likeCount}</p>
-          </div>
-        )}
 
         <div className="flex justify-between my-4 gap-4 select-none">
           {post.previousPost && (
@@ -279,20 +140,59 @@ const PostDetail = () => {
         </div>
       </div>
 
-      <div className="flex flex-col items-center w-full max-w-[720px] mb-8">
-        <h3 className="self-start text-base font-default-bold mb-2">댓글 {comments.length}</h3>
-        {isLoggedIn && (<CommentInput postId={postId} onCommentSubmit={handleCreateComment} />)}
-        {comments.length > 0 && (
-          <CommentList
-            postId={postId}
-            comments={comments}
-            loggedInUserId={loggedInUserId}
-            editingCommentId={editingCommentId}
-            onEditClick={setEditingCommentId}
-            onCancelEdit={() => setEditingCommentId(null)}
-            onUpdate={handleUpdateComment}
-            onDelete={handleDeleteComment}
-          />
+      <div className="flex flex-col w-full max-w-[720px] mb-8">
+        <div className="flex items-center gap-2 mb-4">
+          {!isLiked ? (
+            <div
+              className="btn-post border-yellow-500 transition-colors hover:bg-yellow-50"
+              onClick={handleLike}
+            >
+              <img
+                className="btn-like-img"
+                src={getLikeAlien()}
+              />
+              <p className="btn-post-text text-yellow-600">{likeCount}</p>
+            </div>
+          ) : (
+            <div
+              className="btn-post border-yellow-500 bg-yellow-200 transition-colors hover:bg-yellow-300"
+              onClick={handleUnlike}
+            >
+              <img
+                className="btn-like-img"
+                src={getLikeAlien()}
+              />
+              <p className="btn-post-text text-yellow-600">{likeCount}</p>
+            </div>
+          )}
+          <h3
+            className="btn-post border-green-600 btn-post-text text-green-800"
+          >
+            댓글 {pagination.totalElements || 0}
+          </h3>
+        </div>
+        {isLoggedIn && (<CommentInput postId={post?.postId} onCommentSubmit={handleCreateComment} />)}
+        {!commentsLoading && (
+          <div className="flex flex-col w-full mt-8">
+            <CommentList
+              postId={post?.postId}
+              comments={comments}
+              loggedInUserId={loggedInUserId}
+              editingCommentId={editingCommentId}
+              onEditClick={setEditingCommentId}
+              replingCommentId={replingCommentId}
+              onReplyClick={setReplingCommentId}
+              onCancelEdit={() => setEditingCommentId(null)}
+              onCreate={handleCreateComment}
+              onUpdate={handleUpdateComment}
+              onDelete={handleDeleteComment}
+            />
+            <Pagination
+              pagination={pagination}
+              onPageChange={handlePageChange}
+              generatePageNumbers={generatePageNumbers}
+            />
+          </div>
         )}
       </div>
 

@@ -90,7 +90,7 @@ const Settings = () => {
             updateLocalStorageUserInfo({userImage: null});
             showSuccessToast(MESSAGES.IMAGE_DELETE_SUCCESS);
         } catch (err) {
-            console.log(err);
+            console.error(err);
             showErrorToast(MESSAGES.IMAGE_DELETE_FAILED);
         }
     }
@@ -113,7 +113,7 @@ const Settings = () => {
 
             showSuccessToast(MESSAGES.IMAGE_UPLOAD_SUCCESS);
         } catch (err) {
-            console.log(err);
+            console.error(err);
             showErrorToast(MESSAGES.IMAGE_UPLOAD_FAILED);
         }
     }

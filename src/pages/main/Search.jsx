@@ -23,7 +23,7 @@ const Search = () => {
             setUsers(res.data.objects);
             updatePagination(res.data);
         } catch (err) {
-            console.log(err);
+            console.error(err);
         }
     }, [username]);
 

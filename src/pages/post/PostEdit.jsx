@@ -3,15 +3,14 @@ import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { getPost, updatePost } from "../../api/postService";
 import PostEditor from "../../components/post/PostEditor";
 import MarkdownPreview from "../../components/post/MarkdownPreview"
-import usePost from "../../hooks/usePost";
 import ToastMessage from "../../components/common/ToastMessage";
 import { useAuth } from "../../context/AuthContext";
 import { updateNotice } from "../../api/adminService";
-import EditorHeader from "../../components/header/FullHeader";
 import { showSuccessToast } from "../../util/toast";
 import FullHeader from "../../components/header/FullHeader";
 import PostPublishModal from "../../components/post/PostPublishModal";
 import { getCategories } from "../../api/categoryService";
+import usePostForm from "../../hooks/post/usePostForm";
 
 const PostEdit = () => {
 
@@ -21,7 +20,7 @@ const PostEdit = () => {
 
   const { userId, isLoggedIn } = useAuth();
   const { postId } = useParams();
-  const { post, setPost, handleChange, addTag, removeTag, validatePost } = usePost();
+  const { post, setPost, handleChange, addTag, removeTag, validatePost } = usePostForm();
 
   const [userCategories, setUserCategories] = useState([]);
   const [showModal, setShowModal] = useState(false);

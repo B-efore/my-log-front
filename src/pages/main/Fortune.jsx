@@ -15,7 +15,6 @@ const Fortune = () => {
             setLoading(true);
             try {
                 const res = await getDailyFortune();
-                console.log(res);
                 setFortune(res.data.content);
             } catch (err) {
                 console.error(err);

@@ -70,7 +70,6 @@ const BlogPage = () => {
                     selectedCategoryId, selectedTagIds, keyword,
                     page, size
                 );
-                console.log(res);
                 setPosts(res.data.objects);
                 updatePagination(res.data);
                 updateDataLoaded({ post: true });
@@ -78,8 +77,6 @@ const BlogPage = () => {
                 console.error(err);
             }
         }
-
-        console.log(prevKeyword.current + "< prev, " + keyword + "< keyword");
 
         if (activeTab != 'posts') return;
 

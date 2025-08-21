@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { getUserPosts, getPostsByCategoryAndTags } from "../api/postService";
-import { showErrorToast } from "../util/toast";
+import { getPostsByCategoryAndTags } from "../../api/postService";
+import { showErrorToast } from "../../util/toast";
 
 export function usePostList(userId) {
 

@@ -25,7 +25,7 @@ const Shop = () => {
                 const res = await getMyPoint();
                 setMyPoint(res.data.currentAmount);
             } catch (err) {
-                console.log(err);
+                console.error(err);
             }
         };
 
@@ -37,10 +37,9 @@ const Shop = () => {
         const fetchItems = async () => {
             try {
                 const res = await getAllItems();
-                console.log(res);
                 setItems(res.data.objects);
             } catch (err) {
-                console.log(err);
+                console.error(err);
             }
         };
 

@@ -13,7 +13,7 @@ export const getPost = async (postId) => {
 }
 
 export const getRelatedPosts = async (postId, page, size = 5) => {
-    return await axios.get(`/posts/${postId}/relations`, {
+    return await axios.get(`/posts/${postId}/related-post`, {
         params: {size, page},
     });
 }

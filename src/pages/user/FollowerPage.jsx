@@ -15,7 +15,7 @@ const FollowerPage = () => {
             const res = await getFollowers(userId);
             setUsers(res.data.follows);
         } catch (err) {
-            console.log(err);
+            console.error(err);
         }
     }, [userId]);
 

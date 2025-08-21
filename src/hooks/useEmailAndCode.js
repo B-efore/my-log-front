@@ -15,7 +15,7 @@ export const useEmailVerification = () => {
             setEmailSent(true);
             showSuccessToast(response.data);
         } catch (error) {
-            console.log(error);
+            console.error(error);
             showErrorToast("발송 실패");
         }
     };
@@ -26,7 +26,7 @@ export const useEmailVerification = () => {
             setEmailSent(true);
             showSuccessToast("인증번호를 전송했습니다.");
         } catch (error) {
-            console.log(error);
+            console.error(error);
             showErrorToast("발송 실패");
         }
     }
@@ -37,7 +37,7 @@ export const useEmailVerification = () => {
             setCodeVerified(true);
             showSuccessToast("인증에 성공했습니다.");
         } catch (error) {
-            console.log(error);
+            console.error(error);
             showErrorToast("인증 실패");
         }
     };

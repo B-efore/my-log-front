@@ -37,7 +37,7 @@ const Login = () => {
         showErrorToast("이메일 또는 비밀번호가 올바르지 않습니다.");
       }
     } catch (error) {
-      console.log("응답 상태:", error);
+      console.error("응답 상태:", error);
       showErrorToast("서버 에러");
     }
   }
@@ -48,7 +48,6 @@ const Login = () => {
   }
 
   const handleSocialLogin = (provider) => {
-    console.log(`${oAuth2BaseUrl}/api/oauth2/authorization/${provider}`);
     window.location.href = `${oAuth2BaseUrl}/api/oauth2/authorization/${provider}`;
   };
 

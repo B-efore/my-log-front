@@ -57,7 +57,7 @@ const CategoryPostList = ({ categoryName, postId }) => {
                     <div className="flex items-baseline gap-2">
                         <h2 className="font-orbit text-lg font-black">{categoryName}</h2>
                         <span className="px-2 py-1 text-sm rounded text-gray-500">
-                            {pagination.totalPosts}개
+                            {pagination.totalElements}개
                         </span>
                     </div>
 

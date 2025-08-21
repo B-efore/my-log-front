@@ -53,7 +53,7 @@ const BlogHome = ({ user, readme, pinnedPosts, activities }) => {
             const res = await checkFollowing(userId, user.userId);
             setFollowStatue(res.data);
         } catch (err) {
-            console.log(err);
+            console.error(err);
         }
     }, [follow]);
 

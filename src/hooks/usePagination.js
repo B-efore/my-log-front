@@ -5,7 +5,7 @@ export function  usePagination(initialPage = 0, initialSize = 10) {
     const [pagination, setPagination] = useState({
         currentPage: initialPage,
         totalPages: 1,
-        totalPosts: 0,
+        totalElements: 0,
         size: initialSize
     });
 
@@ -13,7 +13,7 @@ export function  usePagination(initialPage = 0, initialSize = 10) {
         setPagination({
             currentPage: newPagination.page,
             totalPages: newPagination.totalPages,
-            totalPosts: newPagination.totalElements,
+            totalElements: newPagination.totalElements,
             size: newPagination.size
         });
     }

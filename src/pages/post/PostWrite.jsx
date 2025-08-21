@@ -1,6 +1,5 @@
 import PostEditor from "../../components/post/PostEditor";
 import MarkdownPreview from "../../components/post/MarkdownPreview";
-import usePost from "../../hooks/usePost";
 import { useAuth } from "../../context/AuthContext";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -10,12 +9,13 @@ import { createPost } from "../../api/postService";
 import FullHeader from "../../components/header/FullHeader";
 import PostPublishModal from "../../components/post/PostPublishModal";
 import { getCategories } from "../../api/categoryService";
+import usePostForm from "../../hooks/post/usePostForm";
 
 const PostWrite = () => {
 
   const navigate = useNavigate();
   const { userId, isLoggedIn } = useAuth();
-  const { post, handleChange, addTag, removeTag, validatePost } = usePost();
+  const { post, handleChange, addTag, removeTag, validatePost } = usePostForm();
 
   const [userCategories, setUserCategories] = useState([]);
   const [showModal, setShowModal] = useState(false);

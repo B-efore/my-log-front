@@ -48,7 +48,7 @@ const ResetPassword = () => {
             showSuccessToast("비밀번호가 변경되었습니다.");
             navigate("/login", { replace: true });
         } catch (error) {
-            console.log(error);
+            console.error(error);
             showErrorToast("비밀번호 변경 실패");
         }
     };

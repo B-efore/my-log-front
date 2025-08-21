@@ -1,4 +1,4 @@
-import { usePostList } from "./usePostList";
+import { usePostList } from "./post/usePostList";
 import { useUserProfile } from "./useUserProfile";
 
 export function useBlog(userId) {
